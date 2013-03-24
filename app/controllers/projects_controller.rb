@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.find_by_user_id(current_user.id)
+    @projects = current_user.projects
 
     respond_to do |format|
       format.html # index.html.erb

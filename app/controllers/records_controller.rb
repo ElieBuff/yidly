@@ -2,7 +2,8 @@ class RecordsController < ApplicationController
   # GET /records
   # GET /records.json
   def index
-    @records = Record.all
+     
+    @records = current_user.records
 
     respond_to do |format|
       format.html # index.html.erb
