@@ -7,6 +7,8 @@ Dashboard::Application.routes.draw do
   root :to => 'home#index'
   devise_for :users
   resources :users
+  resources :projects
+  resources :records
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
