@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 gem 'rails', '3.2.11'
+gem 'rb-readline'
+gem 'thin'
 gem 'pg'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
