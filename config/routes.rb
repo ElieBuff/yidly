@@ -1,4 +1,7 @@
 Dashboard::Application.routes.draw do
+  resources :stages
+
+
   get "home/index"
   authenticated :user do
     root :to => 'home#index'
