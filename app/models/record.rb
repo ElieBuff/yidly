@@ -5,4 +5,10 @@ class Record < ActiveRecord::Base
   def summary
      "name: #{self.name}, project: #{self.project.name}, user: #{self.project.user.email}, status: #{self.status}"
   end
+  def to_task
+    { 
+      :action => self.status,
+      :name => self.name,
+    }
+  end
 end
