@@ -9,8 +9,6 @@ class Record < ActiveRecord::Base
   def summary
      "name: #{self.name}, project: #{self.project.name}, user: #{self.user.email}, stage: #{self.stage.name}"
   end
-  def action
-  end
 
   def to_task
     { 
