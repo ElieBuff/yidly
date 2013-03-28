@@ -1,17 +1,23 @@
 <script>
-    setInterval(function(){
-        $.ajax({
-            url: '/tasks.json',
-            success: function(data){
-                d3.select('.container').append('div')
-                .attr('class', 'task-container')
-                .data(data)
-                .enter().append('div')
-                .text(function(d) { 
-                    return "action: " + d.action + " name: " + d.name;
-                })
-                .exit().remove();
-            }
+    var dispatcher = new WebSocketRails('yidly-dashboard.herokuapp.com<%= ENV['WEBSOCKET_PORT']%>/websocket');
+    var container = d3.select('.container').append('div').attr('class', 'task-container');
+    dispatcher.on_open = function(data) {
+        //console.log('Connection has been established: ' + data);
+        // You can trigger new server events inside this callback if you wish.
+    }
+    dispatcher.trigger('tasks.get');
+    dispatcher.bind('tasks.receive_all', function(tasks){
+        console.log(JSON.stringify(tasks));
+        var divs = container.selectAll('div').data(tasks);
+
+        divs.enter().append('div')
+        .text(function(task) { 
+            return "action: " + task.action + " name: " + task.name;
         });
-    }, 3000);
+
+        divs.exit().remove();
+        console.log(divs);
+    }, function() { 
+        console.log('failure in tasks.all');
+    });
 </script>

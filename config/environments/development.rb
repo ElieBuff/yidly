@@ -18,6 +18,8 @@ Dashboard::Application.configure do
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
+  # Remove the Rack::Lock middleware (websocket-rails https://github.com/DanKnox/websocket-rails/wiki/Installation-and-Setup)
+  config.middleware.delete Rack::Lock
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
