@@ -1,17 +1,24 @@
 <script>
-    setInterval(function(){
+    var container = d3.select('#main .content').append('div').attr('class', 'task-container');
+    function runAndSetInterval(func, timeout){
+        func();
+        setInterval(func, timeout);
+    }
+    runAndSetInterval(function(){
         $.ajax({
-            url: '/tasks.json',
-            success: function(data){
-                d3.select('.container').append('div')
-                .attr('class', 'task-container')
-                .data(data)
-                .enter().append('div')
-                .text(function(d) { 
-                    return "action: " + d.action + " name: " + d.name;
-                })
-                .exit().remove();
+            url: 'tasks.json',
+            success: function(tasks) {
+                console.log(JSON.stringify(tasks));
+                var divs = container.selectAll('div').data(tasks);
+
+                divs.enter().append('div')
+                .text(function(task) { 
+                    return "action: " + task.action + " name: " + task.name;
+                });
+
+                divs.exit().remove();
+                console.log(divs);
             }
         });
-    }, 3000);
+    }, 2000);
 </script>
