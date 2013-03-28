@@ -15,5 +15,3 @@
 //= require bootstrap
 //= require d3
 //= require_tree .
-//= require websocket_rails/main
-
