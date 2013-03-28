@@ -1,0 +1,17 @@
+<script>
+    setInterval(function(){
+        $.ajax({
+            url: '/tasks.json',
+            success: function(data){
+                d3.select('.container').append('div')
+                .attr('class', 'task-container')
+                .data(data)
+                .enter().append('div')
+                .text(function(d) { 
+                    return "action: " + d.action + " name: " + d.name;
+                })
+                .exit().remove();
+            }
+        });
+    }, 3000);
+</script>
