@@ -12,12 +12,12 @@
                 var divs = container.selectAll('div').data(tasks);
 
                 divs.enter().append('div')
+                .attr('style', 'border-style:groove; border-width:3px; border-color:blue;')
                 .text(function(task) { 
-                    return "action: " + task.action + " name: " + task.name;
+                    return task.action.toUpperCase() + "   " + task.name;
                 });
 
                 divs.exit().remove();
-                console.log(divs);
             }
         });
     }, 2000);
