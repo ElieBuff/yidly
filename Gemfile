@@ -6,6 +6,7 @@ gem 'thin'
 gem 'd3-rails'
 gem 'pg'
 gem 'bootstrap-sass'
+gem 'acts_as_list'
 gem 'simple_form'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

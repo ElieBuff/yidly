@@ -1,12 +1,13 @@
 class StagesController < ApplicationController
   # GET /stages
   # GET /stages.json
+  def get_stages
+  end
   def index
-    @stages = Stage.all
+    stages = params[:project_id] ? Stage.find_all_by_project_id(params[:project_id], :order => :position) : Stage.all
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @stages }
+      format.json { render json: stages }
     end
   end
 
@@ -24,10 +25,18 @@ class StagesController < ApplicationController
   # GET /stages/new
   # GET /stages/new.json
   def new
-    stage = Stage.create! :project_id => params[:project_id], :name => params[:name], :action => params[:action_name]
+    stage = Stage.new :project_id => params[:project_id], :name => params[:name], :action => params[:action_name]
+    position = params[:position];
+    stage.save
+    stage.remove_from_list()
+    saveOkay = stage.insert_at(params[:position])
 
     respond_to do |format|
-      format.json { render json: stage }
+      if saveOkay 
+        format.json { render json: stage } 
+      else 
+        format.json  { render :json => stage.errors, :status => :unprocessable_entity } 
+      end
     end
   end
 
