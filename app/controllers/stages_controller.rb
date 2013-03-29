@@ -24,11 +24,10 @@ class StagesController < ApplicationController
   # GET /stages/new
   # GET /stages/new.json
   def new
-    @stage = Stage.new
+    stage = Stage.create! :project_id => params[:project_id], :name => params[:name], :action => params[:action_name]
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @stage }
+      format.json { render json: stage }
     end
   end
 
