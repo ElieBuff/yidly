@@ -36,6 +36,18 @@ class RecordsController < ApplicationController
   # GET /records/1/edit
   def edit
     @record = Record.find(params[:id])
+    @record.update_attributes({
+      :stage_id => params[:stage_id]
+    })
+    saveOkay = @record.save
+    respond_to do |format|
+      if saveOkay
+        format.json { render json: @record }
+      else
+        format.json  { render :json => @record.errors, :status => :unprocessable_entity } 
+      end
+
+    end
   end
 
   # POST /records
