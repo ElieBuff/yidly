@@ -11,7 +11,9 @@ Dashboard::Application.routes.draw do
   devise_for :users
   resources :users
   resources :projects
-  resources :records
+  resources :records do
+    get 'move_stage', :on => :member
+  end
   resources :tasks
 
   # The priority is based upon order of creation:

@@ -35,6 +35,10 @@ class RecordsController < ApplicationController
 
   # GET /records/1/edit
   def edit
+  end
+
+  # GET /records/1/move_stage
+  def move_stage
     @record = Record.find(params[:id])
     @record.update_attributes({
       :stage_id => params[:stage_id]
@@ -46,9 +50,9 @@ class RecordsController < ApplicationController
       else
         format.json  { render :json => @record.errors, :status => :unprocessable_entity } 
       end
-
     end
   end
+
 
   # POST /records
   # POST /records.json
