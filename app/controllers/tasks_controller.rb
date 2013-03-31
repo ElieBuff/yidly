@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    tasks = current_user.records.map {|record|
+    tasks = current_user.records(:order => :actionable_at).map {|record|
       record.to_task
     }.reject { |task|
       task[:action].empty?

@@ -6,8 +6,11 @@ class Record < ActiveRecord::Base
   end
   include ActiveModel::Validations
   validates_with RecordValidator
-  attr_accessible :email, :name, :stage_id
+  attr_accessible :email, :name, :stage_id, :actionable_at
   validates_presence_of :name, :stage_id
+  default_value_for :actionable_at do
+    Time.now
+  end
   belongs_to :stage
   delegate :action, :to => :stage
   delegate :project, :to => :stage
@@ -21,6 +24,7 @@ class Record < ActiveRecord::Base
     { 
       :action => self.action,
       :name => self.name,
+      :actionable_at => self.actionable_at,
       :record_id => self.id,
       :stage_id => self.stage.id
     }

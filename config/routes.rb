@@ -13,6 +13,7 @@ Dashboard::Application.routes.draw do
   resources :projects
   resources :records do
     get 'move_stage', :on => :member
+    get 'reschedule_in_sec', :on => :member
   end
   resources :tasks
 

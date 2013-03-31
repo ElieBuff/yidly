@@ -36,12 +36,25 @@ class RecordsController < ApplicationController
   # GET /records/1/edit
   def edit
   end
+  
+  # GET /records/1/reschedule_in_sec
+  def reschedule_in_sec
+    @record = Record.find(params[:id])
+    @record.update_attributes({
+      :actionable_at => Time.now + params[:delay].to_i
+    })
+    @record.save
+    respond_to do |format|
+      format.json { render json: @record}
+    end
+  end
 
   # GET /records/1/move_stage
   def move_stage
     @record = Record.find(params[:id])
     @record.update_attributes({
-      :stage_id => params[:stage_id]
+      :stage_id => params[:stage_id],
+      :actionable_at => Time.now
     })
     saveOkay = @record.save
     respond_to do |format|

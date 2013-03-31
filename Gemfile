@@ -8,6 +8,7 @@ gem 'pg'
 gem 'bootstrap-sass'
 gem 'acts_as_list'
 gem 'simple_form'
+gem 'default_value_for'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
