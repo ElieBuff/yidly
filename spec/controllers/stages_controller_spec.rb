@@ -52,8 +52,16 @@ describe StagesController do
 
   describe "GET new" do
     it "assigns a new stage as @stage" do
-      get :new, {}, valid_session
-      assigns(:stage).should be_a_new(Stage)
+      get :new, {:project_id=>1, :name=>"aaabbaaa", :position=>1}, valid_session
+      assigns(:stage).should be_an_instance_of(Stage)
+    end
+    it "position correctly a new stage with same position as an existing stage" do
+      get :new, {:project_id=>1, :name=>"in progress", :position=>1}, valid_session
+      get :new, {:project_id=>1, :name=>"todo", :position=>1}, valid_session
+      in_progress_stage = Stage.find_by_name 'in progress'
+      todo_stage = Stage.find_by_name 'todo'
+      todo_stage.position.should == 1
+      in_progress_stage.position.should == 2
     end
   end
 
@@ -65,44 +73,7 @@ describe StagesController do
     end
   end
 
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Stage" do
-        expect {
-          post :create, {:stage => valid_attributes}, valid_session
-        }.to change(Stage, :count).by(1)
-      end
-
-      it "assigns a newly created stage as @stage" do
-        post :create, {:stage => valid_attributes}, valid_session
-        assigns(:stage).should be_a(Stage)
-        assigns(:stage).should be_persisted
-      end
-
-      it "redirects to the created stage" do
-        post :create, {:stage => valid_attributes}, valid_session
-        response.should redirect_to(Stage.last)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved stage as @stage" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Stage.any_instance.stub(:save).and_return(false)
-        post :create, {:stage => { "name" => "invalid value" }}, valid_session
-        assigns(:stage).should be_a_new(Stage)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Stage.any_instance.stub(:save).and_return(false)
-        post :create, {:stage => { "name" => "invalid value" }}, valid_session
-        response.should render_template("new")
-      end
-    end
-  end
-
-  describe "PUT update" do
+   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested stage" do
         stage = Stage.create! valid_attributes
