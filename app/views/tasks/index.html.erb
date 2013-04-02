@@ -8,12 +8,12 @@
         var container = d3.select('.today_tasks');
         $.getJSON('tasks.json', function(data) {
             function template() {
-                return ' <div class="task" draggable="true"> <div class="title">{{ action }}</div> <div class="time">{{ actionable_at }}</div> </div> ';
+                return ' <div class="task" id= "task{{ id }}" draggable="true"> <div class="title">{{ action }}</div> <div class="time">{{ actionable_at }}</div> </div> ';
             }
             var divs = container.selectAll('div')
             .data(data);
-            divs.enter().append('div').html(function(d){
-                return Mustache.render(template(), d);
+            divs.enter().append('div').html(function(d,i){
+                return Mustache.render(template(), $.extend(d, { id : i}));
             });
             divs.exit().remove();
        });
@@ -55,15 +55,9 @@
 
 
         $('.drop_done,.drop_cancel').on('drop', function(e) {
-
             e.preventDefault();
-
             var id = e.originalEvent.dataTransfer.getData("text/plain");
-
             var data = GetDroppedTask(id);
-
-
-
             $('#' + id).remove();
 
             $(this).append(data);
@@ -184,19 +178,19 @@
 
                 <h2> All days tasks </h2>
 
-                <div class="task" id="task3" draggable="true">
+                <div class="task" id="task33" draggable="true">
 
                     <span class="title">Test</span>
 
                 </div>
 
-                <div class="task" id="task4" draggable="true">
+                <div class="task" id="task34" draggable="true">
 
                     <span class="title">Test</span>
 
                 </div>
 
-                <div class="task" id="task5" draggable="true">
+                <div class="task" id="task35" draggable="true">
 
                     <span class="title">Test</span>
 
