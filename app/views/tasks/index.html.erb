@@ -1,24 +1,495 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 <script>
-    var container = d3.select('#main .content').append('div').attr('class', 'task-container');
-    function runAndSetInterval(func, timeout){
-        func();
-        setInterval(func, timeout);
-    }
-    runAndSetInterval(function(){
-        $.ajax({
-            url: 'tasks.json',
-            success: function(tasks) {
-                console.log(JSON.stringify(tasks));
-                var divs = container.selectAll('div').data(tasks);
 
-                divs.enter().append('div')
-                .attr('style', 'border-style:groove; border-width:3px; border-color:blue;')
-                .text(function(task) { 
-                    return task.action.toUpperCase() + "   " + task.name;
-                });
-
-                divs.exit().remove();
+    var taskID;
+    $(function() {
+        var container = d3.select('.today_tasks');
+        $.getJSON('tasks.json', function(data) {
+            function template() {
+                return ' <div class="task" draggable="true"> <div class="title">{{ action }}</div> <div class="time">{{ actionable_at }}</div> </div> ';
             }
+            var divs = container.selectAll('div')
+            .data(data);
+            divs.enter().append('div').html(function(d){
+                return Mustache.render(template(), d);
+            });
+            divs.exit().remove();
+       });
+
+        $( "#Reschedule" ).dialog({ 
+            position: { my: "center", at: "center", of: ".reschedule_box" },
+            autoOpen: false,  
+            resizable: false,
+            height:150,
+            width:150,
+            modal: true
         });
-    }, 2000);
+
+
+        $('body').click(function() {
+
+            taskID = '';
+
+            $('#Reschedule').dialog('close');
+
+        });
+
+
+
+        $('.task').on('dragstart', function(e) {
+
+            e.originalEvent.dataTransfer.setData("text/plain", e.target.getAttribute('id')); 
+
+        });
+
+
+
+        $('.drop_box').on('dragover', function(e) {
+
+            e.preventDefault();
+
+        });
+
+
+
+        $('.drop_done,.drop_cancel').on('drop', function(e) {
+
+            e.preventDefault();
+
+            var id = e.originalEvent.dataTransfer.getData("text/plain");
+
+            var data = GetDroppedTask(id);
+
+
+
+            $('#' + id).remove();
+
+            $(this).append(data);
+
+        });
+
+
+
+        $('.drop_reschedule').on('drop', function(e) {
+
+            e.preventDefault();
+
+            taskID = e.originalEvent.dataTransfer.getData("text/plain");
+
+
+
+            if($(this).attr('data-status') == 'reschedule')
+
+            $('#Reschedule').dialog('open');
+
+        });
+
+
+
+        $('.date_radio').click(function() {
+
+            var val = $(this).val();
+
+            if(val == 'today')
+
+            {
+
+                $('.today_tasks').show();
+
+                $('.alldays_tasks').hide();
+
+            }
+
+            else
+
+            {
+
+                $('.today_tasks').hide();
+
+                $('.alldays_tasks').show();
+
+            }
+
+        });
+
+
+
+        $('.reschedule_img').click(function() {
+
+            var data = GetDroppedTask(taskID);
+
+
+
+            $('#' + taskID).remove();
+
+            $('.drop_reschedule').append(data);
+
+        });
+
+
+
+
+
+    });
+
+
+
+    function GetDroppedTask(id)
+
+    {
+
+        var title = $('#'+ id + ' .title').text();
+
+        return '<div id="' + id + '" class="drop_data">' + title + '</div>'
+
+    }
+
+
+
 </script>
+
+
+
+<body>
+
+    <div class="align_left">
+
+        <div class="date_selection">
+
+            <span class="chkb_date">
+
+                <input type="radio" class="date_radio" name="date_selection" value="today" checked/> Today
+
+            </span>
+
+            <span class="chkb_date">
+
+                <input type="radio" class="date_radio" name="date_selection" value="alldays"/> All Days
+
+            </span>
+
+        </div>
+
+        <div class="tasks_container">
+
+            <div class="today_tasks">
+
+                <h2> Today tasks </h2>
+
+           </div>
+
+            <div class="alldays_tasks" style="display:none;">
+
+                <h2> All days tasks </h2>
+
+                <div class="task" id="task3" draggable="true">
+
+                    <span class="title">Test</span>
+
+                </div>
+
+                <div class="task" id="task4" draggable="true">
+
+                    <span class="title">Test</span>
+
+                </div>
+
+                <div class="task" id="task5" draggable="true">
+
+                    <span class="title">Test</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="align_right">
+
+        <div class="status_container">
+
+            <div class="status_box done_box">
+
+                <span class="status_title">Done</span>
+
+                <div class="drop_box drop_done" data-status="done">
+
+                </div>
+
+            </div>
+
+            <div class="status_box reschedule_box">
+
+                <span class="status_title">Reschedule</span>
+
+                <div class="drop_box drop_reschedule" data-status="reschedule">
+
+                </div>
+
+            </div>
+
+            <div class="status_box cancel_box">
+
+                <span class="status_title">Cancel</span>
+
+                <div class="drop_box drop_cancel" data-status="cancel">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div id="Reschedule">
+
+        <div>
+
+            <span><img class="reschedule_img" src="./Images/icon1.gif" data-time="today"/></span>
+
+            <span><img class="reschedule_img" src="./Images/icon2.gif" data-time="tomorrow"/></span>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <style>
+
+        body
+
+        {
+
+            font-weight: normal;
+
+            font-family: Arial,Helvetica,sans-serif;
+
+        }
+
+        .align_left
+
+        {
+
+            float: left;
+
+            width: 70%;
+
+        }
+
+        .align_right
+
+        {
+
+            float: right;
+
+            width:30%;
+
+        }
+
+        .date_selection
+
+        {
+
+            width:300px;
+
+            margin:0 auto;
+
+        }
+
+        .chkb_date
+
+        {
+
+            padding: 0 35px;
+
+        }
+
+        .tasks_container
+
+        {
+
+            width:450px; 
+
+            margin:0 auto;
+
+        }
+
+        .task
+
+        {
+
+            color: #676767;
+
+            font-size: 12px;
+
+            border: 1px solid #676767;
+
+            height: 50px;
+
+            padding: 10px 5px;
+
+            margin: 10px;
+
+        }
+
+        .status_container
+
+        {
+
+            width:70%;
+
+            margin:0 auto;
+
+        }
+
+        .status_box
+
+        {
+
+            width:100%;
+
+            padding: 10px 0;
+
+        }
+
+        .status_title
+
+        {
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+        }
+
+        .drop_box
+
+        {
+
+            width:100%;
+
+            height:100px;
+
+
+
+        }
+
+        .done_box .drop_box
+
+        {
+
+            border: 1px solid green;
+
+        }
+
+        .reschedule_box .drop_box
+
+        {
+
+            border: 1px solid orange;
+
+        }
+
+        .cancel_box .drop_box
+
+        {
+
+            border: 1px solid red;
+
+        }
+
+        .done_box .status_title
+
+        {
+
+            color:green;
+
+        }
+
+        .reschedule_box .status_title
+
+        {
+
+            color:orange;
+
+        }
+
+        .cancel_box .status_title
+
+        {
+
+            color:red;
+
+        }
+
+        .drop_data
+
+        {
+
+            padding:5px 3px;
+
+            margin:4px 0;
+
+            color: #676767;
+
+            font-size: 10px;
+
+        }
+
+        .done_box .drop_data
+
+        {
+
+            background-color: #e6f3e2;
+
+        }
+
+        .reschedule_box .drop_data
+
+        {
+
+            background-color: #fde0b5;
+
+        }
+
+        .cancel_box .drop_data
+
+        {
+
+            background-color: #facdc0;
+
+        }
+
+
+
+
+
+
+
+        .ui-widget-header 
+
+        {
+
+            display:none !important;
+
+        }
+
+
+
+    </style>
+
+
+
+</body>
+
+
