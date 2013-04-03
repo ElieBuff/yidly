@@ -23,17 +23,17 @@ class StagesController < ApplicationController
   # GET /stages/new
   # GET /stages/new.json
   def new
-    @stage = Stage.new :project_id => params[:project_id], :name => params[:name], :action => params[:action_name]
-    position = params[:position];
-    @stage.save
-    @stage.remove_from_list()
-    saveOkay = @stage.insert_at(params[:position])
-
     respond_to do |format|
-      if saveOkay 
-        format.json { render json: @stage } 
-      else 
-        format.json  { render :json => @stage.errors, :status => :unprocessable_entity } 
+      stage = Stage.new(:project_id => params[:project_id], :name => params[:name], :action => params[:action_name])
+      begin
+        stage.update_position(params[:position]) 
+        format.json { 
+          render json: stage
+        }
+      rescue
+        format.json { 
+          render :json => {:errors => stage.errors}, :status => :unprocessable_entity 
+        }
       end
     end
   end

@@ -4,4 +4,11 @@ class Stage < ActiveRecord::Base
   acts_as_list :scope => :project
   has_many :records
   validates_uniqueness_of :name, :scope => :project_id
+  def update_position(p)
+    self.save!
+    self.remove_from_list
+    self.insert_at p
+    self
+  end
+
 end
