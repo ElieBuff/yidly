@@ -49,20 +49,10 @@ class RecordsController < ApplicationController
     end
   end
 
-  # GET /records/1/move_stage
-  def move_stage
-    @record = Record.find(params[:id])
-    @record.update_attributes({
-      :stage_id => params[:stage_id],
-      :actionable_at => Time.now
-    })
-    saveOkay = @record.save
+  # GET /records/1/move_to_next_stage
+  def move_to_next_stage
     respond_to do |format|
-      if saveOkay
-        format.json { render json: @record }
-      else
-        format.json  { render :json => @record.errors, :status => :unprocessable_entity } 
-      end
+      format.json { render json: Record.find(params[:id]).move_to_next_stage }
     end
   end
 

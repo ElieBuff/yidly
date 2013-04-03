@@ -20,6 +20,20 @@ class Record < ActiveRecord::Base
      "name: #{self.name}, project: #{self.project.name}, user: #{self.user.email}, stage: #{self.stage.name}"
   end
 
+  def update_stage_id(id)
+    self.update_attributes({
+      :stage_id => id,
+      :actionable_at => Time.now
+    }) unless id == self.id
+  end
+
+  def move_to_next_stage
+    self.stage.lower_item.tap { |next_stage|
+      update_stage_id(next_stage.id) unless next_stage.nil?
+    }
+    self
+  end
+
   def to_task
     { 
       :action => self.action,
