@@ -13,7 +13,10 @@
             var divs = container.selectAll('div')
             .data(data);
             divs.enter().append('div').html(function(d,i){
-                return Mustache.render(template(), $.extend(d, { id : i}));
+                return Mustache.render(template(), $.extend(d, { 
+                    id : i, 
+                    actionable_at: new Date(d.actionable_at)
+                }));
             });
             divs.exit().remove();
        });
