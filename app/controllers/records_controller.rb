@@ -1,8 +1,16 @@
 class RecordsController < ApplicationController
+  before_filter :authenticate_user!
+  before_filter :correct_user
+
+  def correct_user
+    respond_to do |format|
+      format.json { render json: {:errors => ["incorrect user"]}, status: :unprocessable_entity }
+    end unless (params[:id].nil? or controller_name.classify.constantize.find(params[:id]).user == current_user)
+  end
+
   # GET /records
   # GET /records.json
   def index
-     
     @records = current_user.records
 
     respond_to do |format|
