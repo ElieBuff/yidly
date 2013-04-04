@@ -1,6 +1,7 @@
-class RecordsController < ApplicationController
+class MyController < ApplicationController
   before_filter :authenticate_user!
   before_filter :correct_user
+  before_filter :set_current_object
 
   def correct_user
     respond_to do |format|
@@ -8,6 +9,12 @@ class RecordsController < ApplicationController
     end unless (params[:id].nil? or controller_name.classify.constantize.find(params[:id]).user == current_user)
   end
 
+  def set_current_object
+    instance_variable_set("@current_#{controller_name.chop}", controller_name.classify.constantize.find(params[:id])) unless params[:id].nil?
+  end
+end
+
+class RecordsController < MyController
   # GET /records
   # GET /records.json
   def index
@@ -22,11 +29,9 @@ class RecordsController < ApplicationController
   # GET /records/1
   # GET /records/1.json
   def show
-    @record = Record.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @record }
+      format.json { render json: @current_record }
     end
   end
 
@@ -47,20 +52,19 @@ class RecordsController < ApplicationController
   
   # GET /records/1/reschedule_in_sec
   def reschedule_in_sec
-    @record = Record.find(params[:id])
-    @record.update_attributes({
+    @current_record.update_attributes({
       :actionable_at => Time.now + params[:delay].to_i
     })
-    @record.save
+    @current_record.save
     respond_to do |format|
-      format.json { render json: @record}
+      format.json { render json: @current_record}
     end
   end
 
   # GET /records/1/move_to_next_stage
   def move_to_next_stage
     respond_to do |format|
-      format.json { render json: Record.find(params[:id]).move_to_next_stage }
+      format.json { render json: @current_record.move_to_next_stage }
     end
   end
 
@@ -84,15 +88,13 @@ class RecordsController < ApplicationController
   # PUT /records/1
   # PUT /records/1.json
   def update
-    @record = Record.find(params[:id])
-
     respond_to do |format|
-      if @record.update_attributes(params[:record])
-        format.html { redirect_to @record, notice: 'Record was successfully updated.' }
+      if @current_record.update_attributes(params[:record])
+        format.html { redirect_to @current_record, notice: 'Record was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @record.errors, status: :unprocessable_entity }
+        format.json { render json: @current_record.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -100,8 +102,7 @@ class RecordsController < ApplicationController
   # DELETE /records/1
   # DELETE /records/1.json
   def destroy
-    @record = Record.find(params[:id])
-    @record.destroy
+    @current_record.destroy
 
     respond_to do |format|
       format.html { redirect_to records_url }
