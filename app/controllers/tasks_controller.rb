@@ -1,4 +1,4 @@
-class TasksController < ApplicationController
+class TasksController < UserAuthenticatedController
   before_filter :authenticate_user!
 
   def index

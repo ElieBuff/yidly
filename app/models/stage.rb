@@ -4,6 +4,7 @@ class Stage < ActiveRecord::Base
   acts_as_list :scope => :project
   has_many :records
   validates_uniqueness_of :name, :scope => :project_id
+  delegate :user, :to => :project
   def update_position(p)
     self.save!
     self.remove_from_list

@@ -1,20 +1,4 @@
-class MyController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :correct_user
-  before_filter :set_current_object
-
-  def correct_user
-    respond_to do |format|
-      format.json { render json: {:errors => ["incorrect user"]}, status: :unprocessable_entity }
-    end unless (params[:id].nil? or controller_name.classify.constantize.find(params[:id]).user == current_user)
-  end
-
-  def set_current_object
-    instance_variable_set("@current_#{controller_name.chop}", controller_name.classify.constantize.find(params[:id])) unless params[:id].nil?
-  end
-end
-
-class RecordsController < MyController
+class RecordsController < UserAuthenticatedController
   # GET /records
   # GET /records.json
   def index
