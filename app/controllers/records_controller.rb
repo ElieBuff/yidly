@@ -36,14 +36,18 @@ class RecordsController < UserAuthenticatedController
   
   # GET /records/1/reschedule_in_sec
   def reschedule_in_sec
-    @current_record.update_attributes({
-      :actionable_at => Time.now + params[:delay].to_i
-    })
-    @current_record.save
     respond_to do |format|
-      format.json { render json: @current_record}
+      format.json { render json: @current_record.reschedule_in_sec(params[:delay].to_i)}
     end
   end
+
+  # GET /records/1/reschedule_in_sec
+  def wait_for_sec
+    respond_to do |format|
+      format.json { render json: @current_record.wait_for_sec(params[:delay].to_i)}
+    end
+  end
+
 
   # GET /records/1/move_to_next_stage
   def move_to_next_stage

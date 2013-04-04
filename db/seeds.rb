@@ -9,7 +9,6 @@
 # See http://railsapps.github.com/rails-environment-variables.html
 puts 'CREATE DEFAULT USERS'
 3.times {|user_id| 
-  puts "user_id: #{user_id}"
   user = User.create! :name => "test_#{user_id}", :email => "test_#{user_id}@yidly.com", :password => "99999999", :password_confirmation => "99999999"
   rand(1..5).times {|prj_id|
   puts "project user.id: #{user.id}"

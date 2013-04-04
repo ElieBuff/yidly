@@ -8,7 +8,7 @@
         var container = d3.select('.today_tasks');
         $.getJSON('tasks.json', function(data) {
             function template() {
-                return ' <div class="task" id= "task{{ id }}" draggable="true"> <div class="title">{{ action }}</div> <div class="time">{{ actionable_at }}</div> </div> ';
+                return ' <div class="task" id= "task{{ id }}" draggable="true"> <div class="title">{{ action }}</div> <div> {{ name }}, reschedule_count: {{ reschedule_count }}, trial_count: {{ trial_count }} </div><div class="time">{{ actionable_at }} </div></div> ';
             }
             var divs = container.selectAll('div')
             .data(data);
