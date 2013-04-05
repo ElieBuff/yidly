@@ -11,6 +11,7 @@ Dashboard::Application.routes.draw do
   devise_for :users
   resources :users
   resources :projects
+  resources :tests
   resources :records do
     get 'move_to_next_stage', :on => :member
     get 'reschedule_in_sec', :on => :member
