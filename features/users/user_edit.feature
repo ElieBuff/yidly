@@ -5,5 +5,5 @@ Feature: Edit User
 
     Scenario: I sign in and edit my account
       Given I am logged in
-      When I edit my account details
+      When I reschedule a record
       Then I should see an account edited message

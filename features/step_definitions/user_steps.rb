@@ -1,4 +1,6 @@
+require 'cucumber/rspec/doubles'
 ### UTILITY METHODS ###
+ApplicationController.any_instance.stub(:current_user).and_return(User.find(1))
 
 def create_visitor
   @visitor ||= { :name => "Testy McUserton", :email => "example@example.com",
@@ -154,7 +156,7 @@ Then /^I see a successful sign in message$/ do
 end
 
 Then /^I should see a successful sign up message$/ do
-  page.should have_content "A message with a confirmation link has been sent to your email address."
+  page.should have_content "You have signed up successfully."
 end
 
 Then /^I should see an invalid email message$/ do
