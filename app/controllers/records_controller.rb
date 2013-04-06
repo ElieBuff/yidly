@@ -13,9 +13,10 @@ class RecordsController < UserAuthenticatedController
   # GET /records/1
   # GET /records/1.json
   def show
+    @record = @current_record
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @current_record }
+      format.json { render json: @record }
     end
   end
 

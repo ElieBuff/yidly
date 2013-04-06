@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :record do
-    name "MyString"
-    email "MyString"
+    name "Joe"
+    association :stage, factory: :stage, name: "Starting"
   end
 end

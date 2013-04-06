@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :project do
-    name "MyString"
+    name 'prj 200'
+    association :user, factory: :user, name: 'Test User'
   end
 end

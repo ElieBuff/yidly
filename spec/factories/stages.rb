@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :stage do
-    name "MyString"
-    project_id 1
+    name "Start"
+    association :project, factory: :project, name: "my prj for test" 
   end
 end
