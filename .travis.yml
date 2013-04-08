@@ -4,6 +4,7 @@ rvm:
 services:
   - postgresql
 before_script:
+  - rake db:drop
   - rake db:create
   - rake db:migrate
   - rake db:reset
