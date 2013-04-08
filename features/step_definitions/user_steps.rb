@@ -1,6 +1,5 @@
 require 'cucumber/rspec/doubles'
 ### UTILITY METHODS ###
-ApplicationController.any_instance.stub(:current_user).and_return(User.find(1))
 
 def create_visitor
   @visitor ||= { :name => "Testy McUserton", :email => "example@example.com",
