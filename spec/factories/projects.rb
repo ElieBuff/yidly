@@ -3,6 +3,6 @@
 FactoryGirl.define do
   factory :project do
     name 'prj 200'
-    association :user, factory: :user, name: 'Test User'
+    association :user
   end
 end

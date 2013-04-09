@@ -5,6 +5,7 @@ FactoryGirl.define do
     f.sequence(:name) {|n| 
       "Stage #{n}"
     }
-    f.association :project, factory: :project, name: "my prj for test" 
+    #f.association :project, factory: :project, name: "my prj for test" 
+    f.association :project
   end
 end

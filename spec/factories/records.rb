@@ -3,6 +3,6 @@
 FactoryGirl.define do
   factory :record do
     name "Joe"
-    association :stage, factory: :stage, name: "Starting"
+    association :stage
   end
 end
