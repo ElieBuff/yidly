@@ -44,15 +44,11 @@ describe Record do
 
   describe :update_stage_id do
     before :each do
-      @stage_1 = FactoryGirl.create(:stage)
-      @stage_2 = FactoryGirl.create(:stage)
-      FactoryGirl.create(:project, :stages => [@stage_1, @stage_2])
-      p @stage_1
-      p @stage_2
+      @stage_2 = FactoryGirl.create(:stage, project: @record.project)
       @record.update_stage_id(@stage_2.id)
     end
-    it "should update stage id" do
-      @record.stage.id.should == @stage_2.id
+    it "should update the stage" do
+      @record.stage.should == @stage_2
     end
     
   end
