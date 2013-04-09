@@ -3,7 +3,10 @@ require 'spec_helper'
 describe RecordsController do
 
   before (:each) do
-    @record = FactoryGirl.create(:record)
+    @user = FactoryGirl.create(:user)
+    @project = FactoryGirl.create(:project, user: @user)
+    @stage = FactoryGirl.create(:stage, project: @project)
+    @record = FactoryGirl.create(:record, stage: @stage)
     sign_in @record.user
   end
 

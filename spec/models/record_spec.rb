@@ -3,7 +3,8 @@ require 'spec_helper'
 describe Record do
 
   before (:each) do
-    @record = FactoryGirl.create(:record)
+    @stage = FactoryGirl.create(:stage)
+    @record = FactoryGirl.create(:record, stage: @stage)
   end
 
   describe :wait_for_sec do
@@ -43,14 +44,15 @@ describe Record do
 
   describe :update_stage_id do
     before :each do
-      @stage_1 = @record.stage_id
+      @stage_1 = FactoryGirl.create(:stage)
       @stage_2 = FactoryGirl.create(:stage)
+      FactoryGirl.create(:project, :stages => [@stage_1, @stage_2])
       p @stage_1
       p @stage_2
-      @record = @record.update_stage_id(@stage_2.id)
+      @record.update_stage_id(@stage_2.id)
     end
-    xit "should update stage id" do
-      @record.stage_id.should == @stage_2.id
+    it "should update stage id" do
+      @record.stage.id.should == @stage_2.id
     end
     
   end
