@@ -3,19 +3,22 @@ require 'spec_helper'
 describe Record do
 
   before (:each) do
-    @stage = FactoryGirl.create(:stage)
+    @user = FactoryGirl.create(:user)
+    @project = FactoryGirl.create(:project, user: @user)
+    @stage = FactoryGirl.create(:stage, project: @project)
     @record = FactoryGirl.create(:record, stage: @stage)
   end
 
   describe :wait_for_sec do
+    delay = 55
     before :each do
-      @delay = 55
+      @delay = delay
       @record.wait_for_sec @delay
     end
     it "should set status to 'waiting'" do
       @record.status.should == 'waiting'
     end
-    it "should postpone :actionable_at by #{@delay} sec " do
+    it "should postpone :actionable_at by #{delay} sec " do
       @record.actionable_at.should be_within(1).of(Time.at(Time.now.utc + @delay))
     end
     it "should increment :trial_count" do
@@ -44,12 +47,37 @@ describe Record do
 
   describe :update_stage_id do
     before :each do
-      @stage_2 = FactoryGirl.create(:stage, project: @record.project)
-      @record.update_stage_id(@stage_2.id)
+      @record.actionable_at = Time.now - 1000
+      @old_attributes = @record.attributes
     end
-    it "should update the stage" do
-      @record.stage.should == @stage_2
+    describe "when stage is the same as current stage" do
+      before :each do
+        @record.update_stage_id(@stage.id)
+      end
+      it "should not modify the record" do
+        @record.attributes.should == @old_attributes 
+      end
     end
-    
+
+    describe "when stage is different than current stage" do
+      before :each do
+        @stage_2 = FactoryGirl.create(:stage, project: @record.project)
+        @record.update_stage_id(@stage_2.id)
+      end
+      it "should modify the record" do
+        @record.attributes.should_not == @old_attributes 
+      end
+      it "should update the stage" do
+        @record.stage.should == @stage_2
+      end
+
+      it "should modify actionable_at" do
+        @record.actionable_at.should_not be(@old_actionable_at)
+      end
+
+      it "should be actionable now" do
+        @record.actionable_at.should be_within(1).of(Time.now)
+      end
+    end
   end
 end
