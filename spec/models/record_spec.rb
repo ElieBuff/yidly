@@ -45,6 +45,27 @@ describe Record do
     end
   end
 
+  describe :move_to_next_stage do
+    before :each do
+        @record.stub(:update_stage_id) {}
+    end
+    describe "when in last stage" do
+      it "should not call update_stage_id" do
+        @record.should_not_receive(:update_stage_id)
+        @record.move_to_next_stage
+      end
+    end
+    describe "when not in last stage" do
+      before :each do
+        @stage_2 = FactoryGirl.create(:stage, project: @record.project)
+      end
+      it "should call update_stage_id with next stage id" do
+        @record.should_receive(:update_stage_id).with(@stage_2.id)
+        @record.move_to_next_stage
+      end
+    end
+
+  end
   describe :update_stage_id do
     before :each do
       @record.actionable_at = Time.now - 1000
