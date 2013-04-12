@@ -4,7 +4,16 @@
 <script>
 
     var taskID;
+    dust.helpers.formatDate = function (chunk, context, bodies, params) {
+    var value = dust.helpers.tap(params.value, chunk, context);
 
+    var timestamp = new Date(value);
+    var date = ('0' + timestamp.getDate()).slice(-2);
+    var month = ('0' + timestamp.getMonth()).slice(-2);
+    var year = timestamp.getFullYear();
+
+    return chunk.write(date + '-' + month + '-' + year);
+};
    
     $(function() {
 
@@ -42,7 +51,9 @@
         });
 
         $(document).on("dragstart", ".task", function(e){
-            e.originalEvent.dataTransfer.setData("text/plain", e.target.getAttribute('id')); 
+            var id = e.target.getAttribute('id')
+           
+            e.originalEvent.dataTransfer.setData("text/plain", id); 
         });
 
 
@@ -53,30 +64,19 @@
 
 
 
-        $(document).on("drop", ".drop_done,.drop_cancel", function(e){
+        $(document).on("drop", ".drop_done, .drop_cancel", function(e){
             e.preventDefault();
             var id = e.originalEvent.dataTransfer.getData("text/plain");
-            var data = GetDroppedTask(id);
             $('#' + id).remove();
 
-            $(this).append(data);
+            $(this).append(GetDroppedTask(id));
 
         });
 
-
-
-        $('.drop_reschedule').on('drop', function(e) {
-
+        $(document).on("drop", ".drop_reschedule", function(e){
             e.preventDefault();
-
             taskID = e.originalEvent.dataTransfer.getData("text/plain");
-
-
-
-            if($(this).attr('data-status') == 'reschedule')
-
             $('#Reschedule').dialog('open');
-
         });
 
 
@@ -130,13 +130,9 @@
 
 
     function GetDroppedTask(id)
-
     {
-
         var title = $('#'+ id + ' .title').text();
-
         return '<div id="' + id + '" class="drop_data">' + title + '</div>'
-
     }
 
 
