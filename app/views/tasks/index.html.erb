@@ -4,7 +4,11 @@
 <script>
 
     var taskID;
+
+   
     $(function() {
+
+
         var container = d3.select('.today_tasks');
         $.getJSON('tasks.json', function(data) {
             function template() {
@@ -13,10 +17,11 @@
             var divs = container.selectAll('div')
             .data(data);
             divs.enter().append('div').html(function(d,i){
-                return Mustache.render(template(), $.extend(d, { 
-                    id : i, 
-                    actionable_at: new Date(d.actionable_at)
-                }));
+                 var result;
+                dust.render("task", d, function(err, out) {
+                    result = out;
+                });
+                return(result);
             });
             divs.exit().remove();
        });
@@ -31,33 +36,24 @@
         });
 
 
-        $('body').click(function() {
-
+        $(document).on("click", "body", function(){
             taskID = '';
-
             $('#Reschedule').dialog('close');
-
         });
 
-
-
-        $('.task').on('dragstart', function(e) {
-
+        $(document).on("dragstart", ".task", function(e){
             e.originalEvent.dataTransfer.setData("text/plain", e.target.getAttribute('id')); 
-
         });
 
 
 
-        $('.drop_box').on('dragover', function(e) {
-
+        $(document).on("dragover", ".drop_box", function(e){
             e.preventDefault();
-
         });
 
 
 
-        $('.drop_done,.drop_cancel').on('drop', function(e) {
+        $(document).on("drop", ".drop_done,.drop_cancel", function(e){
             e.preventDefault();
             var id = e.originalEvent.dataTransfer.getData("text/plain");
             var data = GetDroppedTask(id);
@@ -150,7 +146,6 @@
 
 
 <body>
-
     <div class="align_left">
 
         <div class="date_selection">
