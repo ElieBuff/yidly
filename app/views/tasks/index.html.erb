@@ -7,36 +7,9 @@
     dust.helpers.formatDate = function (chunk, context, bodies, params) {
         var value = dust.helpers.tap(params.value, chunk, context);
         var timestamp = new Date(value);
-        return chunk.write(GetDateTimeFormat(timestamp));
+        return chunk.write(getDateTimeFormat(timestamp));
     };
-    
-    function GetDateTimeFormat(date)
-    {
-        return GetDateFormat(date) + ' ' + GetTimeFormat(date);
-    }   
-
-    function GetDateFormat(date)
-    {
-        var day = ('0' + date.getDate()).slice(-2);
-        var month = ('0' + (date.getMonth() + 1)).slice(-2);
-        var year = date.getFullYear();
-        return day + '-' + month + '-' + year;
-    }
-
-    function GetTimeFormat(date)
-    {
-        var hours = ('0' + (date.getHours() + 1)).slice(-2);
-        var minutes = ('0' + (date.getMinutes() + 1)).slice(-2);
-        return hours + ':' + minutes;
-    }
-
-    function IsNotSameDay(date1, date2)
-    {
-        return(date1.getDate() != date2.getDate() || 
-               date1.getMonth() != date2.getMonth() || 
-               date1.getFullYear() != date2.getFullYear());
-    }
-
+       
     $(function() {
 
 
@@ -83,14 +56,14 @@
 
 
 
-        $(document).on("drop", ".drop_done, .drop_cancel", function(e){
+        $('.drop_done,.drop_cancel').on('drop', function(e) {
             e.preventDefault();
             var id = e.originalEvent.dataTransfer.getData("text/plain");
-            $(this).append(GetDroppedTask(id));
+            $(this).append(getDroppedTask(id));
             $('#' + id).remove();
         });
 
-        $(document).on("drop", ".drop_reschedule", function(e){
+        $('.drop_reschedule').on('drop', function(e) {
             e.preventDefault();
             taskID = e.originalEvent.dataTransfer.getData("text/plain");
             $('#Reschedule').dialog('open');
@@ -113,43 +86,64 @@
         });
 
         $('.reschedule_time').click(function() {
-            RescheduleTask(taskID, $(this).attr('data-reschedule'));
+            var recordeId = taskID.replace('task', '');
+            var rescheduleTime = $(this).attr('data-reschedule')
+            var timeInSec = 0;
+            if(rescheduleTime == 'same_day')
+                timeInSec = 3600;
+            else if(rescheduleTime == 'tomorrow')
+                timeInSec = 3600 * 24;
+            
+            $.getJSON('/records/' + recordeId + '/reschedule_in_sec.json?delay=' + timeInSec, function(data) {
+                $('#' + taskID).remove();
+                $('.drop_reschedule').append(getProcessedTask(data));
+            });
         });
     });
 
-    function GetDroppedTask(id)
+    function getDateTimeFormat(date)
+    {
+        return getDateFormat(date) + ' ' + getTimeFormat(date);
+    }   
+
+    function getDateFormat(date)
+    {
+        var day = ('0' + date.getDate()).slice(-2);
+        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+        var year = date.getFullYear();
+        return day + '-' + month + '-' + year;
+    }
+
+    function getTimeFormat(date)
+    {
+        var hours = ('0' + (date.getHours() + 1)).slice(-2);
+        var minutes = ('0' + (date.getMinutes() + 1)).slice(-2);
+        return hours + ':' + minutes;
+    }
+
+    function isNotSameDay(date1, date2)
+    {
+        return(date1.getDate() != date2.getDate() || 
+               date1.getMonth() != date2.getMonth() || 
+               date1.getFullYear() != date2.getFullYear());
+    }
+
+
+    function getDroppedTask(id)
     {
         var title = $('#'+ id + ' .title').text();
         return '<div id="' + id + '" class="drop_data">' + title + '</div>'
     }
 
-    function GetProcessedTask(data)
+    function getProcessedTask(data)
     {
         var formatedDate = '';
-        if(IsNotSameDay(new Date(), new Date(data.actionable_at)))
-            formatedDate = GetDateTimeFormat(new Date(data.actionable_at));
+        if(isNotSameDay(new Date(), new Date(data.actionable_at)))
+            formatedDate = getDateTimeFormat(new Date(data.actionable_at));
         else
-            formatedDate = GetTimeFormat(new Date(data.actionable_at));
+            formatedDate = getTimeFormat(new Date(data.actionable_at));
         return '<div class="drop_data">' + data.name + formatedDate +'</div>'
     }
-
-    function RescheduleTask(id, rescheduleTime)
-    {
-        var recordeId = id.replace('task', '');
-        var timeInSec = 0;
-        if(rescheduleTime == 'same_day')
-            timeInSec = 3600;
-        else if(rescheduleTime == 'tomorrow')
-            timeInSec = 3600 * 24;
-        
-        $.getJSON('/records/' + recordeId + '/reschedule_in_sec.json?delay=' + timeInSec, function(data) {
-            $('#' + id).remove();
-             $('.drop_reschedule').append(GetProcessedTask(data));
-        });
-
-    }
-
-
 
 </script>
 
