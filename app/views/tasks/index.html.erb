@@ -5,24 +5,43 @@
 
     var taskID;
     dust.helpers.formatDate = function (chunk, context, bodies, params) {
-    var value = dust.helpers.tap(params.value, chunk, context);
+        var value = dust.helpers.tap(params.value, chunk, context);
+        var timestamp = new Date(value);
+        return chunk.write(GetDateTimeFormat(timestamp));
+    };
+    
+    function GetDateTimeFormat(date)
+    {
+        return GetDateFormat(date) + ' ' + GetTimeFormat(date);
+    }   
 
-    var timestamp = new Date(value);
-    var date = ('0' + timestamp.getDate()).slice(-2);
-    var month = ('0' + timestamp.getMonth()).slice(-2);
-    var year = timestamp.getFullYear();
+    function GetDateFormat(date)
+    {
+        var day = ('0' + date.getDate()).slice(-2);
+        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+        var year = date.getFullYear();
+        return day + '-' + month + '-' + year;
+    }
 
-    return chunk.write(date + '-' + month + '-' + year);
-};
-   
+    function GetTimeFormat(date)
+    {
+        var hours = ('0' + (date.getHours() + 1)).slice(-2);
+        var minutes = ('0' + (date.getMinutes() + 1)).slice(-2);
+        return hours + ':' + minutes;
+    }
+
+    function IsNotSameDay(date1, date2)
+    {
+        return(date1.getDate() != date2.getDate() || 
+               date1.getMonth() != date2.getMonth() || 
+               date1.getFullYear() != date2.getFullYear());
+    }
+
     $(function() {
 
 
         var container = d3.select('.today_tasks');
         $.getJSON('tasks.json', function(data) {
-            function template() {
-                return ' <div class="task" id= "task{{ id }}" draggable="true"> <div class="title">{{ action }}</div> <div> {{ name }}, reschedule_count: {{ reschedule_count }}, trial_count: {{ trial_count }} </div><div class="time">{{ actionable_at }} </div></div> ';
-            }
             var divs = container.selectAll('div')
             .data(data);
             divs.enter().append('div').html(function(d,i){
@@ -67,10 +86,8 @@
         $(document).on("drop", ".drop_done, .drop_cancel", function(e){
             e.preventDefault();
             var id = e.originalEvent.dataTransfer.getData("text/plain");
-            $('#' + id).remove();
-
             $(this).append(GetDroppedTask(id));
-
+            $('#' + id).remove();
         });
 
         $(document).on("drop", ".drop_reschedule", function(e){
@@ -82,57 +99,54 @@
 
 
         $('.date_radio').click(function() {
-
             var val = $(this).val();
-
             if(val == 'today')
-
             {
-
                 $('.today_tasks').show();
-
                 $('.alldays_tasks').hide();
-
             }
-
             else
-
             {
-
                 $('.today_tasks').hide();
-
                 $('.alldays_tasks').show();
-
             }
-
         });
 
-
-
-        $('.reschedule_img').click(function() {
-
-            var data = GetDroppedTask(taskID);
-
-
-
-            $('#' + taskID).remove();
-
-            $('.drop_reschedule').append(data);
-
+        $('.reschedule_time').click(function() {
+            RescheduleTask(taskID, $(this).attr('data-reschedule'));
         });
-
-
-
-
-
     });
-
-
 
     function GetDroppedTask(id)
     {
         var title = $('#'+ id + ' .title').text();
         return '<div id="' + id + '" class="drop_data">' + title + '</div>'
+    }
+
+    function GetProcessedTask(data)
+    {
+        var formatedDate = '';
+        if(IsNotSameDay(new Date(), new Date(data.actionable_at)))
+            formatedDate = GetDateTimeFormat(new Date(data.actionable_at));
+        else
+            formatedDate = GetTimeFormat(new Date(data.actionable_at));
+        return '<div class="drop_data">' + data.name + formatedDate +'</div>'
+    }
+
+    function RescheduleTask(id, rescheduleTime)
+    {
+        var recordeId = id.replace('task', '');
+        var timeInSec = 0;
+        if(rescheduleTime == 'same_day')
+            timeInSec = 3600;
+        else if(rescheduleTime == 'tomorrow')
+            timeInSec = 3600 * 24;
+        
+        $.getJSON('/records/' + recordeId + '/reschedule_in_sec.json?delay=' + timeInSec, function(data) {
+            $('#' + id).remove();
+             $('.drop_reschedule').append(GetProcessedTask(data));
+        });
+
     }
 
 
@@ -201,33 +215,21 @@
         <div class="status_container">
 
             <div class="status_box done_box">
-
                 <span class="status_title">Done</span>
-
                 <div class="drop_box drop_done" data-status="done">
-
                 </div>
-
             </div>
 
             <div class="status_box reschedule_box">
-
                 <span class="status_title">Reschedule</span>
-
                 <div class="drop_box drop_reschedule" data-status="reschedule">
-
                 </div>
-
             </div>
 
             <div class="status_box cancel_box">
-
                 <span class="status_title">Cancel</span>
-
                 <div class="drop_box drop_cancel" data-status="cancel">
-
                 </div>
-
             </div>
 
         </div>
@@ -239,11 +241,8 @@
     <div id="Reschedule">
 
         <div>
-
-            <span><img class="reschedule_img" src="./Images/icon1.gif" data-time="today"/></span>
-
-            <span><img class="reschedule_img" src="./Images/icon2.gif" data-time="tomorrow"/></span>
-
+            <span class="reschedule_time" data-reschedule="same_day">Later Today</span>
+            <span class="reschedule_time" data-reschedule="tomorrow">Tomorrow</span>
         </div>
 
     </div>

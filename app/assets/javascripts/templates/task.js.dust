@@ -1,0 +1,5 @@
+<div class="task" id= "task{id}" draggable="true"> 
+	<div class="title">{action}</div> 
+	<div> {name}, reschedule_count: {reschedule_count}, trial_count: {trial_count} </div>
+	<div class="time">{@formatDate value="{actionable_at}"/} </div>
+</div> 
