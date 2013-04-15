@@ -45,7 +45,6 @@
 
         $(document).on("dragstart", ".task", function(e){
             var id = e.target.getAttribute('id')
-           
             e.originalEvent.dataTransfer.setData("text/plain", id); 
         });
 
@@ -66,7 +65,12 @@
             e.preventDefault();
             var id = e.originalEvent.dataTransfer.getData("text/plain");
             $(this).append(getTask(id));
-            $('#' + id).remove();
+            var recordId = id.replace('task', '');
+            $.getJSON('/records/' + recordId + '/move_to_next_stage.json', function(data) {
+                $('#' + taskID).remove();
+                $('.drop_reschedule').append(getProcessedTask(data));
+            });
+            reloadData();
         });
 
         $('.drop_reschedule').on('drop', function(e) {
@@ -92,7 +96,7 @@
         });
 
         $('.reschedule_time').click(function() {
-            var recordeId = taskID.replace('task', '');
+            var recordId = taskID.replace('task', '');
             var rescheduleTime = $(this).attr('data-reschedule')
             var timeInSec = 0;
             if(rescheduleTime == 'same_day')
@@ -100,7 +104,7 @@
             else if(rescheduleTime == 'tomorrow')
                 timeInSec = 3600 * 24;
             
-            $.getJSON('/records/' + recordeId + '/reschedule_in_sec.json?delay=' + timeInSec, function(data) {
+            $.getJSON('/records/' + recordId + '/reschedule_in_sec.json?delay=' + timeInSec, function(data) {
                 $('#' + taskID).remove();
                 $('.drop_reschedule').append(getProcessedTask(data));
             });
