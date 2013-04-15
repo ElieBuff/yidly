@@ -58,9 +58,14 @@
 
 
         $('.drop_done,.drop_cancel').on('drop', function(e) {
+            function getTask(id) {
+                var title = $('#'+ id + ' .title').text();
+                return '<div id="' + id + '" class="drop_data">' + title + '</div>'
+            }
+
             e.preventDefault();
             var id = e.originalEvent.dataTransfer.getData("text/plain");
-            $(this).append(getDroppedTask(id));
+            $(this).append(getTask(id));
             $('#' + id).remove();
         });
 
@@ -130,12 +135,6 @@
                date1.getFullYear() != date2.getFullYear());
     }
 
-
-    function getDroppedTask(id)
-    {
-        var title = $('#'+ id + ' .title').text();
-        return '<div id="' + id + '" class="drop_data">' + title + '</div>'
-    }
 
     function getProcessedTask(data)
     {
