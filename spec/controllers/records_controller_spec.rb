@@ -29,10 +29,10 @@ describe RecordsController do
       @response_json = JSON.parse(response.body)
     end
     it "should postpone the actionable_at attribute" do
-      Time.parse(@response_json['actionable_at']).should be_within(1).of(Time.at(Time.now.utc + 1000))
+      Time.parse(@response_json['actionable_at']).should be_within(5).of(Time.at(Time.now.utc + 1000))
     end
     it "should postpone the actionable_at attribute" do
-      Time.parse(@response_json['actionable_at']).should be_within(1).of(Time.at(Time.now.utc + 1000))
+      Time.parse(@response_json['actionable_at']).should be_within(5).of(Time.at(Time.now.utc + 1000))
     end
   end
 end
