@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby '1.9.3'
-gem 'rails', '3.2.11'
+gem 'rails'
+gem 'dust-rails'
 gem 'rb-readline'
 gem 'thin'
 gem 'd3-rails'

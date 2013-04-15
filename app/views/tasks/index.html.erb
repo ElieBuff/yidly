@@ -4,19 +4,25 @@
 <script>
 
     var taskID;
+    dust.helpers.formatDate = function (chunk, context, bodies, params) {
+        var value = dust.helpers.tap(params.value, chunk, context);
+        var timestamp = new Date(value);
+        return chunk.write(getDateTimeFormat(timestamp));
+    };
+       
     $(function() {
+
+
         var container = d3.select('.today_tasks');
         $.getJSON('tasks.json', function(data) {
-            function template() {
-                return ' <div class="task" id= "task{{ id }}" draggable="true"> <div class="title">{{ action }}</div> <div> {{ name }}, reschedule_count: {{ reschedule_count }}, trial_count: {{ trial_count }} </div><div class="time">{{ actionable_at }} </div></div> ';
-            }
             var divs = container.selectAll('div')
             .data(data);
             divs.enter().append('div').html(function(d,i){
-                return Mustache.render(template(), $.extend(d, { 
-                    id : i, 
-                    actionable_at: new Date(d.actionable_at)
-                }));
+                 var result;
+                dust.render("task", d, function(err, out) {
+                    result = out;
+                });
+                return(result);
             });
             divs.exit().remove();
        });
@@ -31,28 +37,21 @@
         });
 
 
-        $('body').click(function() {
-
+        $(document).on("click", "body", function(){
             taskID = '';
-
             $('#Reschedule').dialog('close');
+        });
 
+        $(document).on("dragstart", ".task", function(e){
+            var id = e.target.getAttribute('id')
+           
+            e.originalEvent.dataTransfer.setData("text/plain", id); 
         });
 
 
 
-        $('.task').on('dragstart', function(e) {
-
-            e.originalEvent.dataTransfer.setData("text/plain", e.target.getAttribute('id')); 
-
-        });
-
-
-
-        $('.drop_box').on('dragover', function(e) {
-
+        $(document).on("dragover", ".drop_box", function(e){
             e.preventDefault();
-
         });
 
 
@@ -60,97 +59,97 @@
         $('.drop_done,.drop_cancel').on('drop', function(e) {
             e.preventDefault();
             var id = e.originalEvent.dataTransfer.getData("text/plain");
-            var data = GetDroppedTask(id);
+            $(this).append(getDroppedTask(id));
             $('#' + id).remove();
-
-            $(this).append(data);
-
         });
 
-
-
         $('.drop_reschedule').on('drop', function(e) {
-
             e.preventDefault();
-
             taskID = e.originalEvent.dataTransfer.getData("text/plain");
-
-
-
-            if($(this).attr('data-status') == 'reschedule')
-
             $('#Reschedule').dialog('open');
-
         });
 
 
 
         $('.date_radio').click(function() {
-
             var val = $(this).val();
-
             if(val == 'today')
-
             {
-
                 $('.today_tasks').show();
-
                 $('.alldays_tasks').hide();
-
             }
-
             else
-
             {
-
                 $('.today_tasks').hide();
-
                 $('.alldays_tasks').show();
-
             }
-
         });
 
-
-
-        $('.reschedule_img').click(function() {
-
-            var data = GetDroppedTask(taskID);
-
-
-
-            $('#' + taskID).remove();
-
-            $('.drop_reschedule').append(data);
-
+        $('.reschedule_time').click(function() {
+            var recordeId = taskID.replace('task', '');
+            var rescheduleTime = $(this).attr('data-reschedule')
+            var timeInSec = 0;
+            if(rescheduleTime == 'same_day')
+                timeInSec = 3600;
+            else if(rescheduleTime == 'tomorrow')
+                timeInSec = 3600 * 24;
+            
+            $.getJSON('/records/' + recordeId + '/reschedule_in_sec.json?delay=' + timeInSec, function(data) {
+                $('#' + taskID).remove();
+                $('.drop_reschedule').append(getProcessedTask(data));
+            });
         });
-
-
-
-
-
     });
 
-
-
-    function GetDroppedTask(id)
-
+    function getDateTimeFormat(date)
     {
+        return getDateFormat(date) + ' ' + getTimeFormat(date);
+    }   
 
-        var title = $('#'+ id + ' .title').text();
+    function getDateFormat(date)
+    {
+        var day = ('0' + date.getDate()).slice(-2);
+        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+        var year = date.getFullYear();
+        return day + '-' + month + '-' + year;
+    }
 
-        return '<div id="' + id + '" class="drop_data">' + title + '</div>'
+    function getTimeFormat(date)
+    {
+        var hours = ('0' + (date.getHours() + 1)).slice(-2);
+        var minutes = ('0' + (date.getMinutes() + 1)).slice(-2);
+        return hours + ':' + minutes;
+    }
 
+    function isNotSameDay(date1, date2)
+    {
+        return(date1.getDate() != date2.getDate() || 
+               date1.getMonth() != date2.getMonth() || 
+               date1.getFullYear() != date2.getFullYear());
     }
 
 
+    function getDroppedTask(id)
+    {
+        var title = $('#'+ id + ' .title').text();
+        return '<div id="' + id + '" class="drop_data">' + title + '</div>'
+    }
+
+    function getProcessedTask(data)
+    {
+        var formatedDate = '';
+        if(isNotSameDay(new Date(), new Date(data.actionable_at)))
+            formatedDate = getDateTimeFormat(new Date(data.actionable_at));
+        else
+            formatedDate = getTimeFormat(new Date(data.actionable_at));
+        return '<div class="drop_data">' + data.name + formatedDate +'</div>'
+    }
 
 </script>
 
 
 
 <body>
-
     <div class="align_left">
 
         <div class="date_selection">
@@ -210,33 +209,21 @@
         <div class="status_container">
 
             <div class="status_box done_box">
-
                 <span class="status_title">Done</span>
-
                 <div class="drop_box drop_done" data-status="done">
-
                 </div>
-
             </div>
 
             <div class="status_box reschedule_box">
-
                 <span class="status_title">Reschedule</span>
-
                 <div class="drop_box drop_reschedule" data-status="reschedule">
-
                 </div>
-
             </div>
 
             <div class="status_box cancel_box">
-
                 <span class="status_title">Cancel</span>
-
                 <div class="drop_box drop_cancel" data-status="cancel">
-
                 </div>
-
             </div>
 
         </div>
@@ -248,11 +235,8 @@
     <div id="Reschedule">
 
         <div>
-
-            <span><img class="reschedule_img" src="./Images/icon1.gif" data-time="today"/></span>
-
-            <span><img class="reschedule_img" src="./Images/icon2.gif" data-time="tomorrow"/></span>
-
+            <span class="reschedule_time" data-reschedule="same_day">Later Today</span>
+            <span class="reschedule_time" data-reschedule="tomorrow">Tomorrow</span>
         </div>
 
     </div>
