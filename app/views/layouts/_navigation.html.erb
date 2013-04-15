@@ -19,3 +19,10 @@
     </li>
   <% end %>
 </ul>
+<% if user_signed_in? %>
+    <ul class="nav" style="float:right;">
+        <li>
+        <%= link_to 'Tasks', tasks_path %>
+        </li>
+    </ul>
+<% end %>
