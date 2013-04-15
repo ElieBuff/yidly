@@ -16,6 +16,7 @@ class Record < ActiveRecord::Base
   end
   belongs_to :stage
   delegate :action, :to => :stage
+  delegate :icon, :to => :stage
   delegate :project, :to => :stage
   delegate :user, :to => :project
 
@@ -61,6 +62,7 @@ class Record < ActiveRecord::Base
   def to_task
     { 
       :action => self.action,
+      :icon => self.icon,
       :name => self.name,
       :trial_count => self.trial_count,
       :actionable_at => self.actionable_at,

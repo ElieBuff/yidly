@@ -11,21 +11,22 @@
     };
        
     $(function() {
-
-
         var container = d3.select('.today_tasks');
-        $.getJSON('tasks.json', function(data) {
-            var divs = container.selectAll('div')
-            .data(data);
-            divs.enter().append('div').html(function(d,i){
-                 var result;
-                dust.render("task", d, function(err, out) {
-                    result = out;
-                });
-                return(result);
+        function reloadData(){
+            $.getJSON('tasks.json', function(data) {
+                function createHtml(d, i) {
+                    var result;
+                    dust.render("task", d, function(err, out) {
+                        result = out;
+                    });
+                    return result;
+                }
+                var divs = container.selectAll('.task-container').data(data).html(createHtml);
+                divs.enter().append('div').attr('class', 'task-container').html(createHtml);
+                divs.exit().remove();
             });
-            divs.exit().remove();
-       });
+        }
+        reloadData();
 
         $( "#Reschedule" ).dialog({ 
             position: { my: "center", at: "center", of: ".reschedule_box" },
@@ -98,6 +99,7 @@
                 $('#' + taskID).remove();
                 $('.drop_reschedule').append(getProcessedTask(data));
             });
+            reloadData();
         });
     });
 
