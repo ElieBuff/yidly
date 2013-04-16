@@ -61,6 +61,7 @@ class Record < ActiveRecord::Base
 
   def to_task
     { 
+      :project => self.project.name,
       :action => self.action,
       :icon => self.icon,
       :name => self.name,
