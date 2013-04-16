@@ -22,11 +22,10 @@ class ProjectsController < UserAuthenticatedController
   # GET /projects/new
   # GET /projects/new.json
   def new
-    @project = Project.create! :name=>params[:name]
+    @project = Project.new
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @project }
     end
   end
 
@@ -37,15 +36,26 @@ class ProjectsController < UserAuthenticatedController
   # POST /projects
   # POST /projects.json
   def create
-    @project = Project.new(params[:project])
+    @project = Project.new params[:project]
+    @project.user = current_user
+    @project.save
+    [
+      ["received", "review", "http://www.tienganh123.com/file/luyen-thi-toeic/part3%20practice/test%204.jpg"], 
+      ["reviewed", "contact", "http://www.skinz.org/free-clipart/email-graphics/envelope-circle-clipart.gif"], 
+      ["contacted", "schedule a meeting", "http://www.rock.k12.nc.us//cms/lib6/NC01000985/Centricity/Domain/153/Phone.jpg"], 
+      ["meeting_scheduled", "pass to manager", "http://www.best-of-web.com/_images_300/Realistic_Style_Quarterback_Throwing_the_Football_100308-164108-094042.jpg"], 
+      ["passed to manager",""], 
+      ["offer",""], 
+      ["closed",""]
+    ].each {|stage, action, icon|
+      Stage.create! :name => stage, :action => action, :icon => icon, :project_id => @project.id
+    }
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to @project, notice: 'Project was successfully created.' }
-        format.json { render json: @project, status: :created, location: @project }
+        format.html { redirect_to tasks_path, notice: 'Project was successfully created.' }
       else
         format.html { render action: "new" }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
   end

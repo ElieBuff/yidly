@@ -3,7 +3,7 @@ class Stage < ActiveRecord::Base
   belongs_to :project
   acts_as_list :scope => :project
   has_many :records
-  validates_uniqueness_of :name, :scope => :project_id
+  validates :name, :uniqueness => { :scope => :project_id, :message => "You cannot have several stages of a project with the same name."}
   delegate :user, :to => :project
   def update_position(p)
     self.save!
