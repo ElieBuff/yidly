@@ -12,4 +12,10 @@ class User < ActiveRecord::Base
   has_many :records, :through => :stages
   # attr_accessible :title, :body
   validates_presence_of :name
+
+  def first_stages
+    projects.map {|project|
+      project.first_stage
+    }
+  end
 end

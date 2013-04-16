@@ -4,4 +4,8 @@ class Project < ActiveRecord::Base
   has_many :records, :dependent => :destroy
   has_many :stages, :dependent => :destroy, :order => :position
   belongs_to :user
+
+  def first_stage
+    stages.min {|stage| stage.id}
+  end
 end

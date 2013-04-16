@@ -23,11 +23,11 @@ class RecordsController < UserAuthenticatedController
   # GET /records/new
   # GET /records/new.json
   def new
-    @record = Record.create! :name=>params[:name], :project_id=>params[:project_id]
+    @record = Record.new 
+    @first_stages_with_project_name = current_user.first_stages.collect {|p| [ p.project.name, p.id ] }
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @record }
     end
   end
 
@@ -65,7 +65,7 @@ class RecordsController < UserAuthenticatedController
 
     respond_to do |format|
       if @record.save
-        format.html { redirect_to @record, notice: 'Record was successfully created.' }
+        format.html { redirect_to tasks_path, notice: 'Record was successfully created.' }
         format.json { render json: @record, status: :created, location: @record }
       else
         format.html { render action: "new" }

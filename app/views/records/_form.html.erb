@@ -1,0 +1,27 @@
+<%= form_for(@record) do |f| %>
+  <% if @record.errors.any? %>
+  <div id="errorExplanation">
+    <h2><%= pluralize(@record.errors.count, "error") %> prohibited
+        this record from being saved:</h2>
+    <ul>
+    <% @record.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+ 
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>  
+  <%= select("record", "stage_id", @first_stages_with_project_name, {:prompt => 'Select Project'}) %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
