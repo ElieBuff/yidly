@@ -4,11 +4,11 @@
 <script>
 
     var taskID;
-    //dust.helpers.formatDate = function (chunk, context, bodies, params) {
-    //    var value = dust.helpers.tap(params.value, chunk, context);
-    //    var timestamp = new Date(value);
-    //    return chunk.write(getDateTimeFormat(timestamp));
-    //};
+    dust.helpers.formatDate = function (chunk, context, bodies, params) {
+        var value = dust.helpers.tap(params.value, chunk, context);
+        var timestamp = new Date(value);
+        return chunk.write(getDateTimeFormat(timestamp));
+    };
        
     $(function() {
         var container = d3.select('.today_tasks');
