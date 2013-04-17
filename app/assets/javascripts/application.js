@@ -10,12 +10,11 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require dust-core
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
 //= require d3
-//= require dust-core
-//= require_tree .
 //= require_tree ./templates
 
  	
