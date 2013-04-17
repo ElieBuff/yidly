@@ -4,11 +4,11 @@
 <script>
 
     var taskID;
-    dust.helpers.formatDate = function (chunk, context, bodies, params) {
-        var value = dust.helpers.tap(params.value, chunk, context);
-        var timestamp = new Date(value);
-        return chunk.write(getDateTimeFormat(timestamp));
-    };
+    //dust.helpers.formatDate = function (chunk, context, bodies, params) {
+    //    var value = dust.helpers.tap(params.value, chunk, context);
+    //    var timestamp = new Date(value);
+    //    return chunk.write(getDateTimeFormat(timestamp));
+    //};
        
     $(function() {
         var container = d3.select('.today_tasks');
@@ -16,9 +16,9 @@
             $.getJSON('tasks.json', function(data) {
                 function createHtml(d, i) {
                     var result;
-                    dust.render("task", d, function(err, out) {
-                        result = out;
-                    });
+                   // dust.render("task", d, function(err, out) {
+                    //    result = out;
+                    //});
                     return result;
                 }
                 var divs = container.selectAll('.task-container').data(data).html(createHtml);
