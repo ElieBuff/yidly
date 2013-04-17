@@ -1,5 +1,4 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 <script>
 
@@ -106,15 +105,27 @@
         });
 
         $('.reschedule_time').click(function() {
-            var recordId = taskID.replace('task', '');
-            var rescheduleTime = $(this).attr('data-reschedule')
-            var timeInSec = 0;
-            if(rescheduleTime == 'same_day')
-                timeInSec = 3600;
-            else if(rescheduleTime == 'tomorrow')
-                timeInSec = 3600 * 24;
-            
-            $.getJSON('/records/' + recordId + '/reschedule_in_sec.json?delay=' + timeInSec, function(data) {
+            var jQueryThis = $(this);
+            function url(){
+                function futureStr() {
+                    return  jQueryThis.attr('data-reschedule')
+                }
+                function timeInSec(futureStr) {
+                    var HOUR = 3600;
+                    return {
+                        same_day: 1*HOUR,
+                        tomorrow: 24*HOUR,
+                        in_a_week: 7*24*HOUR
+                    }[futureStr];
+                }
+
+                function recordId() {
+                    return taskID.replace('task', '');
+                }
+                console.log( '/records/' + recordId() + '/reschedule_in_sec.json?delay=' + timeInSec(futureStr()));
+                return '/records/' + recordId() + '/reschedule_in_sec.json?delay=' + timeInSec(futureStr());
+            }
+            $.getJSON(url(), function(data) {
                 $('#' + taskID).remove();
                 $('.drop_reschedule').append(getProcessedTask(data));
             });
@@ -227,8 +238,9 @@
     <div id="Reschedule">
 
         <div>
-            <span class="reschedule_time" data-reschedule="same_day">Later Today</span>
-            <span class="reschedule_time" data-reschedule="tomorrow">Tomorrow</span>
+            <div class="reschedule_time" data-reschedule="in_a_week">In a Week</div>
+            <div class="reschedule_time" data-reschedule="same_day">Later Today</div>
+            <div class="reschedule_time" data-reschedule="tomorrow">Tomorrow</div>
         </div>
 
     </div>
