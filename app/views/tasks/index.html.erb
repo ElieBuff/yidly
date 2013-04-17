@@ -14,16 +14,25 @@
         var container = d3.select('.today_tasks');
         function reloadData(){
             $.getJSON('tasks.json', function(data) {
-                function createHtml(d, i) {
-                    var result;
-                    dust.render("task", d, function(err, out) {
-                        result = out;
+                function filterActionableBefore(tasks, datePoint) {
+                    return tasks.filter(function(task) {
+                        return (new Date(task.actionable_at) < datePoint);
                     });
-                    return result;
                 }
-                var divs = container.selectAll('.task-container').data(data).html(createHtml);
-                divs.enter().append('div').attr('class', 'task-container').html(createHtml);
-                divs.exit().remove();
+                function displayTasks(tasks) {
+                    function createHtml(d, i) {
+                        var result;
+                        dust.render("task", d, function(err, out) {
+                            result = out;
+                        });
+                        return result;
+                    }
+                    var divs = container.selectAll('.task-container').data(tasks).html(createHtml);
+                    divs.enter().append('div').attr('class', 'task-container').html(createHtml);
+                    divs.exit().remove();
+                }
+
+                displayTasks(filterActionableBefore(data, new Date()));
             });
         }
         reloadData();
