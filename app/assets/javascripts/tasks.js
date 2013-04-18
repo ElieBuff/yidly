@@ -2,7 +2,7 @@
 var taskID;
 dust.helpers.formatDate = function (chunk, context, bodies, params) {
     var value = dust.helpers.tap(params.value, chunk, context);
-    return chunk.write(moment(new Date(value)).calendar());
+    return chunk.write(moment(value).calendar());
 };
 
 $(function() {
