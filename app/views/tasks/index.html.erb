@@ -1,83 +1,48 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
-
-
 <body>
     <div class="align_left">
-
         <div class="date_selection">
-
             <span class="chkb_date">
-
                 <input type="radio" class="date_radio" name="date_selection" value="today" checked/> Today
-
             </span>
-
             <span class="chkb_date">
-
                 <input type="radio" class="date_radio" name="date_selection" value="alldays"/> All 
-
             </span>
-
         </div>
-
         <div class="tasks_container">
-
             <div class="today_tasks">
                 <h2> Today tasks </h2>
            </div>
-
             <div class="all_tasks" style="display:none;">
                 <h2> All tasks </h2>
             </div>
         </div>
-
     </div>
-
     <div class="align_right">
-
         <div class="status_container">
-
             <div class="status_box done_box">
                 <span class="status_title">Done</span>
                 <div class="drop_box drop_done" data-status="done">
                 </div>
             </div>
-
             <div class="status_box reschedule_box">
                 <span class="status_title">Reschedule</span>
                 <div class="drop_box drop_reschedule" data-status="reschedule">
                 </div>
             </div>
-
             <div class="status_box cancel_box">
                 <span class="status_title">Cancel</span>
                 <div class="drop_box drop_cancel" data-status="cancel">
                 </div>
             </div>
-
         </div>
-
     </div>
-
-
-
     <div id="Reschedule">
-
         <div>
             <div class="reschedule_time" data-reschedule="in_a_week">In a Week</div>
             <div class="reschedule_time" data-reschedule="same_day">Later Today</div>
             <div class="reschedule_time" data-reschedule="tomorrow">Tomorrow</div>
         </div>
-
     </div>
-
-
-
-
-
-
-
 </body>
-
-
