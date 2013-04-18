@@ -129,42 +129,18 @@ $(function() {
     });
 });
 
-function getDateTimeFormat(date)
-{
-    return getDateFormat(date) + ' ' + getTimeFormat(date);
-}   
-
-function getDateFormat(date)
-{
-    var day = ('0' + date.getDate()).slice(-2);
-    var month = ('0' + (date.getMonth() + 1)).slice(-2);
-    var year = date.getFullYear();
-    return day + '-' + month + '-' + year;
+function renderDust(template_name, data) {
+    var result;
+    dust.render(template_name, data, function(err, out) {
+        result = out;
+    });
+    return result;
 }
-
-function getTimeFormat(date)
-{
-    var hours = ('0' + (date.getHours() + 1)).slice(-2);
-    var minutes = ('0' + (date.getMinutes() + 1)).slice(-2);
-    return hours + ':' + minutes;
-}
-
-function isNotSameDay(date1, date2)
-{
-    return(date1.getDate() != date2.getDate() || 
-            date1.getMonth() != date2.getMonth() || 
-            date1.getFullYear() != date2.getFullYear());
-}
-
-
 function getProcessedTask(data)
 {
-    var formatedDate = '';
-    if(isNotSameDay(new Date(), new Date(data.actionable_at)))
-        formatedDate = getDateTimeFormat(new Date(data.actionable_at));
-    else
-        formatedDate = getTimeFormat(new Date(data.actionable_at));
-    return '<div class="drop_data">' + data.name + formatedDate +'</div>'
+    return renderDust("record_small", $.extend(data, { 
+        actionable_at: moment(data.actionable_at).calendar()
+    }));
 }
 
 
