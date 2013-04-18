@@ -1,5 +1,4 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 <script>
 
@@ -11,19 +10,29 @@
     };
        
     $(function() {
-        var container = d3.select('.today_tasks');
         function reloadData(){
             $.getJSON('tasks.json', function(data) {
-                function createHtml(d, i) {
-                    var result;
-                    dust.render("task", d, function(err, out) {
-                        result = out;
+                function filterActionableBefore(tasks, datePoint) {
+                    return tasks.filter(function(task) {
+                        return (new Date(task.actionable_at) < datePoint);
                     });
-                    return result;
                 }
-                var divs = container.selectAll('.task-container').data(data).html(createHtml);
-                divs.enter().append('div').attr('class', 'task-container').html(createHtml);
-                divs.exit().remove();
+                function displayTasks(container,tasks) {
+                    function createHtml(d, i) {
+                        var result;
+                        dust.render("task", d, function(err, out) {
+                            result = out;
+                        });
+                        return result;
+                    }
+                    var divs = container.selectAll('.task-container').data(tasks).html(createHtml);
+                    divs.enter().append('div').attr('class', 'task-container').html(createHtml);
+                    divs.exit().remove();
+                }
+
+        
+                displayTasks(d3.select('.today_tasks'), filterActionableBefore(data, new Date()));
+                displayTasks(d3.select('.all_tasks'), data);
             });
         }
         reloadData();
@@ -86,25 +95,37 @@
             if(val == 'today')
             {
                 $('.today_tasks').show();
-                $('.alldays_tasks').hide();
+                $('.all_tasks').hide();
             }
             else
             {
                 $('.today_tasks').hide();
-                $('.alldays_tasks').show();
+                $('.all_tasks').show();
             }
         });
 
         $('.reschedule_time').click(function() {
-            var recordId = taskID.replace('task', '');
-            var rescheduleTime = $(this).attr('data-reschedule')
-            var timeInSec = 0;
-            if(rescheduleTime == 'same_day')
-                timeInSec = 3600;
-            else if(rescheduleTime == 'tomorrow')
-                timeInSec = 3600 * 24;
-            
-            $.getJSON('/records/' + recordId + '/reschedule_in_sec.json?delay=' + timeInSec, function(data) {
+            var jQueryThis = $(this);
+            function url(){
+                function futureStr() {
+                    return  jQueryThis.attr('data-reschedule')
+                }
+                function timeInSec(futureStr) {
+                    var HOUR = 3600;
+                    return {
+                        same_day: 1*HOUR,
+                        tomorrow: 24*HOUR,
+                        in_a_week: 7*24*HOUR
+                    }[futureStr];
+                }
+
+                function recordId() {
+                    return taskID.replace('task', '');
+                }
+                console.log( '/records/' + recordId() + '/reschedule_in_sec.json?delay=' + timeInSec(futureStr()));
+                return '/records/' + recordId() + '/reschedule_in_sec.json?delay=' + timeInSec(futureStr());
+            }
+            $.getJSON(url(), function(data) {
                 $('#' + taskID).remove();
                 $('.drop_reschedule').append(getProcessedTask(data));
             });
@@ -167,7 +188,7 @@
 
             <span class="chkb_date">
 
-                <input type="radio" class="date_radio" name="date_selection" value="alldays"/> All Days
+                <input type="radio" class="date_radio" name="date_selection" value="alldays"/> All 
 
             </span>
 
@@ -176,35 +197,12 @@
         <div class="tasks_container">
 
             <div class="today_tasks">
-
                 <h2> Today tasks </h2>
-
            </div>
 
-            <div class="alldays_tasks" style="display:none;">
-
-                <h2> All days tasks </h2>
-
-                <div class="task" id="task33" draggable="true">
-
-                    <span class="title">Test</span>
-
-                </div>
-
-                <div class="task" id="task34" draggable="true">
-
-                    <span class="title">Test</span>
-
-                </div>
-
-                <div class="task" id="task35" draggable="true">
-
-                    <span class="title">Test</span>
-
-                </div>
-
+            <div class="all_tasks" style="display:none;">
+                <h2> All tasks </h2>
             </div>
-
         </div>
 
     </div>
@@ -240,8 +238,9 @@
     <div id="Reschedule">
 
         <div>
-            <span class="reschedule_time" data-reschedule="same_day">Later Today</span>
-            <span class="reschedule_time" data-reschedule="tomorrow">Tomorrow</span>
+            <div class="reschedule_time" data-reschedule="in_a_week">In a Week</div>
+            <div class="reschedule_time" data-reschedule="same_day">Later Today</div>
+            <div class="reschedule_time" data-reschedule="tomorrow">Tomorrow</div>
         </div>
 
     </div>
