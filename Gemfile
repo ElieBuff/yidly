@@ -4,6 +4,7 @@ gem 'rails'
 gem 'rb-readline'
 gem 'thin'
 gem 'd3-rails'
+gem 'dust_assets'
 gem 'pg'
 gem 'bootstrap-sass'
 gem 'acts_as_list'
@@ -15,7 +16,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem "execjs", "~> 1.4.0"
   gem "tilt", "~> 1.3.7"
-  gem "dust-rails", "~> 0.4.0"
 end
 gem 'jquery-rails'
 gem "rspec-rails", ">= 2.12.2", :group => [:development, :test]
