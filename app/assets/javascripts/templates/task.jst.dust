@@ -1,8 +1,0 @@
-<div class="task" id= "task{id}" draggable="true"> 
-    <img style="float:left;width: 40px;height: 40px;" src={icon}></img>
-	<div class="candidate-name"> {name}</div>
-    <div class="project-name">{project}</div> 
-    <div style="float: right;" class="reschedule-icon"><span class="reschedule-count">{reschedule_count}</span></div> 
-    <div style="float: right;" class="trial-icon"><span class="trial-count">{trial_count}</span></div> 
-	<div class="time">{@formatDate value="{actionable_at}"/} </div>
-</div> 
