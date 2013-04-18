@@ -1,9 +1,5 @@
 
 var taskID;
-dust.helpers.formatDate = function (chunk, context, bodies, params) {
-    var value = dust.helpers.tap(params.value, chunk, context);
-    return chunk.write(moment(value).calendar());
-};
 
 $(function() {
     function reloadData(){
@@ -13,13 +9,9 @@ $(function() {
                     return (new Date(task.actionable_at) < datePoint);
                 });
             }
-            function displayTasks(container,tasks) {
+            function displayTasks(container, tasks) {
                 function createHtml(d, i) {
-                    var result;
-                    dust.render("task", d, function(err, out) {
-                        result = out;
-                    });
-                    return result;
+                    return UTILS.renderDust('task', UTILS.formatTimeStampInDict(d, 'actionable_at'));
                 }
                 var divs = container.selectAll('.task-container').data(tasks).html(createHtml);
                 divs.enter().append('div').attr('class', 'task-container').html(createHtml);
@@ -73,7 +65,7 @@ $(function() {
         var recordId = id.replace('task', '');
         $.getJSON('/records/' + recordId + '/move_to_next_stage.json', function(data) {
             $('#' + taskID).remove();
-            $('.drop_reschedule').append(getProcessedTask(data));
+            $('.drop_done').append(getProcessedTask(data));
         });
         reloadData();
     });
@@ -129,18 +121,9 @@ $(function() {
     });
 });
 
-function renderDust(template_name, data) {
-    var result;
-    dust.render(template_name, data, function(err, out) {
-        result = out;
-    });
-    return result;
-}
 function getProcessedTask(data)
 {
-    return renderDust("record_small", $.extend(data, { 
-        actionable_at: moment(data.actionable_at).calendar()
-    }));
+    return UTILS.renderDust("record_small", UTILS.formatTimeStampInDict(data, 'actionable_at'));
 }
 
 

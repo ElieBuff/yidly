@@ -18,5 +18,6 @@
 //= require dust-core
 //= require_tree .
 //= require_tree ./templates
+//= require utils.js
 
  	
