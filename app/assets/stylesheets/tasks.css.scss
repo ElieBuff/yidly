@@ -131,11 +131,51 @@ body
 }
 
 
+.details {
+    float: left;
+}
+
 .candidate-name {
     color: #333333;
     font-family: Copperplate / Copperplate Gothic Light, sans-serif;
     font-size: 20px;
 }
+.content-left {
+    float:left;
+}
+
+.content-right {
+    float:left;
+    padding-left:15px;
+}
+.content-up {
+    min-width: 320px;
+    min-height: 40px;
+}
+.content-down {
+    min-width: 320px;
+}
+
+.action-icon {
+    width: 80px;
+    height: 80px; 
+}
+
+.counter-container {
+    float: right;
+    padding-right: 10px;
+}
+
+.actionable-at {
+    float: right;
+    position: relative;
+    right: 10px;
+    color: #333333;
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 15px;
+}
+
+
 .project-name {
     color: #333333;
     font-family: Impact, Charcoal, sans-serif;
