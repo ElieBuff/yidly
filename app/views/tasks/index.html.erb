@@ -16,7 +16,7 @@
             $.getJSON('tasks.json', function(data) {
                 function createHtml(d, i) {
                     var result;
-                    dust.render("task", d, function(err, out) {
+                    JST['templates/task']( d, function(err, out) {
                         result = out;
                     });
                     return result;
