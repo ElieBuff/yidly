@@ -1,0 +1,63 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+<body>
+    <div class="align_left">
+        <div class="date_selection">
+            <span class="chkb_date">
+                <input type="radio" class="date_radio" name="date_selection" value="today" checked/> Today
+            </span>
+            <span class="chkb_date">
+                <input type="radio" class="date_radio" name="date_selection" value="alldays"/> All 
+            </span>
+        </div>
+        <div class="tasks_container">
+            <div class="today_tasks">
+                <h2> Today tasks </h2>
+           </div>
+            <div class="all_tasks" style="display:none;">
+                <h2> All tasks </h2>
+            </div>
+        </div>
+    </div>
+    <div class="align_right">
+        <div class="status_container">
+            <div class="status_box done_box">
+                <span class="status_title">Done</span>
+                <div class="drop_box drop_done" data-status="done">
+                </div>
+            </div>
+            <div class="status_box reschedule_box">
+                <span class="status_title">Reschedule</span>
+                <div class="drop_box drop_reschedule" data-status="reschedule">
+                </div>
+            </div>
+            <div class="status_box cancel_box">
+                <span class="status_title">Cancel</span>
+                <div class="drop_box drop_cancel" data-status="cancel">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="reschedule-dialog">
+        <div>
+            <div class="reschedule-option" data-reschedule="same_day">
+                <img class="reschedule-option-img" src="assets/time/later.png"> 
+            </div>
+            <div class="reschedule-option" data-reschedule="this_evening">
+                <img class="reschedule-option-img" src="http://www.clipartheaven.com/clipart/seasons_&_weather/moon_&_stars_2.gif"> 
+            </div>
+            <div class="reschedule-option" data-reschedule="tonight">
+                <img class="reschedule-option-img" src="http://www.clker.com/cliparts/4/2/4/4/12236112211833628872eeyrsja_Disco_Dancers.svg.med.png"> 
+            </div>
+            <div class="reschedule-option" data-reschedule="tomorrow">
+                <img class="reschedule-option-img" src="assets/time/tomorrow.png"> 
+            </div>
+            <div class="reschedule-option" data-reschedule="in_two_days">
+                <img class="reschedule-option-img" src="http://www.clipartlord.com/wp-content/uploads/2013/01/penguin4.png"> 
+            </div>
+            <div class="reschedule-option" data-reschedule="in_a_week">
+                <img class="reschedule-option-img" src="http://school.discoveryeducation.com/clipart/images/clock.gif"> 
+            </div>
+        </div>
+    </div>
+</body>
