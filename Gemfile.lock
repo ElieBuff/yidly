@@ -77,6 +77,10 @@ GEM
       railties (~> 3.1)
       warden (~> 1.2.1)
     diff-lcs (1.2.3)
+    dust-rails (0.4.0)
+      execjs
+      rails (> 3.1.0)
+      tilt
     dust_assets (0.0.5)
       execjs (>= 1.2.9)
       sprockets (>= 2.0.3)
@@ -227,6 +231,7 @@ DEPENDENCIES
   database_cleaner (>= 0.9.1)
   default_value_for
   devise (>= 2.2.3)
+  dust-rails
   dust_assets
   email_spec (>= 1.4.0)
   execjs (~> 1.4.0)
