@@ -26,9 +26,8 @@ $(function() {
     $( "#Reschedule" ).dialog({ 
         position: { my: "center", at: "center", of: ".reschedule_box" },
         autoOpen: false,  
-        resizable: false,
-        height:150,
-        width:150,
+        resizable: true,
+        width:300,
         modal: true
     });
     $(document).on("click", "body", function(){
@@ -72,24 +71,31 @@ $(function() {
             $('.all_tasks').show();
         }
     });
-    $('.reschedule_time').click(function() {
+    $('.reschedule-option').click(function() {
         var jQueryThis = $(this);
         function url(){
             function futureStr() {
                 return  jQueryThis.attr('data-reschedule')
             }
-            function timeInSec(futureStr) {
-                var HOUR = 3600;
-                return {
-                    same_day: 1*HOUR,
-        tomorrow: 24*HOUR,
-        in_a_week: 7*24*HOUR
-                }[futureStr];
+            function fromNowInSec(futureStr) {
+                function the_moment(futureStr) {
+                    switch(futureStr) {
+                        case 'same_day': return moment().add('hours',1);
+                        case 'this_evening': return moment().endOf('day').subtract('hours', 6);
+                        case 'tonight': return moment().endOf('day').subtract('hours', 3);
+                        case 'tomorrow': return moment().add('days',1).startOf('day').add('hours', 7);
+                        case 'in_two_days': return moment().add('days',2).startOf('day').add('hours', 7);
+                        case 'in_a_week': return moment().add('days',7).startOf('day').add('hours', 7);
+                    }
+                    return moment();
+                }
+                alert(the_moment(futureStr).calendar());
+                return (the_moment(futureStr) - moment())/1000;
             }
             function recordId() {
                 return taskID.replace('task', '');
             }
-            return '/records/' + recordId() + '/reschedule_in_sec.json?delay=' + timeInSec(futureStr());
+            return '/records/' + recordId() + '/reschedule_in_sec.json?delay=' + fromNowInSec(futureStr());
         }
         $.getJSON(url(), function(data) {
             $('#' + taskID).remove();
