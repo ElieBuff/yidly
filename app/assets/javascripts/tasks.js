@@ -23,16 +23,19 @@ $(function() {
         });
     }
     reloadData();
-    $( "#Reschedule" ).dialog({ 
+    $("#reschedule-dialog").dialog({ 
+        dialogClass: 'reschedule-dialog',
+        show: 'slide',
+        hide: 'slide',
         position: { my: "center", at: "center", of: ".reschedule_box" },
         autoOpen: false,  
         resizable: true,
-        width:300,
+        width:600,
         modal: true
     });
     $(document).on("click", "body", function(){
         taskID = '';
-        $('#Reschedule').dialog('close');
+        $('#reschedule-dialog').dialog('close');
     });
     $(document).on("dragstart", ".task", function(e){
         var id = e.target.getAttribute('id')
@@ -59,7 +62,7 @@ $(function() {
     $('.drop_reschedule').on('drop', function(e) {
         e.preventDefault();
         taskID = e.originalEvent.dataTransfer.getData("text/plain");
-        $('#Reschedule').dialog('open');
+        $('#reschedule-dialog').dialog('open');
     });
     $('.date_radio').click(function() {
         var val = $(this).val();
@@ -89,7 +92,6 @@ $(function() {
                     }
                     return moment();
                 }
-                alert(the_moment(futureStr).calendar());
                 return (the_moment(futureStr) - moment())/1000;
             }
             function recordId() {

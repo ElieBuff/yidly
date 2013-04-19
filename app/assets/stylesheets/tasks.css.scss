@@ -1,3 +1,5 @@
+$task-background-color: #CCFFCC;
+
 body
 {
     font-weight: normal;
@@ -42,7 +44,7 @@ body
     padding: 10px 5px;
     margin: 10px;
     box-shadow: 3px 3px 2px #888888;
-    background-color: #CCFFCC;
+    background-color: $task-background-color;
     border-width:2px;
     border-radius: 15px;
 }
@@ -205,9 +207,16 @@ body
     font-weight:bold;
 }
 
+.ui-dialog .ui-dialog-content {
+    border: 0;
+    padding: .5em 1em;
+    background-color: $task-background-color !important;
+    overflow: auto;
+    zoom: 1;
+}
 .reschedule-option-img {
-    width: 80px;
-    height: 80px;
+    width: 150px;
+    height: 150px;
 }
 .reschedule-option-next-line {
     clear:both;
