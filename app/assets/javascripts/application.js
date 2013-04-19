@@ -15,9 +15,6 @@
 //= require bootstrap
 //= require moment
 //= require d3
-//= require dust-core
+//= require dust
 //= require_tree .
-//= require_tree ./templates
 //= require utils.js
-
- 	
