@@ -17,11 +17,4 @@
 //= require d3
 //= require dust
 //= require_tree .
-<<<<<<< HEAD
-
-=======
-//= require_tree ./templates
 //= require utils.js
->>>>>>> upstream/master
-
- 	
