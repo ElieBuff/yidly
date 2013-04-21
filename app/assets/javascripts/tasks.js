@@ -1,5 +1,4 @@
 $(function() {
-    var taskID;
     function getProcessedTask(data) {
         return UTILS.renderDust("record_small", UTILS.formatTimeStampInDict(data, 'actionable_at'));
     }
@@ -34,7 +33,6 @@ $(function() {
         modal: true
     });
     $(document).on("click", "body", function(){
-        taskID = '';
         $('#reschedule-dialog').dialog('close');
     });
     $(document).on("dragstart", ".task", function(e){
@@ -57,7 +55,6 @@ $(function() {
                 jQueryElement.append(getTask(id));
                 var recordId = id.replace('task', '');
                 $.getJSON('/records/' + recordId + '/' + args.server_function + '.json', function(data) {
-                    $('#' + taskID).remove();
                     jQueryElement.append(getProcessedTask(data));
                 });
                 reloadData();
@@ -77,7 +74,7 @@ $(function() {
         });
         $('.drop_reschedule').on('drop', function(e) {
             e.preventDefault();
-            taskID = e.originalEvent.dataTransfer.getData("text/plain");
+            $('#reschedule-dialog').data('recordId', e.originalEvent.dataTransfer.getData("text/plain").replace('task',''));
             $('#reschedule-dialog').dialog('open');
         });
     }());
@@ -92,8 +89,17 @@ $(function() {
         }
     });
     $('.reschedule-option').click(function() {
+        function dataElement() {
+            return $('#reschedule-dialog');
+        }
+        function recordId() {
+            return dataElement().data('recordId');
+        }
+        function clear() {
+            return dataElement().removeData('recordId');
+        }
         var jQueryThis = $(this);
-        function url(){
+        function url(id){
             function futureStr() {
                 return  jQueryThis.attr('data-reschedule')
             }
@@ -111,15 +117,12 @@ $(function() {
                 }
                 return (the_moment(futureStr) - moment())/1000;
             }
-            function recordId() {
-                return taskID.replace('task', '');
-            }
-            return '/records/' + recordId() + '/reschedule_in_sec.json?delay=' + fromNowInSec(futureStr());
+            return '/records/' + id + '/reschedule_in_sec.json?delay=' + fromNowInSec(futureStr());
         }
-        $.getJSON(url(), function(data) {
-            $('#' + taskID).remove();
+        $.getJSON(url(recordId()), function(data) {
             $('.drop_reschedule').append(getProcessedTask(data));
+            clearElementData();
+            reloadData();
         });
-        reloadData();
     });
 });
