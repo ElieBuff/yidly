@@ -1,10 +1,11 @@
 source 'https://rubygems.org'
 ruby '1.9.3'
 gem 'rails'
-gem 'dust-rails'
 gem 'rb-readline'
 gem 'thin'
 gem 'd3-rails'
+gem 'dust_assets'
+gem 'dust-rails'
 gem 'momentjs-rails'
 gem 'pg'
 gem 'bootstrap-sass'
@@ -15,6 +16,8 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
+  gem "execjs", "~> 1.4.0"
+  gem "tilt", "~> 1.3.7"
 end
 gem 'jquery-rails'
 gem "rspec-rails", ">= 2.12.2", :group => [:development, :test]

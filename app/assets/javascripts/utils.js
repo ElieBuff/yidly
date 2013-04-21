@@ -2,7 +2,7 @@ var UTILS =
 { 
     renderDust: function (template_name, data) {
         var result;
-        dust.render(template_name, data, function(err, out) {
+        JST['templates/' + template_name]( data, function(err, out) {
             result = out;
         });
         return result;
