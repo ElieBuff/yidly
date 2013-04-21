@@ -1,6 +1,15 @@
+/*
+$.get('assets/record_small.html', function(templates) {
+    //ich.addTemplate('record_small', $(templates).html());
+});
+
+$.get('assets/task.html', function(templates) {
+    //ich.addTemplate('task', $(templates).html());
+});
+*/
 $(function() {
     function getProcessedTask(data) {
-        return UTILS.renderDust("record_small", UTILS.formatTimeStampInDict(data, 'actionable_at'));
+        return ich.record_small(UTILS.formatTimeStampInDict(data, 'actionable_at')).html();
     }
     function reloadData(){
         $.getJSON('tasks.json', function(data) {
@@ -11,7 +20,7 @@ $(function() {
             }
             function displayTasks(container, tasks) {
                 function createHtml(d, i) {
-                    return UTILS.renderDust('task', UTILS.formatTimeStampInDict(d, 'actionable_at'));
+                    return ich.task(UTILS.formatTimeStampInDict(d, 'actionable_at')).html();
                 }
                 var divs = container.selectAll('.task-container').data(tasks).html(createHtml);
                 divs.enter().append('div').attr('class', 'task-container').html(createHtml);
