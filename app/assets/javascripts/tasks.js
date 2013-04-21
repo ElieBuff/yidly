@@ -130,7 +130,7 @@ $(function() {
         }
         $.getJSON(url(recordId()), function(data) {
             $('.drop_reschedule').append(getProcessedTask(data));
-            clearElementData();
+            clear();
             reloadData();
         });
     });
