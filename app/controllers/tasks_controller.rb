@@ -2,7 +2,10 @@ class TasksController < UserAuthenticatedController
   before_filter :authenticate_user!
 
   def index
-    tasks = current_user.records.find(:all, :order => :actionable_at).map {|record|
+    tasks = current_user.records.find(:all, 
+                                      :order => :actionable_at, 
+                                      :conditions => "rejected_at is NULL"
+    ).map {|record|
       record.to_task
     }.reject { |task|
       task[:action].empty?

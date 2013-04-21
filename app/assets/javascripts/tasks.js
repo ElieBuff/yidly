@@ -44,26 +44,43 @@ $(function() {
     $(document).on("dragover", ".drop_box", function(e){
         e.preventDefault();
     });
-    $('.drop_done,.drop_cancel').on('drop', function(e) {
-        function getTask(id) {
-            var title = $('#'+ id + ' .title').text();
-            return '<div id="' + id + '" class="drop_data">' + title + '</div>'
+    (function setDropBoxes(){
+        function setDropBox(args) {
+            $(args.selector).on('drop', function(e) {
+                function getTask(id) {
+                    var title = $('#'+ id + ' .title').text();
+                    return '<div id="' + id + '" class="drop_data">' + title + '</div>'
+                }
+                var jQueryElement = $(this);
+                var id = e.originalEvent.dataTransfer.getData("text/plain");
+                e.preventDefault();
+                jQueryElement.append(getTask(id));
+                var recordId = id.replace('task', '');
+                $.getJSON('/records/' + recordId + '/' + args.server_function + '.json', function(data) {
+                    $('#' + taskID).remove();
+                    jQueryElement.append(getProcessedTask(data));
+                });
+                reloadData();
+            });
         }
-        e.preventDefault();
-        var id = e.originalEvent.dataTransfer.getData("text/plain");
-        $(this).append(getTask(id));
-        var recordId = id.replace('task', '');
-        $.getJSON('/records/' + recordId + '/move_to_next_stage.json', function(data) {
-            $('#' + taskID).remove();
-            $('.drop_done').append(getProcessedTask(data));
+        $.each([
+    {
+        selector: '.drop_reject',
+            server_function: 'reject'
+    },
+        {
+            selector: '.drop_done',
+            server_function: 'move_to_next_stage'
+        }
+        ], function(index, args){
+            setDropBox(args);
         });
-        reloadData();
-    });
-    $('.drop_reschedule').on('drop', function(e) {
-        e.preventDefault();
-        taskID = e.originalEvent.dataTransfer.getData("text/plain");
-        $('#reschedule-dialog').dialog('open');
-    });
+        $('.drop_reschedule').on('drop', function(e) {
+            e.preventDefault();
+            taskID = e.originalEvent.dataTransfer.getData("text/plain");
+            $('#reschedule-dialog').dialog('open');
+        });
+    }());
     $('.date_radio').click(function() {
         var val = $(this).val();
         if(val == 'today') {

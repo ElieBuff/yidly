@@ -57,6 +57,14 @@ class RecordsController < UserAuthenticatedController
     end
   end
 
+  # GET /records/1/reject
+  def reject
+    respond_to do |format|
+      format.json { render json: @current_record.reject }
+    end
+  end
+
+
 
   # POST /records
   # POST /records.json
