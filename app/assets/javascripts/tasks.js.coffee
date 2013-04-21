@@ -1,4 +1,4 @@
-$(function() {
+`function onLoad(){
     function reloadData(){
         $.getJSON('tasks.json', function(data) {
             function filterActionableBefore(tasks, datePoint) {
@@ -133,4 +133,6 @@ $(function() {
             $('.all_tasks').show();
         }
     });
-});
+}`
+jQuery -> 
+    onLoad()
