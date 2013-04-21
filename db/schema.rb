@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130415080814) do
+ActiveRecord::Schema.define(:version => 20130421134208) do
 
   create_table "columns", :force => true do |t|
     t.string   "name"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20130415080814) do
     t.integer  "trial_count"
     t.integer  "reschedule_count"
     t.string   "status"
+    t.datetime "rejected_at"
   end
 
   create_table "stages", :force => true do |t|

@@ -6,7 +6,7 @@ class Record < ActiveRecord::Base
   end
   include ActiveModel::Validations
   validates_with RecordValidator
-  attr_accessible :email, :name, :stage_id, :actionable_at, :reschedule_count, :trial_count, :status
+  attr_accessible :email, :name, :stage_id, :actionable_at, :reschedule_count, :trial_count, :status, :rejected_at
   validates_presence_of :name, :stage_id
   default_value_for :trial_count, 0
   default_value_for :reschedule_count, 0
@@ -32,6 +32,13 @@ class Record < ActiveRecord::Base
       :status => 'active',
       :actionable_at => Time.now
     }) unless id == self.id
+  end
+
+  def reject
+    self.update_attributes({
+      :rejected_at => Time.now
+    });
+    self
   end
 
   def wait_for_sec(delay)

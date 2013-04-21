@@ -15,6 +15,6 @@
 //= require bootstrap
 //= require moment
 //= require d3
-//= require dust
 //= require_tree .
 //= require utils.js
+//= require ICanHaz.min.js
