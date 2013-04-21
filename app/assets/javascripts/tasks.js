@@ -1,4 +1,7 @@
 $(function() {
+    if($('#task-page').length === 0){
+        return;
+    }
     function reloadData(){
         $.getJSON('tasks.json', function(data) {
             function filterActionableBefore(tasks, datePoint) {
