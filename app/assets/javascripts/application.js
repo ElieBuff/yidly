@@ -16,5 +16,5 @@
 //= require moment
 //= require d3
 //= require_tree .
-//= require utils.js
+//= require utils
 //= require ICanHaz.min.js
