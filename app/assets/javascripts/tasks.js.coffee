@@ -1,4 +1,5 @@
 jQuery ->
+    return if $('#task-page').length == 0
     reloadData = ->
         $.get 'tasks.json', (data) ->
             filterActionableBefore = (tasks, datePoint) ->
@@ -38,7 +39,10 @@ jQuery ->
                 e.preventDefault()
                 jQueryElement.append(getTask(id))
                 recordId = id.replace('task', '')
-                $.get '/records/' + recordId + '/' + args.server_function + '.json', (data) ->
+                $.get Mustache.render("/records/{{ id }}/{{ action }}.json"
+                    id: recordId
+                    action: args.server_function
+                ), (data) ->
                     jQueryElement.append(getProcessedTask(data))
 
                 reloadData()
@@ -82,7 +86,10 @@ jQuery ->
                                 when 'in_a_week' then moment().add('days',7).startOf('day').add('hours', 7)
                             
                         (the_moment(futureStr) - moment())/1000
-                    '/records/' + id + '/reschedule_in_sec.json?delay=' + fromNowInSec(futureStr())
+
+                    Mustache.render "/records/{{ id }}/reschedule_in_sec.json?delay={{ delay }}",
+                        id: id
+                        delay: fromNowInSec(futureStr())
 
                 $.get url(recordId()), (data) ->
                     $('.drop_reschedule').append(getProcessedTask(data))

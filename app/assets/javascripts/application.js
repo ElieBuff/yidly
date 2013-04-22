@@ -17,4 +17,5 @@
 //= require d3
 //= require_tree .
 //= require utils
-//= require ICanHaz.min.js
+//= require mustache.min
+//= require ICanHaz-no-mustache.min
