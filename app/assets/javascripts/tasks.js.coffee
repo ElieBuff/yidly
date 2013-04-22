@@ -18,13 +18,13 @@ jQuery ->
             displayTasks d3.select('.all_tasks'), data
     createDateFilter = ->
         $('.date_radio').click () ->
-            val = $(this).val()
-            if val == 'today'
-                $('.today_tasks').show()
-                $('.all_tasks').hide()
-            else
-                $('.today_tasks').hide()
-                $('.all_tasks').show()
+            switch $(this).val()
+                when 'today'
+                    $('.today_tasks').show()
+                    $('.all_tasks').hide()
+                when 'alldays'
+                    $('.today_tasks').hide()
+                    $('.all_tasks').show()
 
     createDropBoxes = ->
         getProcessedTask = (data) -> ich.record_small(UTILS.formatTimeStampInDict(data, 'actionable_at')).html()
