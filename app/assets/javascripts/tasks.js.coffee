@@ -1,4 +1,5 @@
 jQuery ->
+    return if $('#task-page').length == 0
     reloadData = ->
         $.get 'tasks.json', (data) ->
             filterActionableBefore = (tasks, datePoint) ->
