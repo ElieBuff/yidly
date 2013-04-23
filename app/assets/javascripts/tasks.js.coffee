@@ -9,8 +9,7 @@ jQuery ->
                 createHtml = (d, i) ->
                     ich.task(UTILS.formatTimeStampInDict(d, 'actionable_at')).html()
 
-                divs = container.selectAll('.task-container')
-                    .data(tasks).html(createHtml)
+                divs = container.selectAll('.task-container').data(tasks).html(createHtml)
                 divs.enter().append('div').attr('class', 'task-container').html(createHtml)
                 divs.exit().remove()
 
@@ -18,26 +17,21 @@ jQuery ->
             displayTasks d3.select('.all_tasks'), data
     createDateFilter = ->
         $('.date_radio').click () ->
-            val = $(this).val()
-            if val == 'today'
-                $('.today_tasks').show()
-                $('.all_tasks').hide()
-            else
-                $('.today_tasks').hide()
-                $('.all_tasks').show()
+            switch $(this).val()
+                when 'today'
+                    $('.today_tasks').show()
+                    $('.all_tasks').hide()
+                when 'alldays'
+                    $('.today_tasks').hide()
+                    $('.all_tasks').show()
 
     createDropBoxes = ->
         getProcessedTask = (data) -> ich.record_small(UTILS.formatTimeStampInDict(data, 'actionable_at')).html()
         createDropBox = (args) ->
             $(args.selector).on 'drop', (e) ->
-                getTask = (id) ->
-                    title = $('#'+ id + ' .title').text()
-                    '<div id="' + id + '" class="drop_data">' + title + '</div>'
-
                 jQueryElement = $(this)
                 id = e.originalEvent.dataTransfer.getData("text/plain")
                 e.preventDefault()
-                jQueryElement.append(getTask(id))
                 recordId = id.replace('task', '')
                 $.get Mustache.render("/records/{{ id }}/{{ action }}.json"
                     id: recordId
