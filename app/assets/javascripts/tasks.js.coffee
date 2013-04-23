@@ -1,5 +1,16 @@
 jQuery ->
     return if $('#task-page').length == 0
+   
+    $('#task-page').sideBar();
+    $(document).on "click", ".task", (e) ->
+        candidateName = $(this).find(".candidate-name").text();
+        projectName = $(this).find(".project-name").text();
+        $('#task-page').sideBar('showSidebar', {
+                                    'candidateName' : candidateName,
+                                    'projectName'   : projectName
+                                });
+        e.stopPropagation();
+
     reloadData = ->
         $.get 'tasks.json', (data) ->
             filterActionableBefore = (tasks, datePoint) ->
@@ -55,7 +66,9 @@ jQuery ->
                 width: 600
                 modal: true
                 
-            $(document).on "click", "body", () -> $('#reschedule-dialog').dialog('close')
+            $(document).on "click", "body", () -> 
+                $('#reschedule-dialog').dialog('close')
+                $('#task-page').sideBar('hideSidebar');
             $('.drop_reschedule').on 'drop', (e) ->
                 e.preventDefault()
                 $('#reschedule-dialog').data('recordId', e.originalEvent.dataTransfer.getData("text/plain").replace('task',''))

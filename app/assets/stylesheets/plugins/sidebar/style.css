@@ -1,0 +1,25 @@
+.sidebar{
+	opacity: 0.9;
+	overflow:hidden;
+	width:0px;
+	height:100%;
+	position: absolute;
+  	top: 0px;
+  	right: 0px;
+  	background-color: #c8c8c8;
+  	border-left: 2px solid #676767;
+  	border-top: 2px solid #676767;
+  	border-bottom: 2px solid #676767;
+    -webkit-border-top-left-radius: 15px;
+	-webkit-border-bottom-left-radius: 15px;
+	-moz-border-radius-topleft: 15px;
+	-moz-border-radius-bottomleft: 15px;
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+	box-shadow: -3px 0px 2px #888888;
+}
+
+.sb-candidate-name,
+.sb-project-name{
+	width: 200px;
+}
