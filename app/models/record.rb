@@ -70,6 +70,7 @@ class Record < ActiveRecord::Base
     { 
       :project => self.project.name,
       :action => self.action,
+      :stage => self.stage.name,
       :icon => self.icon,
       :name => self.name,
       :trial_count => self.trial_count,

@@ -52,7 +52,7 @@ projects = [
     stages.each {|stage, action, icon|
       Stage.create! :name => stage, :action => action, :icon => icon, :project_id => prj.id
     }
-    rand(1..4).times {|candidate_id|
+    rand(1..10).times {|candidate_id|
       stage = prj.stages.sample
       puts "stage user: #{stage.user.name}"
       Record.create! :name => candidate_names[candidate_id], :stage_id => stage.id
