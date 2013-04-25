@@ -1,24 +1,18 @@
 <script id="task" type="text/html">
 <div>
     <div class="task" id= "task{{ id }}" draggable="true"> 
-        <div class="content-left">
-            <img class="action-icon" src={{ icon }}></img>
-        </div>
-        <div class="content-right">
             <div class="content-up"> 
                 <div class="details">
                     <div class="candidate-name"> {{ name }}</div>
-                    <div class="project-name">{{ project }}</div> 
                 </div>
                 <div class="actionable-at">{{ actionable_at }}</div>
             </div>
             <div class="content-down">
                 <div class="counter-container">
-                    <div style="float: right;" class="reschedule-icon"><span class="reschedule-count">{{ reschedule_count }}</span></div> 
-                    <div style="float: right;" class="trial-icon"><span class="trial-count">{{ trial_count }}</span></div> 
+                    <div class="reschedule-icon icon"><span class="reschedule-count">{{ reschedule_count }}</span></div> 
+                    <div class="trial-icon icon"><span class="trial-count">{{ trial_count }}</span></div> 
                 </div>
             </div>
-        </div>
     </div> 
 </div>
 </script>
@@ -31,19 +25,7 @@
 </script>
 <body>
     <div id="project-page">
-        <div class="date_selection">
-            <span class="chkb_date">
-                <input type="radio" class="date_radio" name="date_selection" value="today"/> Today
-            </span>
-            <span class="chkb_date">
-                <input type="radio" class="date_radio" name="date_selection" value="alldays" checked/> All 
-            </span>
-        </div>
         <div class="board">
-            <div class="today_tasks" style="display:none;">
-           </div>
-            <div class="all_tasks">
-            </div>
         </div>
     </div>
 </body>
