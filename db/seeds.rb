@@ -9,13 +9,12 @@
 # See http://railsapps.github.com/rails-environment-variables.html
 
 stages = [
-     ["received", "review", "http://www.tienganh123.com/file/luyen-thi-toeic/part3%20practice/test%204.jpg"], 
-     ["reviewed", "contact", "http://www.skinz.org/free-clipart/email-graphics/envelope-circle-clipart.gif"], 
-     ["contacted", "schedule a meeting", "http://www.rock.k12.nc.us//cms/lib6/NC01000985/Centricity/Domain/153/Phone.jpg"], 
-     ["meeting_scheduled", "pass to manager", "http://www.best-of-web.com/_images_300/Realistic_Style_Quarterback_Throwing_the_Football_100308-164108-094042.jpg"], 
-     ["passed to manager",""], 
-     ["offer",""], 
-     ["closed",""]
+     ["Review", "review", "http://www.tienganh123.com/file/luyen-thi-toeic/part3%20practice/test%204.jpg"], 
+     ["Intial Contact", "contact", "http://www.skinz.org/free-clipart/email-graphics/envelope-circle-clipart.gif"], 
+     ["Phone Screen", "schedule a meeting", "http://www.rock.k12.nc.us//cms/lib6/NC01000985/Centricity/Domain/153/Phone.jpg"], 
+     ["First Interview", "pass to manager", "http://www.best-of-web.com/_images_300/Realistic_Style_Quarterback_Throwing_the_Football_100308-164108-094042.jpg"], 
+     ["Further Interviews",""], 
+     ["Decision",""]
     ]
 candidate_names = [
 "Steve Bolhman",
