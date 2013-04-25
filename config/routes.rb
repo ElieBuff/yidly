@@ -10,7 +10,12 @@ Dashboard::Application.routes.draw do
   root :to => 'home#index'
   devise_for :users
   resources :users
-  resources :projects
+  resources :projects do
+    collection do
+      get 'random'
+      get 'display'
+    end
+  end
   resources :tests
   resources :records do
     get 'move_to_next_stage', :on => :member
