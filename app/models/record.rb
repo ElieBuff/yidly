@@ -21,7 +21,7 @@ class Record < ActiveRecord::Base
   delegate :user, :to => :project
 
   def summary
-     "name: #{self.name}, project: #{self.project.name}, user: #{self.user.email}, stage: #{self.stage.name}"
+     "name: #{self.name}, project: #{self.project.job_title}, user: #{self.user.email}, stage: #{self.stage.name}"
   end
 
   def update_stage_id(id)
@@ -68,7 +68,7 @@ class Record < ActiveRecord::Base
 
   def to_task
     { 
-      :project => self.project.name,
+      :project => self.project.job_title,
       :action => self.action,
       :stage => self.stage.name,
       :icon => self.icon,

@@ -36,22 +36,27 @@ candidate_names = [
 "Joseph Stockman",
 ].shuffle
 projects = [
-  ["Manager, Media Relations", "John Smith"],
-  ["Manager, Professional Activities", "Fred Appleseed"],
-  ["Jr Business Analyst", "Bill Timothey"],
-  ["Production Editor", "Frank Redley"],
-  ["Software Engineer", "Jennifer Madison"],
-  ["Web Designer", "Sam Liam"]
+  ["Manager, Media Relations", "John Smith", "HP", "http://picsoff.com/files/funzug/imgs/informative/co_logos_mean_09.jpg", "New York"],
+  ["Manager, Professional Activities", "Fred Appleseed", "Green Apple", "http://www.logodesigncompanyindia.com/images/logo/green-apple.jpg", "Boston"],
+  ["Jr Business Analyst", "Bill Timothey", "Toyota", "http://1.bp.blogspot.com/-6vatOqS9mBM/UShnnEJvqdI/AAAAAAAACX4/2cjvw5wkPQA/s1600/Toyota_logo1.jpg", "San Francisco"],
+  ["Production Editor", "Frank Redley", "Google", "http://images3.wikia.nocookie.net/__cb20100520131748/logopedia/images/5/5c/Google_logo.png", "Los Angeles"],
+  ["Software Engineer", "Jennifer Madison", "Apple", "http://edibleapple.com/wp-content/uploads/2009/04/silver-apple-logo.png", "Miami"],
+  ["Web Designer", "Sam Liam", "P&G", "http://www.pgnewsroom.co.uk/sites/pguk.newshq.businesswire.com/files/press_release/file/PG_NEWPHASE_LOGO_RGB_HR.jpg", "Palo Alto"]
 ].shuffle
 3.times {|user_id| 
   user = User.create! :name => "test_#{user_id}", :email => "test_#{user_id}@yidly.com", :password => "99999999", :password_confirmation => "99999999"
-  rand(1..5).times {|prj_id|
+  5.times {|prj_id|
   puts "project user.id: #{user.id}"
-    prj = Project.create! :name => projects[prj_id][0], :hiring_manager => projects[prj_id][1], :user_id=>user.id
+    prj = Project.create! :job_title => projects[prj_id][0], 
+                          :hiring_manager => projects[prj_id][1], 
+                          :company => projects[prj_id][2],
+                          :company_icon => projects[prj_id][3],
+                          :location => projects[prj_id][4],
+                          :user_id=>user.id
     stages.each {|stage, action, icon|
       Stage.create! :name => stage, :action => action, :icon => icon, :project_id => prj.id
     }
-    rand(1..10).times {|candidate_id|
+    rand(4..10).times {|candidate_id|
       stage = prj.stages.sample
       puts "stage user: #{stage.user.name}"
       Record.create! :name => candidate_names[candidate_id], :stage_id => stage.id
