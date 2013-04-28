@@ -259,13 +259,14 @@ body
             position: relative;
             border: 11px solid rgb(126, 109, 42);
             height: 100px;
-            width: 300px;
-            margin-top: 10px;
+            width: 100%;
+            margin-top: 25px;
             box-shadow: 5px 6px 3px #888888;
             background-color: rgb(255, 243, 204);
             border-width: 6px;
             border-radius: 4px;
          }
+         width: 100%%;
     }
 
 }
