@@ -10,7 +10,7 @@
                 <div class="content-up"> 
                     <div class="details">
                         <div class="candidate-name"> {{ name }}</div>
-                        <div class="project-name">{{ project }}</div> 
+                        <div class="job-title">{{ project }}</div> 
                     </div>
                     <div class="actionable-at">{{ actionable_at }}</div>
                 </div>
@@ -28,14 +28,22 @@
 <script id="project" type="text/html">
     <div>
         <div class="project" id= "project #{{ id }}"> 
-            <div class="job-title">
-                {{ job_title }}
+            <div class="row">
+                <div class="job-title">
+                    {{ job_title }}
+                </div>
+                <div class="location">
+                    {{ location }}
+                </div>
             </div>
-            <div class="location">
-                ({{ location }})
+            <div class="row">
+                <div class="hiring-manager">
+                    {{ hiring_manager }}
+                </div>
             </div>
-            <div class="hiring-manager">
-                {{ hiring_manager }}
+            <div class="company-logo">
+                <img src="{{ company_icon }}" class="company-logo-img">
+                </img>
             </div>
         </div> 
     </div>
