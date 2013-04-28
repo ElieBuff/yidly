@@ -36,18 +36,18 @@ candidate_names = [
 "Joseph Stockman",
 ].shuffle
 projects = [
-  "Manager, Media Relations",
-  "Manager, Professional Activities",
-  "Jr Business Analyst",
-  "Production Editor",
-  "Software Engineer",
-  "Web Designer"
+  ["Manager, Media Relations", "John Smith"],
+  ["Manager, Professional Activities", "Fred Appleseed"],
+  ["Jr Business Analyst", "Bill Timothey"],
+  ["Production Editor", "Frank Redley"],
+  ["Software Engineer", "Jennifer Madison"],
+  ["Web Designer", "Sam Liam"]
 ].shuffle
 3.times {|user_id| 
   user = User.create! :name => "test_#{user_id}", :email => "test_#{user_id}@yidly.com", :password => "99999999", :password_confirmation => "99999999"
   rand(1..5).times {|prj_id|
   puts "project user.id: #{user.id}"
-    prj = Project.create! :name => projects[prj_id], :user_id=>user.id
+    prj = Project.create! :name => projects[prj_id][0], :hiring_manager => projects[prj_id][1], :user_id=>user.id
     stages.each {|stage, action, icon|
       Stage.create! :name => stage, :action => action, :icon => icon, :project_id => prj.id
     }
