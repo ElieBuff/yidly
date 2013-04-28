@@ -11,6 +11,7 @@ class Project < ActiveRecord::Base
 
   def stages_and_records
     {
+      :name => self.name,
       :stages => self.stages.order(:id).map {|stage|
                     stage.name
                  },

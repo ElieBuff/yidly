@@ -1,4 +1,12 @@
 #project-page {
+    width:100%;
+    .project-name {
+        font-color: #778844;
+        color: rgb(82, 43, 109);
+        margin-left: 2%;
+        margin-bottom: 10px;
+    }
+
     .stage {
             .header {
                 color: blue;
@@ -13,6 +21,14 @@
         border-radius: 15px;
     }
     .board {
+        .stages {
+            width: 100%;
+            margin: 5px 5px 1% 1%;
+        }
+        margin-left: 2px;
+        margin-right: 2px;
+        height: 1000px;
+        background-color: #125678;
         width: 100%;
     }
     .task-container {
