@@ -15,6 +15,9 @@ jQuery ->
 
             displayTasks d3.select('.today_tasks'), filterActionableBefore(data, new Date())
             displayTasks d3.select('.all_tasks'), data
+            reloadQuickDrop(); 
+    initQuickDrop(reloadData)
+
     createDateFilter = ->
         $('.date_radio').click () ->
             switch $(this).val()
@@ -95,7 +98,7 @@ jQuery ->
                 id = e.target.getAttribute('id').replace 'task', ''# must be called outside a function
                 e.originalEvent.dataTransfer.setData("text/plain", id)
         
-        handleDragEvents()
+        
         createDropBox args for args in [
             {
                 selector: '.drop_reject'
@@ -106,9 +109,8 @@ jQuery ->
                 server_function: 'move_to_next_stage'
             }
             ]
-        createRescheduleBox()
+        
 
     createDateFilter()
     reloadData()
     createDropBoxes()
-
