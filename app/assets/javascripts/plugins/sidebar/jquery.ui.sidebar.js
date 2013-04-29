@@ -18,7 +18,7 @@
 			stopDragabble = function(){
 				$(this).removeClass('draged');
 				$('.sidebar').animate({
-          			opacity: 0.9
+          			opacity: 0
           			}, 500, function() {
            		});
 			}
