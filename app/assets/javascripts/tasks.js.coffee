@@ -33,11 +33,10 @@ jQuery ->
         createDropBox = (args) ->
             $(args.selector).on 'drop', (e) ->
                 jQueryElement = $(this)
-                id = e.originalEvent.dataTransfer.getData("text/plain")
+                recordId = () -> e.originalEvent.dataTransfer.getData("text/plain")
                 e.preventDefault()
-                recordId = id.replace('task', '')
                 $.get Mustache.render("/records/{{ id }}/{{ action }}.json"
-                    id: recordId
+                    id: recordId()
                     action: args.server_function
                 ), (data) ->
                     jQueryElement.append(getProcessedTask(data))
@@ -61,7 +60,7 @@ jQuery ->
             $(document).on "click", "body", () -> $('#reschedule-dialog').dialog('close')
             $('.drop_reschedule').on 'drop', (e) ->
                 e.preventDefault()
-                $('#reschedule-dialog').data('recordId', e.originalEvent.dataTransfer.getData("text/plain").replace('task',''))
+                $('#reschedule-dialog').data('recordId', e.originalEvent.dataTransfer.getData("text/plain"))
                 $('#reschedule-dialog').dialog('open')
             
             $('.reschedule-option').click () ->
@@ -96,7 +95,7 @@ jQuery ->
         handleDragEvents = ->
             $(document).on "dragover", ".drop_box", (e) -> e.preventDefault()
             $(document).on "dragstart", ".task", (e) ->
-                id = e.target.getAttribute 'id'
+                id = e.target.getAttribute('id').replace 'task', ''# must be called outside a function
                 e.originalEvent.dataTransfer.setData("text/plain", id)
         
         

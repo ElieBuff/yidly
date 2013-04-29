@@ -9,13 +9,12 @@
 # See http://railsapps.github.com/rails-environment-variables.html
 
 stages = [
-     ["received", "review", "http://www.tienganh123.com/file/luyen-thi-toeic/part3%20practice/test%204.jpg"], 
-     ["reviewed", "contact", "http://www.skinz.org/free-clipart/email-graphics/envelope-circle-clipart.gif"], 
-     ["contacted", "schedule a meeting", "http://www.rock.k12.nc.us//cms/lib6/NC01000985/Centricity/Domain/153/Phone.jpg"], 
-     ["meeting_scheduled", "pass to manager", "http://www.best-of-web.com/_images_300/Realistic_Style_Quarterback_Throwing_the_Football_100308-164108-094042.jpg"], 
-     ["passed to manager",""], 
-     ["offer",""], 
-     ["closed",""]
+     ["Review", "review", "http://www.tienganh123.com/file/luyen-thi-toeic/part3%20practice/test%204.jpg"], 
+     ["Intial Contact", "contact", "http://www.skinz.org/free-clipart/email-graphics/envelope-circle-clipart.gif"], 
+     ["Phone Screen", "schedule a meeting", "http://www.rock.k12.nc.us//cms/lib6/NC01000985/Centricity/Domain/153/Phone.jpg"], 
+     ["First Interview", "pass to manager", "http://www.best-of-web.com/_images_300/Realistic_Style_Quarterback_Throwing_the_Football_100308-164108-094042.jpg"], 
+     ["Further Interviews",""], 
+     ["Decision",""]
     ]
 candidate_names = [
 "Steve Bolhman",
@@ -37,22 +36,27 @@ candidate_names = [
 "Joseph Stockman",
 ].shuffle
 projects = [
-  "Manager, Media Relations",
-  "Manager, Professional Activities",
-  "Jr Business Analyst",
-  "Production Editor",
-  "Software Engineer",
-  "Web Designer"
+  ["Manager, Media Relations", "John Smith", "HP", "http://picsoff.com/files/funzug/imgs/informative/co_logos_mean_09.jpg", "New York"],
+  ["Manager, Professional Activities", "Fred Appleseed", "Green Apple", "http://www.logodesigncompanyindia.com/images/logo/green-apple.jpg", "Boston"],
+  ["Jr Business Analyst", "Bill Timothey", "Toyota", "http://1.bp.blogspot.com/-6vatOqS9mBM/UShnnEJvqdI/AAAAAAAACX4/2cjvw5wkPQA/s1600/Toyota_logo1.jpg", "San Francisco"],
+  ["Production Editor", "Frank Redley", "Google", "http://images3.wikia.nocookie.net/__cb20100520131748/logopedia/images/5/5c/Google_logo.png", "Los Angeles"],
+  ["Software Engineer", "Jennifer Madison", "Apple", "http://edibleapple.com/wp-content/uploads/2009/04/silver-apple-logo.png", "Miami"],
+  ["Web Designer", "Sam Liam", "P&G", "http://www.pgnewsroom.co.uk/sites/pguk.newshq.businesswire.com/files/press_release/file/PG_NEWPHASE_LOGO_RGB_HR.jpg", "Palo Alto"]
 ].shuffle
 3.times {|user_id| 
   user = User.create! :name => "test_#{user_id}", :email => "test_#{user_id}@yidly.com", :password => "99999999", :password_confirmation => "99999999"
-  rand(1..5).times {|prj_id|
+  5.times {|prj_id|
   puts "project user.id: #{user.id}"
-    prj = Project.create! :name => projects[prj_id], :user_id=>user.id
+    prj = Project.create! :job_title => projects[prj_id][0], 
+                          :hiring_manager => projects[prj_id][1], 
+                          :company => projects[prj_id][2],
+                          :company_icon => projects[prj_id][3],
+                          :location => projects[prj_id][4],
+                          :user_id=>user.id
     stages.each {|stage, action, icon|
       Stage.create! :name => stage, :action => action, :icon => icon, :project_id => prj.id
     }
-    rand(1..4).times {|candidate_id|
+    rand(4..10).times {|candidate_id|
       stage = prj.stages.sample
       puts "stage user: #{stage.user.name}"
       Record.create! :name => candidate_names[candidate_id], :stage_id => stage.id

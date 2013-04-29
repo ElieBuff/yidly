@@ -1,0 +1,40 @@
+<script id="task" type="text/html">
+<div>
+    <div class="task" id= "task{{ id }}" draggable="true"> 
+            <div class="content-up"> 
+                <div class="details">
+                    <div class="candidate-name"> {{ name }}</div>
+                </div>
+                <div class="actionable-at">{{ actionable_at }}</div>
+            </div>
+            <div class="content-down">
+                <div class="counter-container">
+                    <div class="reschedule-icon icon"><span class="reschedule-count">{{ reschedule_count }}</span></div> 
+                    <div class="trial-icon icon"><span class="trial-count">{{ trial_count }}</span></div> 
+                </div>
+            </div>
+    </div> 
+</div>
+</script>
+<script id="stage" type="text/html">
+    <div id="{{ name }}" class="stage"> 
+        <div class="header">
+            {{ name }}
+        </div>
+    </div>
+</script>
+<script id="project" type="text/html">
+    <div>
+        {{ name }}
+    </div>
+</script>
+<body>
+    <div id="project-page">
+        <div class="project-name">
+        </div>
+        <div class="board">
+            <div class="stages">
+            </div>
+        </div>
+    </div>
+</body>

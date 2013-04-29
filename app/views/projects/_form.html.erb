@@ -10,12 +10,30 @@
     </ul>
   </div>
   <% end %>
- 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <div class="field">
+        <%= f.label :job_title %><br />
+        <%= f.text_field :job_title %>
   </div>
-  <div class="actions">
+   <div class="field">
+    <%= f.label :company %><br />
+    <%= f.text_field :company %>
+  </div>
+   <div class="field">
+    <%= f.label :location %><br />
+    <%= f.text_field :location %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :hiring_manager %><br />
+    <%= f.text_field :hiring_manager %>
+  </div>
+    <div class="field">
+        <%= f.label :job_description %><br />
+        <%= f.text_field :job_description %>
+  </div>
+ 
+<div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
