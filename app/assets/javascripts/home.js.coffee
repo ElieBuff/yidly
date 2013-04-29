@@ -1,31 +1,46 @@
 jQuery ->
     return if $('#home-page').length == 0
     reloadData = ->
-        taskList = ->
-            $.get '/tasks.json', (data) ->
-                filterActionableBefore = (tasks, datePoint) ->
-                    tasks.filter (task) -> new Date(task.actionable_at) < datePoint
-
-                displayTasks = (container, tasks) ->
+        displayListFromServer = (args) ->
+            $.get args.url, (data) ->
+                displayItems = (container, template, items) ->
                     createHtml = (d, i) ->
-                        ich.task(UTILS.formatTimeStampInDict(d, 'actionable_at')).html()
+                        ich[template](d).html()
 
-                    divs = container.selectAll('.task-container').data(tasks).html(createHtml)
-                    divs.enter().append('div').attr('class', 'task-container').html(createHtml)
+                    divs = container.selectAll('.item-container').data(items).html(createHtml)
+                    divs.enter().append('div').attr('class', 'item-container').html(createHtml)
                     divs.exit().remove()
+                mappie = (collection, func) ->
+                    if func then collection.map(func) else collection
+                filterie = (collection, func) ->
+                    if func then collection.filter(func) else collection
+                
+                displayItems param.container, param.template, mappie(filterie(data, param.filter), args.mapper) for param in args.params
 
-                #displayTasks d3.select('.today_tasks'), filterActionableBefore(data, new Date())
-                displayTasks d3.select('.tasks-list'), data
+        taskList = ->
+           filterActionableBefore = (tasks, datePoint) ->
+                tasks.filter (task) -> new Date(task.actionable_at) < datePoint
+
+            displayListFromServer
+                url: '/tasks.json',
+                mapper: (d) -> UTILS.formatTimeStampInDict(d, 'actionable_at'),
+                params : [
+                        container: d3.select('.today-tasks .tasks-list')
+                        filter: (x) -> (new Date(x.actionable_at) >= moment().startOf('day'))
+                        template: 'task'
+                    ,
+                        container: d3.select('.urgent-tasks .tasks-list')
+                        filter: (x) -> (new Date(x.actionable_at) < moment().startOf('day'))
+                        template: 'urgent_task'
+                        ]
 
         projectList = ->
-            $.get '/projects.json', (data) ->
-                displayProjects = (container, projects) ->
-                    createHtml = (d,i) ->
-                        ich.project(d).html()
-                    divs = container.selectAll('.project-container').data(projects).html(createHtml)
-                    divs.enter().append('div').attr('class', 'project-container').html(createHtml)
-                    divs.exit().remove()
-                displayProjects d3.select('.project-list'), data
+            displayListFromServer
+                url: '/projects.json',
+                params: [
+                   container: d3.select('.project-list')
+                   template: 'project'
+                ]
 
         taskList()
         projectList()
