@@ -1,16 +1,5 @@
 jQuery ->
     return if $('#task-page').length == 0
-   
-    $('#task-page').sideBar();
-    $(document).on "click", ".task", (e) ->
-        candidateName = $(this).find(".candidate-name").text();
-        projectName = $(this).find(".project-name").text();
-        $('#task-page').sideBar('showSidebar', {
-                                    'candidateName' : candidateName,
-                                    'projectName'   : projectName
-                                });
-        e.stopPropagation();
-
     reloadData = ->
         $.get 'tasks.json', (data) ->
             filterActionableBefore = (tasks, datePoint) ->
@@ -26,6 +15,9 @@ jQuery ->
 
             displayTasks d3.select('.today_tasks'), filterActionableBefore(data, new Date())
             displayTasks d3.select('.all_tasks'), data
+            reloadQuickDrop(); 
+    initQuickDrop(reloadData)
+
     createDateFilter = ->
         $('.date_radio').click () ->
             switch $(this).val()
@@ -66,9 +58,7 @@ jQuery ->
                 width: 600
                 modal: true
                 
-            $(document).on "click", "body", () -> 
-                $('#reschedule-dialog').dialog('close')
-                $('#task-page').sideBar('hideSidebar');
+            $(document).on "click", "body", () -> $('#reschedule-dialog').dialog('close')
             $('.drop_reschedule').on 'drop', (e) ->
                 e.preventDefault()
                 $('#reschedule-dialog').data('recordId', e.originalEvent.dataTransfer.getData("text/plain").replace('task',''))
@@ -109,7 +99,7 @@ jQuery ->
                 id = e.target.getAttribute 'id'
                 e.originalEvent.dataTransfer.setData("text/plain", id)
         
-        handleDragEvents()
+        
         createDropBox args for args in [
             {
                 selector: '.drop_reject'
@@ -120,9 +110,8 @@ jQuery ->
                 server_function: 'move_to_next_stage'
             }
             ]
-        createRescheduleBox()
+        
 
     createDateFilter()
     reloadData()
     createDropBoxes()
-

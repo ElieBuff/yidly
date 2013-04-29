@@ -1,10 +1,16 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 <link rel="stylesheet" href="/assets/plugins/sidebar.html" />
-
+<script>
+$(function() {
+   
+    
+    
+     });
+</script>
 <script id="task" type="text/html">
 <div>
-    <div class="task" id= "task{{ id }}" draggable="true"> 
+    <div class="task draggable" id= "task{{ id }}" draggable="true"> 
         <div class="content-left">
             <img class="action-icon" src={{ icon }}></img>
         </div>
@@ -34,7 +40,7 @@
 </div>
 </script>
 <body>
-    <div id="task-page">
+    <div id="task-page" class="sidebar-records">
         <div class="align_left">
             <div class="date_selection">
                 <span class="chkb_date">
@@ -83,6 +89,7 @@
                 <div class="reschedule-option" data-reschedule="tonight">
                     <img class="reschedule-option-img" src="http://www.clker.com/cliparts/4/2/4/4/12236112211833628872eeyrsja_Disco_Dancers.svg.med.png"> 
                 </div>
+                <br style="clear:both;"/>
                 <div class="reschedule-option" data-reschedule="tomorrow">
                     <img class="reschedule-option-img" src="assets/time/tomorrow.png"> 
                 </div>
