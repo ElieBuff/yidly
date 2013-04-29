@@ -16,6 +16,7 @@ jQuery ->
                     if func then collection.filter(func) else collection
                 
                 displayItems param.container, param.template, mappie(filterie(data, param.filter), args.mapper) for param in args.params
+                reloadQuickDrop()
 
         taskList = ->
            filterActionableBefore = (tasks, datePoint) ->
@@ -45,15 +46,5 @@ jQuery ->
         taskList()
         projectList()
 
-    createDateFilter = ->
-        $('.date_radio').click () ->
-            switch $(this).val()
-                when 'today'
-                    $('.today_tasks').show()
-                    $('.all_tasks').hide()
-                when 'alldays'
-                    $('.today_tasks').hide()
-                    $('.all_tasks').show()
-
-    createDateFilter()
+    initQuickDrop(reloadData)
     reloadData()

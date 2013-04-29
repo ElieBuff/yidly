@@ -10,7 +10,7 @@
 </script>
 <script id="task" type="text/html">
     <div>
-        <div class="task" id= "task{{ id }}"> 
+        <div class="task draggable" id= "task{{ id }}" draggable="true"> 
             <div class="content-left">
                 <img class="action-icon" src={{ icon }}></img>
             </div>
@@ -57,7 +57,7 @@
     </div>
 </script>
 <body>
-    <div id="home-page">
+    <div id="home-page" class="sidebar-records">
         <div class="align_left">
             <div class="urgent-tasks">
                 <div class="list-header">
