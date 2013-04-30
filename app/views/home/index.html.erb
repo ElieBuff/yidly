@@ -4,7 +4,6 @@
     <div>
         <div class="urgent-task" id= "urgent-task{{ id }}"> 
             <div class="candidate-name"> {{ name }}</div>
-            <div class="job-title">{{ project }}</div> 
         </div>
     </div>
 </script>
@@ -30,6 +29,13 @@
                 </div>
             </div>
         </div> 
+    </div>
+</script>
+<script id="by_project_task_list" type="text/html">
+    <div class="by-project-task-list">
+        <div class="header">
+            {{ project }}
+        </div>
     </div>
 </script>
 
@@ -70,7 +76,7 @@
 </script>
 <body>
     <div id="home-page" class="sidebar-records">
-        <div class="align_left">
+        <div class="align-left">
             <div class="urgent-tasks">
                 <div class="list-header">
                     URGENT TASKS
@@ -88,7 +94,7 @@
                 </div>
             </div>
         </div>
-        <div class="align_right">
+        <div class="align-right">
             <div id="projects">
                 <div class="list-header">
                     PROJECTS

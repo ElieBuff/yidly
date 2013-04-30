@@ -12,15 +12,19 @@ jQuery ->
         taskList = ->
             $.get '/tasks/urgent_and_today.json?tipping_point=' + moment().startOf('day')._d, (data) ->
                 calendarTime = (d) -> UTILS.formatTimeStampInDict(d, 'actionable_at')
-                createTaskListWrapper = (hour) ->
-                    wrapper = ich.hourly_task_list hour: hour
-                    $('.today-tasks .tasks-list').append wrapper
-                    d3.select(wrapper[0])
                 today =  ->
+                    createTaskListWrapper = (hour) ->
+                        wrapper = ich.hourly_task_list hour: hour
+                        $('.today-tasks .tasks-list').append wrapper
+                        d3.select(wrapper[0])
                     displayItems createTaskListWrapper(hour), 'task', tasks.map(calendarTime) for hour, tasks of data.today
                 urgent = ->
-                    displayItems d3.select('.urgent-tasks .tasks-list'), 'urgent-task', data.urgent.map(calendarTime)
-                #urgent()
+                    createTaskListWrapper = (project) ->
+                        wrapper = ich.by_project_task_list project: project
+                        $('.urgent-tasks .tasks-list').append wrapper
+                        d3.select(wrapper[0])
+                    displayItems createTaskListWrapper(project), 'urgent_task', tasks.map(calendarTime) for project, tasks of data.urgent
+                urgent()
                 today()
                 reloadQuickDrop()
 

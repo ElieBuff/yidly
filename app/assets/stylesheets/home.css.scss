@@ -26,6 +26,12 @@ body
             }
         }
     }
+    .by-project-task-list {
+            .header {
+                color: white;
+                background-color: gray;
+            }
+    }
     .list-header
     {
         color: gray;
@@ -41,21 +47,24 @@ body
     }
 
 
-    .align_left
-    {
-    float: left;
-    width: 20%;
+    .align-left {
+        float: left;
+        width: 20%;
+        margin-left: 2%;
+        margin-top: 2%;
     }
     .align-middle
     {
         float: left;
         width: 39%;
+        margin-left:5%;
+        margin-top: 2%;
     }
 
-    .align_right
-    {
-    float: right;
-    width:30%;
+    .align-right {
+        float: right;
+        width:30%;
+        margin-top: 2%;
     }
 
     .date_selection
@@ -139,8 +148,6 @@ body
         font-weight:bold;
         }
 
-
-        //width:420px; 
         color: #676767;
         font-size: 12px;
         height: 80px;
