@@ -13,7 +13,6 @@ class ProjectsController < UserAuthenticatedController
   # GET /projects/random.json
   def random
     respond_to do |format|
-      #format.json { render json: current_user.projects.first.records.group("records.id", "stages") }
       format.json { render json: current_user.projects.first.stages_and_records }
     end
   end

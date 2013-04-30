@@ -8,6 +8,24 @@ body
 }
 
 #home-page {
+
+    .tasks-list
+    {
+        margin-top: 10px;
+        background-color: yellow;
+        border: 1px solid #676767;
+        box-shadow: 3px 3px 2px #888888;
+        border-width:2px;
+        border-radius: 15px;
+    }
+    .today-tasks {
+        .hourly-task-list {
+            .header {
+                color: white;
+                background-color: gray;
+            }
+        }
+    }
     .list-header
     {
         color: gray;
@@ -31,7 +49,7 @@ body
     .align-middle
     {
         float: left;
-        width: 50%;
+        width: 39%;
     }
 
     .align_right
@@ -49,10 +67,6 @@ body
     .chkb_date
     {
     padding: 0 35px;
-    }
-
-    .tasks-list
-    {
     }
 
     .task
@@ -126,17 +140,17 @@ body
         }
 
 
-        width:420px; 
+        //width:420px; 
         color: #676767;
         font-size: 12px;
-        border: 1px solid #676767;
         height: 80px;
         padding: 10px 5px;
         margin: 10px;
+        border: 1px solid #676767;
         box-shadow: 3px 3px 2px #888888;
-        background-color: $task-background-color;
         border-width:2px;
         border-radius: 15px;
+        background-color: $task-background-color;
     }
 
     .status_container

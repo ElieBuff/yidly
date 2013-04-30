@@ -23,7 +23,11 @@ Dashboard::Application.routes.draw do
     get 'reschedule_in_sec', :on => :member
     get 'wait_for_sec', :on => :member
   end
-  resources :tasks
+  resources :tasks do
+    collection do
+      get 'urgent_and_today'
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
