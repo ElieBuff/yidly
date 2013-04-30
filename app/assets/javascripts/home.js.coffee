@@ -17,6 +17,7 @@ jQuery ->
                 #displayTasks d3.select('.today_tasks'), filterActionableBefore(data, new Date())
                 displayTasks d3.select('.tasks-list'), data
 
+                
         projectList = ->
             $.get '/projects.json', (data) ->
                 displayProjects = (container, projects) ->
@@ -29,6 +30,9 @@ jQuery ->
 
         taskList()
         projectList()
+        reloadQuickDrop(); 
+
+    initQuickDrop(reloadData)
 
     createDateFilter = ->
         $('.date_radio').click () ->
