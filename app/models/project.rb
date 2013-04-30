@@ -4,6 +4,10 @@ class Project < ActiveRecord::Base
   has_many :stages, :dependent => :destroy, :order => :position
   belongs_to :user
 
+  def extended
+    self.attributes.merge :num_records => records.find(:all, :conditions => "rejected_at is NULL").length
+  end
+
   def first_stage
     stages.min {|stage| stage.id}
   end

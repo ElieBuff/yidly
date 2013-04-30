@@ -2,7 +2,7 @@ class ProjectsController < UserAuthenticatedController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = current_user.projects
+    @projects = current_user.projects.map {|prj| prj.extended}
 
     respond_to do |format|
       format.html # index.html.erb
