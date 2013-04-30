@@ -15,7 +15,7 @@ jQuery ->
 
             displayTasks d3.select('.today_tasks'), filterActionableBefore(data, new Date())
             displayTasks d3.select('.all_tasks'), data
-            reloadQuickDrop(); 
+            reloadQuickDrop()
     initQuickDrop(reloadData)
 
     createDateFilter = ->

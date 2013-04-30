@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :project do
-    name 'prj 200'
+    job_title 'prj 200'
   end
 end
