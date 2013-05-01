@@ -11,39 +11,46 @@ body
     font-size: 100%;
     font-family: Arial,Helvetica,sans-serif;
 }
+.list-header {
+        color: gray;
+        font-family:tahoma, arial, 'sans-serif';
+        font-size: 170%;
+        font-weight:bold;
+    }
+.urgent-tasks-big {
+    .item-list {
+        background-color: red;
+    }
+}
 
-    .task-list {
-        .header {
-            background-color: gray;
-            .title {
-                color: white;
-                font-family: Century Gothic, sans-serif;
-                font-size: 100%;
-                padding-left: 2%;
-            }
+.task-list {
+    .header {
+        background-color: gray;
+        .title {
+            color: white;
+            font-family: Century Gothic, sans-serif;
+            font-size: 100%;
+            padding-left: 2%;
         }
     }
+}
+.item-list {
+    margin-top: 10px;
+    border: 1px solid #676767;
+    box-shadow: 3px 3px 2px #888888;
+    border-width:2px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
 #home-page {
 
     .underlay {
         width: 100%;
     }
-    .item-list {
-        margin-top: 10px;
-        border: 1px solid #676767;
-        box-shadow: 3px 3px 2px #888888;
-        border-width:2px;
-        border-radius: 15px;
-        overflow: hidden;
-    }
     .urgent-tasks {
         .item-list {
             background-color: red;
-        }
-    }
-    .urgent-tasks-big {
-        .item-list {
-            background-color: rgb(107, 235, 8);
         }
     }
     .today-tasks {
@@ -74,14 +81,6 @@ body
                     width: 80%;
                 }
             }
-    }
-    .list-header
-    {
-        color: gray;
-        font-family:tahoma, arial, 'sans-serif';
-        font-size: 170%;
-        font-weight:bold;
-
     }
     .job-title {
         color: #333333;
