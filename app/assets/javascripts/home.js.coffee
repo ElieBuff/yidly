@@ -14,16 +14,17 @@ jQuery ->
                 calendarTime = (d) -> UTILS.formatTimeStampInDict(d, 'actionable_at')
                 today =  ->
                     createTaskListWrapper = (hour) ->
-                        wrapper = ich.hourly_task_list title: "#{hour}:00 - #{hour+1}:00"
+                        wrapper = ich.task_list title: "#{hour}:00 - #{hour+1}:00"
                         $('.today-tasks .item-list').append wrapper
                         d3.select(wrapper[0])
                     displayItems createTaskListWrapper(1*hour), 'task', tasks.map(calendarTime) for hour, tasks of data.today
                 urgent = ->
-                    createTaskListWrapper = (project) ->
-                        wrapper = ich.by_project_task_list project: project
-                        $('.urgent-tasks .item-list').append wrapper
+                    createTaskListWrapper = (project, container) ->
+                        wrapper = ich.task_list title: project
+                        container.append wrapper
                         d3.select(wrapper[0])
-                    displayItems createTaskListWrapper(project), 'urgent_task', tasks.map(calendarTime) for project, tasks of data.urgent
+                    displayItems createTaskListWrapper(project, $('.urgent-tasks .item-list')), 'urgent_task', tasks.map(calendarTime) for project, tasks of data.urgent
+                    displayItems createTaskListWrapper(project, $('.urgent-tasks-big .item-list')), 'task', tasks.map(calendarTime) for project, tasks of data.urgent
                 urgent()
                 today()
                 reloadQuickDrop()
@@ -35,6 +36,14 @@ jQuery ->
 
         projectList()
         taskList()
+    userEventHandling = ->
+        $('.urgent-tasks').mouseover () ->
+            $('.urgent-tasks-big').lightbox_me
+                overlayCSS:
+                    opacity: 0.7
+                    background: 'black'
+
 
     initQuickDrop(reloadData)
+    userEventHandling()
     reloadData()

@@ -1,5 +1,10 @@
 $task-background-color: #CCFFCC;
 
+.auto-resize {
+    min-height: 1px;
+    float: left;
+    width: 100%;
+}
 body
 {
     font-weight: normal;
@@ -7,38 +12,46 @@ body
     font-family: Arial,Helvetica,sans-serif;
 }
 
+    .task-list {
+        .header {
+            background-color: gray;
+            .title {
+                color: white;
+                font-family: Century Gothic, sans-serif;
+                font-size: 100%;
+                padding-left: 2%;
+            }
+        }
+    }
 #home-page {
 
+    .underlay {
+        width: 100%;
+    }
     .item-list {
         margin-top: 10px;
         border: 1px solid #676767;
         box-shadow: 3px 3px 2px #888888;
         border-width:2px;
         border-radius: 15px;
+        overflow: hidden;
     }
     .urgent-tasks {
         .item-list {
             background-color: red;
         }
     }
+    .urgent-tasks-big {
+        .item-list {
+            background-color: rgb(107, 235, 8);
+        }
+    }
     .today-tasks {
         .item-list {
             background-color: rgb(235, 235, 98);
-            overflow: hidden;
-        }
-        .hourly-task-list {
-            .header {
-                background-color: gray;
-                .title {
-                    color: white;
-                    font-family: Century Gothic, sans-serif;
-                    font-size: 100%;
-                    padding-left: 2%;
-                }
-            }
         }
     }
-    .by-project-task-list {
+    .task-list {
             .header {
                 color: white;
                 background-color: gray;
@@ -77,7 +90,7 @@ body
     }
 
 
-    .align-left {
+   .align-left {
         float: left;
         width: 20%;
         margin-left: 2%;

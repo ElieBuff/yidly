@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.lightbox_me
 //= require bootstrap
 //= require moment
 //= require d3

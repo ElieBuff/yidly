@@ -35,20 +35,10 @@
     </div> 
 </div>
 </script>
-<script id="by_project_task_list" type="text/html">
-    <div class="by-project-task-list">
+<script id="task_list" type="text/html">
+    <div class="task-list">
         <div class="header">
-            {{ project }}
-        </div>
-    </div>
-</script>
-
-<script id="hourly_task_list" type="text/html">
-    <div class="hourly-task-list">
-        <div class="header">
-            <div class="title">
-                {{ title }}
-            </div>
+            {{ title }}
         </div>
     </div>
 </script>
@@ -83,31 +73,40 @@
 </div>
 </script>
 <body>
-    <div id="home-page" class="sidebar-records">
-        <div class="align-left">
-            <div class="urgent-tasks">
-                <div class="list-header">
-                    URGENT TASKS
-               </div>
-                <div class="item-list">
-                </div>
+    <div id="home-page" class="sidebar-records auto-resize">
+        <div class="urgent-tasks-big" style="display:none;">
+            <div class="list-header">
+                URGENT TASKS
+           </div>
+            <div class="item-list">
             </div>
         </div>
-        <div class="align-middle">
-            <div class="today-tasks">
-                <div class="list-header">
-                    TODAY'S TASKS
-               </div>
-                <div class="item-list">
+        <div class="underlay auto-resize">
+            <div class="align-left">
+                <div class="urgent-tasks">
+                    <div class="list-header">
+                        URGENT TASKS
+                   </div>
+                    <div class="item-list">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="align-right">
-            <div class="projects">
-                <div class="list-header">
-                    PROJECTS
+            <div class="align-middle">
+                <div class="today-tasks">
+                    <div class="list-header">
+                        TODAY'S TASKS
+                   </div>
+                    <div class="item-list">
+                    </div>
                 </div>
-                <div class="item-list">
+            </div>
+            <div class="align-right">
+                <div class="projects">
+                    <div class="list-header">
+                        PROJECTS
+                    </div>
+                    <div class="item-list">
+                    </div>
                 </div>
             </div>
         </div>
