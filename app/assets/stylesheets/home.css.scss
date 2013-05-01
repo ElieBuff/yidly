@@ -89,6 +89,7 @@ body
         float: right;
         width:30%;
         margin-top: 2%;
+        margin-right:2%;
     }
 
     .task {
@@ -196,8 +197,26 @@ body
     }
     .projects 
     {
+        .project-wrapper {
+            margin-left: 2%;
+            margin-right: 2%;
+            margin-top: 25px;
+        }
         .project
         {
+            position: relative;
+            border: 11px solid rgb(126, 109, 42);
+            height: 100px;
+            width: 100%;
+            box-shadow: 5px 6px 3px #888888;
+            background-color: rgb(255, 243, 204);
+            border-width: 6px;
+            border-radius: 4px;
+            -webkit-box-sizing: border-box;
+             
+            .item-list {
+                background-color: blue;
+            }
             .hiring-manager {
                 color: #333333;
                 font-family: Copperplate, Copperplate Gothic Light, 'sans-serif';
@@ -234,15 +253,6 @@ body
             {
                 height: 100%;
             }
-            position: relative;
-            border: 11px solid rgb(126, 109, 42);
-            height: 100px;
-            width: 100%;
-            margin-top: 25px;
-            box-shadow: 5px 6px 3px #888888;
-            background-color: rgb(255, 243, 204);
-            border-width: 6px;
-            border-radius: 4px;
          }
          width: 100%%;
     }
