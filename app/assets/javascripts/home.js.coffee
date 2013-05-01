@@ -40,7 +40,7 @@ jQuery ->
         $('.urgent-tasks').mouseover () ->
             $('.urgent-tasks-big').lightbox_me
                 overlayCSS:
-                    opacity: 0.7
+                    opacity: 0.9
                     background: 'black'
 
 

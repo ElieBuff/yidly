@@ -18,20 +18,25 @@ body
         font-weight:bold;
     }
 .urgent-tasks-big {
+    .list-header {
+        margin-top: 80px;
+        text-align: center;
+    }
+
     .item-list {
         background-color: red;
+        box-shadow: 3px 3px 2px #ffffff;
+        margin-top: 30px;
     }
 }
 
 .task-list {
     .header {
         background-color: gray;
-        .title {
-            color: white;
-            font-family: Century Gothic, sans-serif;
-            font-size: 100%;
-            padding-left: 2%;
-        }
+        color: white;
+        font-family: Century Gothic, sans-serif;
+        font-size: 100%;
+        padding-left: 2%;
     }
 }
 .item-list {
