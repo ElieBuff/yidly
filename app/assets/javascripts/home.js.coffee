@@ -28,6 +28,7 @@ jQuery ->
                 today()
                 reloadQuickDrop()
 
+                
         projectList = ->
             $.get '/projects.json', (data) ->
                 displayItems d3.select('.projects .item-list'), 'project', data

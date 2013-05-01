@@ -19,7 +19,6 @@ group :assets do
   gem "tilt", "~> 1.3.7"
 end
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
 gem "rspec-rails", ">= 2.12.2", :group => [:development, :test]
 gem "guard-rspec", :group => [:development, :test]
 gem "rb-inotify", :group => [:development, :test]

@@ -1,4 +1,4 @@
-window.initQuickDrop = (callback)->
+window.initQuickDrop = (refreshDataCallBack)->
     callbacks = ->
         directAction = (obj, server_function) ->
             jQueryElement = $(this)
@@ -8,7 +8,7 @@ window.initQuickDrop = (callback)->
                 id: recordId
                 action: server_function
                 ), (data) ->
-                    callback()
+                    refreshDataCallBack()
         createRescheduleAction = ->
             $("#reschedule-dialog").dialog
                 dialogClass: 'reschedule-dialog'
@@ -50,41 +50,32 @@ window.initQuickDrop = (callback)->
                         delay: fromNowInSec(futureStr())
 
                 $.get url(recordId()), (data) ->
-                    callback()
+                    refreshDataCallBack()
         createRescheduleAction()
 
-        nextStage = (obj) ->
-            directAction obj, 'move_to_next_stage'
-        reschedule = (obj) ->
-            $('#reschedule-dialog').data('obj', obj)
-            $('#reschedule-dialog').dialog('open') 
-        wait = (obj) ->
-            directAction obj, 'wait'
-        reject = (obj) ->
-            directAction obj, 'reject'
-        actions = [
-                    {
-                    "icon" : "/assets/actions/done.gif",
-                    "callback" : nextStage
-                    }
-                    {
-                    "icon" : "/assets/actions/clock.png",           
-                    "callback" :  reschedule
-                    }
-                    {
-                    icon : "/assets/actions/hourglass.jpg"
-                    callback :  wait
-                    },
-                    {
-                    "icon" : "/assets/actions/stop.png",
-                    "callback" :  reject
-                    }
-                ]
+        actions =   [
+                        icon : "/assets/actions/done.gif"
+                        callback : (obj) ->
+                                        directAction obj, 'move_to_next_stage'
+                    ,
+                        icon : "/assets/actions/clock.png",           
+                        callback : (obj) ->
+                                        $('#reschedule-dialog').data('obj', obj)
+                                        $('#reschedule-dialog').dialog('open') 
+                    ,
+                        icon : "/assets/actions/hourglass.jpg"
+                        callback : (obj) ->
+                                        directAction obj, 'wait'
+                    ,
+                        icon : "/assets/actions/stop.png"
+                        callback : (obj) ->
+                                        directAction obj, 'reject'
+                    ]
     
-    $('body').sidebar({'actions' : callbacks()});
+    $('body').quickdrop({'actions' : callbacks()});
 
 window.reloadQuickDrop = ->
-     $('body').sidebar('reloadDraggable');
+     $('body').quickdrop('reloadDraggable');
 
     
  

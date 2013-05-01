@@ -100,7 +100,7 @@ body
 
     .task {
         .details {
-            float: left;
+            overflow: hidden;
         }
 
         .candidate-name {
@@ -108,13 +108,23 @@ body
             font-family: Copperplate, Copperplate Gothic Light, sans-serif;
             font-size: 20px;
         }
+        .candidate-name ,
+        .project-name {
+            overflow: hidden;
+            padding-right: 10px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
         .content-left {
             float:left;
+            width: 80px;
+            height:80px
         }
 
         .content-right {
-            float:left;
+            height:100%;
             padding-left:15px;
+            overflow:hidden;
         }
         .content-up {
             min-width: 320px;
