@@ -15,13 +15,13 @@ jQuery ->
                 today =  ->
                     createTaskListWrapper = (hour) ->
                         wrapper = ich.hourly_task_list hour: hour
-                        $('.today-tasks .tasks-list').append wrapper
+                        $('.today-tasks .item-list').append wrapper
                         d3.select(wrapper[0])
                     displayItems createTaskListWrapper(hour), 'task', tasks.map(calendarTime) for hour, tasks of data.today
                 urgent = ->
                     createTaskListWrapper = (project) ->
                         wrapper = ich.by_project_task_list project: project
-                        $('.urgent-tasks .tasks-list').append wrapper
+                        $('.urgent-tasks .item-list').append wrapper
                         d3.select(wrapper[0])
                     displayItems createTaskListWrapper(project), 'urgent_task', tasks.map(calendarTime) for project, tasks of data.urgent
                 urgent()
@@ -30,7 +30,7 @@ jQuery ->
 
         projectList = ->
             $.get '/projects.json', (data) ->
-                displayItems d3.select('.project-list'), 'project', data
+                displayItems d3.select('.projects .item-list'), 'project', data
 
         projectList()
         taskList()

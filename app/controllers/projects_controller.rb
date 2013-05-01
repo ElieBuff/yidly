@@ -68,7 +68,7 @@ class ProjectsController < UserAuthenticatedController
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to tasks_path, notice: 'Project was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Project was successfully created.' }
       else
         format.html { render action: "new" }
       end
