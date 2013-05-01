@@ -23,12 +23,18 @@ body
     }
     .today-tasks {
         .item-list {
-            background-color: yellow;
+            background-color: rgb(235, 235, 98);
+            overflow: hidden;
         }
         .hourly-task-list {
             .header {
-                color: white;
                 background-color: gray;
+                .title {
+                    color: white;
+                    font-family: Century Gothic, sans-serif;
+                    font-size: 100%;
+                    padding-left: 2%;
+                }
             }
         }
     }
@@ -197,13 +203,15 @@ body
     }
     .projects 
     {
+        .item-list {
+            background-color: rgb(187, 187, 197);
+        }
         .project-wrapper {
             margin-left: 2%;
             margin-right: 2%;
             margin-top: 25px;
         }
-        .project
-        {
+        .project {
             position: relative;
             border: 11px solid rgb(126, 109, 42);
             height: 100px;
@@ -214,9 +222,6 @@ body
             border-radius: 4px;
             -webkit-box-sizing: border-box;
              
-            .item-list {
-                background-color: blue;
-            }
             .hiring-manager {
                 color: #333333;
                 font-family: Copperplate, Copperplate Gothic Light, 'sans-serif';
@@ -256,5 +261,4 @@ body
          }
          width: 100%%;
     }
-
 }

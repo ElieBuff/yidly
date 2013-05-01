@@ -14,10 +14,10 @@ jQuery ->
                 calendarTime = (d) -> UTILS.formatTimeStampInDict(d, 'actionable_at')
                 today =  ->
                     createTaskListWrapper = (hour) ->
-                        wrapper = ich.hourly_task_list hour: hour
+                        wrapper = ich.hourly_task_list title: "#{hour}:00 - #{hour+1}:00"
                         $('.today-tasks .item-list').append wrapper
                         d3.select(wrapper[0])
-                    displayItems createTaskListWrapper(hour), 'task', tasks.map(calendarTime) for hour, tasks of data.today
+                    displayItems createTaskListWrapper(1*hour), 'task', tasks.map(calendarTime) for hour, tasks of data.today
                 urgent = ->
                     createTaskListWrapper = (project) ->
                         wrapper = ich.by_project_task_list project: project
