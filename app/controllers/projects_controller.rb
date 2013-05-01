@@ -2,7 +2,9 @@ class ProjectsController < UserAuthenticatedController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = current_user.projects.map {|prj| prj.extended}
+    @projects = current_user.projects.map {|prj| prj.extended}.sort_by {|prj|
+      p prj
+      prj['job_title']}
 
     respond_to do |format|
       format.html # index.html.erb

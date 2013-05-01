@@ -3,7 +3,13 @@
 <script id="urgent_task" type="text/html">
     <div>
         <div class="urgent-task" id= "urgent-task{{ id }}"> 
-            <div class="candidate-name"> {{ name }}</div>
+            <div class="row">
+                <div class="action-icon-wrapper">
+                    <img class="action-icon" src="{{ icon }}"></img>
+                </div>
+                <div class="candidate-name"> {{ name }}</div>
+                <div class="actionable-at"> {{ actionable_at }}</div>
+            </div>
         </div>
     </div>
 </script>
@@ -64,7 +70,7 @@
             </div>
             <div class="row">
                 <div class="records">
-                    {{ num_records }}
+                    {{ num_records }} RECORDS
                 </div>
                 <div class="company-logo">
                     <img src="{{ company_icon }}" class="company-logo-img">

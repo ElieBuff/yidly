@@ -9,16 +9,22 @@ body
 
 #home-page {
 
-    .tasks-list
-    {
+    .tasks-list {
         margin-top: 10px;
-        background-color: yellow;
         border: 1px solid #676767;
         box-shadow: 3px 3px 2px #888888;
         border-width:2px;
         border-radius: 15px;
     }
+    .urgent-tasks {
+        .tasks-list {
+            background-color: red;
+        }
+    }
     .today-tasks {
+        .tasks-list {
+            background-color: yellow;
+        }
         .hourly-task-list {
             .header {
                 color: white;
@@ -30,6 +36,24 @@ body
             .header {
                 color: white;
                 background-color: gray;
+            }
+            .urgent-task {
+                .row {
+                    width: 100%;
+                    margin-left: 1%;
+                }
+                .action-icon-wrapper {
+                    float: left;
+                    width: 12%
+                }
+                .action-icon {
+                    width: 20px;
+                    height: 20px;
+                }
+                .candidate-name {
+                    float: left;
+                    width: 80%;
+                }
             }
     }
     .list-header
@@ -78,31 +102,30 @@ body
     padding: 0 35px;
     }
 
-    .task
-    {
+    .task {
         .details {
-        float: left;
+            float: left;
         }
 
         .candidate-name {
-        color: #333333;
-        font-family: Copperplate, Copperplate Gothic Light, sans-serif;
-        font-size: 20px;
+            color: #333333;
+            font-family: Copperplate, Copperplate Gothic Light, sans-serif;
+            font-size: 20px;
         }
         .content-left {
             float:left;
         }
 
         .content-right {
-        float:left;
-        padding-left:15px;
+            float:left;
+            padding-left:15px;
         }
         .content-up {
-        min-width: 320px;
-        min-height: 40px;
+            min-width: 320px;
+            min-height: 40px;
         }
         .content-down {
-        min-width: 320px;
+            min-width: 320px;
         }
 
         .action-icon {
