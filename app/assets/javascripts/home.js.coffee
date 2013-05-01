@@ -49,6 +49,4 @@ jQuery ->
         reloadQuickDrop(); 
 
     initQuickDrop(reloadData)
-
-    initQuickDrop(reloadData)
     reloadData()

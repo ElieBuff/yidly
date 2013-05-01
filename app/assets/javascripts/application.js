@@ -15,7 +15,8 @@
 //= require bootstrap
 //= require moment
 //= require d3
-//= require_tree .
 //= require utils
 //= require mustache.min
+//= require jquery-ui.js
 //= require ICanHaz-no-mustache.min
+//= require_tree .

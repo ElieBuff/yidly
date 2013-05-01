@@ -9,15 +9,14 @@ jQuery ->
                 createHtml = (d, i) ->
                     ich.task(UTILS.formatTimeStampInDict(d, 'actionable_at')).html()
 
-                divs = container.selectAll('.task-container').data(tasks).html(createHtml)
-                divs.enter().append('div').attr('class', 'task-container').html(createHtml)
+                divs = container.selectAll('.tasks').data(tasks).html(createHtml)
+                divs.enter().append('div').attr('class', 'tasks').html(createHtml)
                 divs.exit().remove()
 
-            displayTasks d3.select('.today_tasks'), filterActionableBefore(data, new Date())
-            displayTasks d3.select('.all_tasks'), data
+            displayTasks d3.select('.today_tasks .tasks_container'), filterActionableBefore(data, new Date())
+            displayTasks d3.select('.all_tasks .tasks_container'), data
             reloadQuickDrop()
-    initQuickDrop(reloadData)
-
+    
     createDateFilter = ->
         $('.date_radio').click () ->
             switch $(this).val()
@@ -112,5 +111,6 @@ jQuery ->
         
 
     createDateFilter()
+    initQuickDrop(reloadData)
     reloadData()
     createDropBoxes()
