@@ -2,7 +2,9 @@ class ProjectsController < UserAuthenticatedController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = current_user.projects
+    @projects = current_user.projects.map {|prj| prj.extended}.sort_by {|prj|
+      p prj
+      prj['job_title']}
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +15,6 @@ class ProjectsController < UserAuthenticatedController
   # GET /projects/random.json
   def random
     respond_to do |format|
-      #format.json { render json: current_user.projects.first.records.group("records.id", "stages") }
       format.json { render json: current_user.projects.first.stages_and_records }
     end
   end
@@ -67,7 +68,7 @@ class ProjectsController < UserAuthenticatedController
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to tasks_path, notice: 'Project was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Project was successfully created.' }
       else
         format.html { render action: "new" }
       end

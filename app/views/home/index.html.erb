@@ -1,10 +1,13 @@
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 <script id="urgent_task" type="text/html">
     <div>
         <div class="urgent-task" id= "urgent-task{{ id }}"> 
-            <div class="candidate-name"> {{ name }}</div>
-            <div class="job-title">{{ project }}</div> 
+            <div class="row">
+                <div class="action-icon-wrapper">
+                    <img class="action-icon" src="{{ icon }}"></img>
+                </div>
+                <div class="candidate-name"> {{ name }}</div>
+                <div class="actionable-at"> {{ actionable_at }}</div>
+            </div>
         </div>
     </div>
 </script>
@@ -32,9 +35,26 @@
         </div> 
     </div>
 </script>
+<script id="by_project_task_list" type="text/html">
+    <div class="by-project-task-list">
+        <div class="header">
+            {{ project }}
+        </div>
+    </div>
+</script>
 
+<script id="hourly_task_list" type="text/html">
+    <div class="hourly-task-list">
+        <div class="header">
+            <div class="title">
+                {{ title }}
+            </div>
+        </div>
+    </div>
+</script>
 <script id="project" type="text/html">
     <div>
+    <div class="project-wrapper">
         <div class="project" id= "project #{{ id }}"> 
             <div class="row">
                 <div class="job-title">
@@ -49,12 +69,18 @@
                     {{ hiring_manager }}
                 </div>
             </div>
-            <div class="company-logo">
-                <img src="{{ company_icon }}" class="company-logo-img">
-                </img>
+            <div class="row">
+                <div class="records">
+                    {{ num_records }} RECORDS
+                </div>
+                <div class="company-logo">
+                    <img src="{{ company_icon }}" class="company-logo-img">
+                    </img>
+                </div>
             </div>
         </div> 
     </div>
+</div>
 </script>
 <body>
     <div id="home-page" class="quickdrop-records">
@@ -63,7 +89,7 @@
                 <div class="list-header">
                     URGENT TASKS
                </div>
-                <div class="tasks-list">
+                <div class="item-list">
                 </div>
             </div>
         </div>
@@ -72,16 +98,16 @@
                 <div class="list-header">
                     TODAY'S TASKS
                </div>
-                <div class="tasks-list">
+                <div class="item-list">
                 </div>
             </div>
         </div>
-        <div class="align_right">
-            <div id="projects">
+        <div class="align-right">
+            <div class="projects">
                 <div class="list-header">
                     PROJECTS
                 </div>
-                <div class="project-list">
+                <div class="item-list">
                 </div>
             </div>
         </div>

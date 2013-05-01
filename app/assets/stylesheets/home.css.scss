@@ -8,6 +8,60 @@ body
 }
 
 #home-page {
+
+    .item-list {
+        margin-top: 10px;
+        border: 1px solid #676767;
+        box-shadow: 3px 3px 2px #888888;
+        border-width:2px;
+        border-radius: 15px;
+    }
+    .urgent-tasks {
+        .item-list {
+            background-color: red;
+        }
+    }
+    .today-tasks {
+        .item-list {
+            background-color: rgb(235, 235, 98);
+            overflow: hidden;
+        }
+        .hourly-task-list {
+            .header {
+                background-color: gray;
+                .title {
+                    color: white;
+                    font-family: Century Gothic, sans-serif;
+                    font-size: 100%;
+                    padding-left: 2%;
+                }
+            }
+        }
+    }
+    .by-project-task-list {
+            .header {
+                color: white;
+                background-color: gray;
+            }
+            .urgent-task {
+                .row {
+                    width: 100%;
+                    margin-left: 1%;
+                }
+                .action-icon-wrapper {
+                    float: left;
+                    width: 12%
+                }
+                .action-icon {
+                    width: 20px;
+                    height: 20px;
+                }
+                .candidate-name {
+                    float: left;
+                    width: 80%;
+                }
+            }
+    }
     .list-header
     {
         color: gray;
@@ -23,63 +77,51 @@ body
     }
 
 
-    .align_left
-    {
-    float: left;
-    width: 20%;
+    .align-left {
+        float: left;
+        width: 20%;
+        margin-left: 2%;
+        margin-top: 2%;
     }
     .align-middle
     {
         float: left;
-        width: 50%;
+        width: 39%;
+        margin-left:5%;
+        margin-top: 2%;
     }
 
-    .align_right
-    {
-    float: right;
-    width:30%;
+    .align-right {
+        float: right;
+        width:30%;
+        margin-top: 2%;
+        margin-right:2%;
     }
 
-    .date_selection
-    {
-    width:300px;
-    margin:0 auto;
-    }
-
-    .chkb_date
-    {
-    padding: 0 35px;
-    }
-
-    .tasks-list
-    {
-    }
-
-    .task
-    {
+    .task {
         .details {
-        float: left;
+            float: left;
         }
 
         .candidate-name {
-        color: #333333;
-        font-family: Copperplate, Copperplate Gothic Light, sans-serif;
-        font-size: 20px;
+            color: #333333;
+            font-family: Copperplate, Copperplate Gothic Light, sans-serif;
+            font-size: 20px;
         }
         .content-left {
             float:left;
         }
 
         .content-right {
-        float:left;
-        padding-left:15px;
+            float:left;
+            padding-left:15px;
         }
         .content-up {
-        min-width: 320px;
-        min-height: 40px;
+            min-width: 320px;
+            min-height: 40px;
         }
         .content-down {
-        min-width: 320px;
+            min-width: 320px;
         }
 
         .action-icon {
@@ -125,107 +167,61 @@ body
         font-weight:bold;
         }
 
-
-        width:420px; 
         color: #676767;
         font-size: 12px;
-        border: 1px solid #676767;
         height: 80px;
         padding: 10px 5px;
         margin: 10px;
+        border: 1px solid #676767;
         box-shadow: 3px 3px 2px #888888;
-        background-color: $task-background-color;
         border-width:2px;
         border-radius: 15px;
-    }
+        background-color: $task-background-color;
 
-    .status_container
+        .reschedule-icon{
+            background: url(http://www.clipartheaven.com/clipart/time/alarm_clock_03.gif) no-repeat;
+            background-size: 100% 100%;
+            width: 40px;
+            height: 40px;
+            border: none;
+            display:inline-block;
+            position:relative;
+            text-decoration:none;
+        }
+
+        .reschedule-count {
+            position:absolute;
+            top:-4px;
+            right:-4px;
+            background-color:#FF0000;
+            color:#fff;
+            padding:2px;
+            font-family:tahoma, arial, 'sans-serif';
+            font-size:9px;
+            font-weight:bold;
+        }
+    }
+    .projects 
     {
-    position:fixed;
-    width:300px;
-    margin:0 auto;
-    }
-
-    .status_box
-    {
-    width:100%;
-    padding: 10px 0;
-    }
-
-    .status_title
-    {
-    font-size: 13px;
-    font-weight: bold;
-    }
-
-
-    .reschedule_box 
-    {
-    border: 1px solid orange;
-    }
-
-
-    .reschedule_box 
-    {
-    background-color: #fde0b5;
-    }
-
-    .ui-widget-header 
-    {
-    display:none !important;
-    }
-
-
-    .ui-dialog .ui-dialog-content {
-    border: 0;
-    padding: .5em 1em;
-    background-color: $task-background-color !important;
-    overflow: auto;
-    zoom: 1;
-    opacity: 0.7;
-    box-shadow: 5px 5px 2px #888888;
-    border-color: #676767;
-    background-color: $task-background-color;
-    border-width:2px;
-    border: 1px solid #676767;
-    border-radius: 15px;
-    }
-    .reschedule-option-img {
-    width: 150px;
-    height: 150px;
-    }
-    .reschedule-option-next-line {
-    clear:both;
-    }
-    .reschedule-option {
-    float: right;
-    }
-    .reschedule-icon{
-    background: url(http://www.clipartheaven.com/clipart/time/alarm_clock_03.gif) no-repeat;
-    background-size: 100% 100%;
-    width: 40px;
-    height: 40px;
-    border: none;
-    display:inline-block;
-    position:relative;
-    text-decoration:none;
-    }
-
-    .reschedule-count {
-    position:absolute;
-    top:-4px;
-    right:-4px;
-    background-color:#FF0000;
-    color:#fff;
-    padding:2px;
-    font-family:tahoma, arial, 'sans-serif';
-    font-size:9px;
-    font-weight:bold;
-    }
-    #projects 
-    {
-        .project
-        {
+        .item-list {
+            background-color: rgb(187, 187, 197);
+        }
+        .project-wrapper {
+            margin-left: 2%;
+            margin-right: 2%;
+            margin-top: 25px;
+        }
+        .project {
+            position: relative;
+            border: 11px solid rgb(126, 109, 42);
+            height: 100px;
+            width: 100%;
+            box-shadow: 5px 6px 3px #888888;
+            background-color: rgb(255, 243, 204);
+            border-width: 6px;
+            border-radius: 4px;
+            -webkit-box-sizing: border-box;
+             
             .hiring-manager {
                 color: #333333;
                 font-family: Copperplate, Copperplate Gothic Light, 'sans-serif';
@@ -262,17 +258,7 @@ body
             {
                 height: 100%;
             }
-            position: relative;
-            border: 11px solid rgb(126, 109, 42);
-            height: 100px;
-            width: 100%;
-            margin-top: 25px;
-            box-shadow: 5px 6px 3px #888888;
-            background-color: rgb(255, 243, 204);
-            border-width: 6px;
-            border-radius: 4px;
          }
          width: 100%%;
     }
-
 }

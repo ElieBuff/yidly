@@ -1,52 +1,40 @@
 jQuery ->
     return if $('#home-page').length == 0
     reloadData = ->
-        displayListFromServer = (args) ->
-            $.get args.url, (data) ->
-                displayItems = (container, template, items) ->
-                    createHtml = (d, i) ->
-                        ich[template](d).html()
+        displayItems = (container, template, items) ->
+            createHtml = (d, i) ->
+                ich[template](d).html()
 
-                    divs = container.selectAll('.item-container').data(items).html(createHtml)
-                    divs.enter().append('div').attr('class', 'item-container').html(createHtml)
-                    divs.exit().remove()
-                mappie = (collection, func) ->
-                    if func then collection.map(func) else collection
-                filterie = (collection, func) ->
-                    if func then collection.filter(func) else collection
-                
-                displayItems param.container, param.template, mappie(filterie(data, param.filter), args.mapper) for param in args.params
-                reloadQuickDrop()
+            divs = container.selectAll('.item-container').data(items).html(createHtml)
+            divs.enter().append('div').attr('class', 'item-container').html(createHtml)
+            divs.exit().remove()
 
         taskList = ->
-           filterActionableBefore = (tasks, datePoint) ->
-                tasks.filter (task) -> new Date(task.actionable_at) < datePoint
-
-            displayListFromServer
-                url: '/tasks.json',
-                mapper: (d) -> UTILS.formatTimeStampInDict(d, 'actionable_at'),
-                params : [
-                        container: d3.select('.today-tasks .tasks-list')
-                        filter: (x) -> (new Date(x.actionable_at) >= moment().startOf('day'))
-                        template: 'task'
-                    ,
-                        container: d3.select('.urgent-tasks .tasks-list')
-                        filter: (x) -> (new Date(x.actionable_at) < moment().startOf('day'))
-                        template: 'urgent_task'
-                        ]
+            $.get '/tasks/urgent_and_today.json?tipping_point=' + moment().startOf('day')._d, (data) ->
+                calendarTime = (d) -> UTILS.formatTimeStampInDict(d, 'actionable_at')
+                today =  ->
+                    createTaskListWrapper = (hour) ->
+                        wrapper = ich.hourly_task_list title: "#{hour}:00 - #{hour+1}:00"
+                        $('.today-tasks .item-list').append wrapper
+                        d3.select(wrapper[0])
+                    displayItems createTaskListWrapper(1*hour), 'task', tasks.map(calendarTime) for hour, tasks of data.today
+                urgent = ->
+                    createTaskListWrapper = (project) ->
+                        wrapper = ich.by_project_task_list project: project
+                        $('.urgent-tasks .item-list').append wrapper
+                        d3.select(wrapper[0])
+                    displayItems createTaskListWrapper(project), 'urgent_task', tasks.map(calendarTime) for project, tasks of data.urgent
+                urgent()
+                today()
+                reloadQuickDrop()
 
                 
         projectList = ->
-            displayListFromServer
-                url: '/projects.json',
-                params: [
-                   container: d3.select('.project-list')
-                   template: 'project'
-                ]
+            $.get '/projects.json', (data) ->
+                displayItems d3.select('.projects .item-list'), 'project', data
 
-        taskList()
         projectList()
-        reloadQuickDrop(); 
+        taskList()
 
     initQuickDrop(reloadData)
     reloadData()
