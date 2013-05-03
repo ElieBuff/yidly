@@ -1,4 +1,5 @@
 class TasksController < UserAuthenticatedController
+  HOUR = 3600
   before_filter :authenticate_user!
 
   def all
@@ -20,18 +21,25 @@ class TasksController < UserAuthenticatedController
   end
 
 
+  def time_slot(timestamp, point_before, point_after, before, between, after)
+    (timestamp < point_before) ? before :
+      (timestamp < point_after) ? between : after
+  end
   def urgent_and_today
-    tipping_point = Time.parse params[:tipping_point]
+    tipping_point_today = Time.parse params[:tipping_point]
+    tipping_point_later = tipping_point_today + 24*HOUR
     tasks = {
       :urgent => [],
-      :today => []
+      :today => [],
+      :later => []
     }.merge all.group_by {|task|
-      (task[:actionable_at] < tipping_point) ? :urgent : :today
+      time_slot task[:actionable_at], tipping_point_today, tipping_point_later, :urgent, :today, :later
     }
     respond_to do |format|
       format.json { render json: {
         :urgent => Hash[tasks[:urgent].sort_by {|t| t[:actionable_at]}.group_by {|t| t[:project]}.sort],
-        :today => Hash[tasks[:today].sort_by {|t| t[:actionable_at]}.group_by {|t| t[:actionable_at].hour}.sort]
+        :today => Hash[tasks[:today].sort_by {|t| t[:actionable_at]}.group_by {|t| t[:actionable_at].hour}.sort],
+        :later => Hash[tasks[:later].sort_by {|t| t[:actionable_at]}.group_by {|t| t[:actionable_at].beginning_of_day}.sort]
       }
       }
 

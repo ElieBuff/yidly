@@ -11,18 +11,19 @@ jQuery ->
 
         taskList = ->
             $.get '/tasks/urgent_and_today.json?tipping_point=' + moment().startOf('day')._d, (data) ->
+                createTaskListWrapper = (title, container) ->
+                    wrapper = ich.task_list title: title
+                    container.append wrapper
+                    d3.select(wrapper[0])
+
                 calendarTime = (d) -> UTILS.formatTimeStampInDict(d, 'actionable_at')
                 today =  ->
-                    createTaskListWrapper = (hour) ->
-                        wrapper = ich.task_list title: "#{hour}:00 - #{hour+1}:00"
-                        $('.today-tasks .item-list').append wrapper
-                        d3.select(wrapper[0])
-                    displayItems createTaskListWrapper(1*hour), 'task', tasks.map(calendarTime) for hour, tasks of data.today
+                    hour_str = (hour) -> "#{hour}:00 - #{hour+1}:00"
+
+                    displayItems createTaskListWrapper(hour_str(1*hour), $('.today-tasks .item-list')), 'task', tasks.map(calendarTime) for hour, tasks of data.today
+                    displayItems createTaskListWrapper(moment(day).fromNow(), $('.later-tasks .item-list')), 'task', tasks.map(calendarTime) for day, tasks of data.later
+
                 urgent = ->
-                    createTaskListWrapper = (project, container) ->
-                        wrapper = ich.task_list title: project
-                        container.append wrapper
-                        d3.select(wrapper[0])
                     displayItems createTaskListWrapper(project, $('.urgent-tasks .item-list')), 'urgent_task', tasks.map(calendarTime) for project, tasks of data.urgent
                     displayItems createTaskListWrapper(project, $('.urgent-tasks-big .item-list')), 'task', tasks.map(calendarTime) for project, tasks of data.urgent
                 urgent()
