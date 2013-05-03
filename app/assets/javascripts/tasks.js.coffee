@@ -9,6 +9,7 @@ jQuery ->
                 createHtml = (d, i) ->
                     ich.task(UTILS.formatTimeStampInDict(d, 'actionable_at')).html()
 
+                divs = container.selectAll('.tasks').data(tasks).html(createHtml)
                 divs.enter().append('div').attr('class', 'tasks').html(createHtml)
                 divs.exit().remove()
 
