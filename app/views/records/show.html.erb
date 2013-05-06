@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @current_record.name %>
+</p>
+
+<p>
+  <b>email:</b>
+  <%= @current_record.email %>
+</p>
+
+<p>
+  <b>Project:</b>
+  <%= @current_record.project.job_title %>
+</p>
+
+
+<%= link_to 'Edit', edit_record_path(@current_record) %> |
+<%= link_to 'Back', records_path %>

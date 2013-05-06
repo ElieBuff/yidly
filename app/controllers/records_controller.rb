@@ -33,6 +33,7 @@ class RecordsController < UserAuthenticatedController
 
   # GET /records/1/edit
   def edit
+    @first_stages_with_project_name = current_user.first_stages.collect {|p| [ p.project.job_title, p.id ] }
   end
   
   # GET /records/1/reschedule_in_sec
