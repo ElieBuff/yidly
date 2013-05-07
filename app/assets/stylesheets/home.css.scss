@@ -48,6 +48,22 @@ body
     overflow: hidden;
 }
 
+.reschedule-dialog{
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    border: 0;
+    padding: .5em 1em;
+    background-color: #c7c7c7 !important;
+    box-shadow: 5px 5px 2px #888888;
+    border-color: #676767;
+    background-color: $task-background-color;
+    border-width:2px;
+    border: 1px solid #676767;
+    width: 190px !important;
+    height: 120px !important;
+}
+
 #home-page {
 
     .underlay {

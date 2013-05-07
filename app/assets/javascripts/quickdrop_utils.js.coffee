@@ -1,29 +1,34 @@
 window.initQuickDrop = (refreshDataCallBack)->
     callbacks = ->
-        directAction = (obj, server_function) ->
-            jQueryElement = $(this)
-            id = obj.attr('id')
-            recordId = id.replace('task', '')
+        directAction = (recordId, server_function) ->
             $.get Mustache.render("/records/{{ id }}/{{ action }}.json"
                 id: recordId
                 action: server_function
                 ), (data) ->
                     refreshDataCallBack()
+        waitForSec = (recordId) ->
+            $.get Mustache.render("/records/{{ id }}/wait_for_sec.json?delay=86400"
+                id: recordId
+                ), (data) ->
+                    refreshDataCallBack()
         createRescheduleAction = ->
-            $("#reschedule-dialog").dialog
-                dialogClass: 'reschedule-dialog'
-                show: 'slide'
-                hide: 'slide'
+            $("#dialog").dialog
+                show: 
+                    effect: "fade"
+                    duration: 800
+                hide: 
+                    effect: "fade"
+                    duration: 500
                 autoOpen: false
                 resizable: false
-                width:220
                 dialogClass:'reschedule-dialog'
                 modal: true
+            $('#dialog').load('/dialogs.html')
                     
-            $(document).on "click", "body", () -> $('#reschedule-dialog').dialog('close')
+            $(document).on "click", "body", () -> $('#dialog').dialog('close')
                         
-            $('.reschedule-option').click () ->
-                dataElement = -> $('#reschedule-dialog')
+            $(document).on "click", ".reschedule-option", () ->
+                dataElement = -> $('#dialog')
                 recordId = -> 
                     obj = dataElement().data('obj')
                     obj.attr('id').replace('task', '');
@@ -53,23 +58,27 @@ window.initQuickDrop = (refreshDataCallBack)->
                     refreshDataCallBack()
         createRescheduleAction()
 
+        getRecordId = (obj) ->
+            id = obj.attr('id')
+            recordId = id.replace('task', '')
+
         actions =   [
                         icon : "/assets/actions/done.gif"
                         callback : (obj) ->
-                                        directAction obj, 'move_to_next_stage'
+                                        directAction getRecordId(obj), 'move_to_next_stage'
                     ,
                         icon : "/assets/actions/clock.png",           
                         callback : (obj) ->
-                                        $('#reschedule-dialog').data('obj', obj)
-                                        $('#reschedule-dialog').dialog('open') 
+                                        $('#dialog').data('obj', obj)
+                                        $('#dialog').dialog('open') 
                     ,
                         icon : "/assets/actions/hourglass.jpg"
                         callback : (obj) ->
-                                        directAction obj, 'wait'
+                                        waitForSec getRecordId(obj)
                     ,
                         icon : "/assets/actions/stop.png"
                         callback : (obj) ->
-                                        directAction obj, 'reject'
+                                        directAction getRecordId(obj), 'reject'
                     ]
     
     $('body').quickdrop({'actions' : callbacks()});
