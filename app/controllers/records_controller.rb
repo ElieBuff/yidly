@@ -26,7 +26,7 @@ class RecordsController < UserAuthenticatedController
   # GET /records/new
   # GET /records/new.json
   def new
-    @record = Record.new 
+    @current_record = Record.new 
     set_first_stages_with_project_name
 
     respond_to do |format|
