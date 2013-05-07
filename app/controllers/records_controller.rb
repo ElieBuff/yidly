@@ -20,11 +20,14 @@ class RecordsController < UserAuthenticatedController
     end
   end
 
+  def set_first_stages_with_project_name
+    @first_stages_with_project_name = current_user.first_stages.collect {|p| [ p.project.job_title, p.id ] }
+  end
   # GET /records/new
   # GET /records/new.json
   def new
     @record = Record.new 
-    @first_stages_with_project_name = current_user.first_stages.collect {|p| [ p.project.job_title, p.id ] }
+    set_first_stages_with_project_name
 
     respond_to do |format|
       format.html # new.html.erb

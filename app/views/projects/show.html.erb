@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Job Title:</b>
+  <%= @current_project.job_title %>
+</p>
+
+<p>
+  <b>Company:</b>
+  <%= @current_project.company %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @current_project.location %>
+</p>
+
+<p>
+  <b>Hiring Manager:</b>
+  <%= @current_project.hiring_manager %>
+</p>
+
+<p>
+  <b>Job Description:</b>
+  <%= @current_project.job_description %>
+</p>
+<%= link_to 'Edit', edit_project_path(@current_project) %> |
+<%= link_to 'Back', projects_path %>
