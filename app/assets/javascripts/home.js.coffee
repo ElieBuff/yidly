@@ -5,15 +5,14 @@ jQuery ->
         taskList = ->
             $.get '/tasks/urgent_and_today.json?tipping_point=' + moment().startOf('day')._d, (data) ->
                 
-                GetHour = (d) -> "#{(1*d)}:00 - #{(1*d)+1}:00" 
-                GetDay = (d) -> moment(d).fromNow() 
+                GetHour = (d) -> moment(d).calendar()
+                GetDay = (d) -> moment(d).fromNow()
                 GetProject = (d) -> d
 
-                createTaskListWrapper = (data, GetTitle, itemsList, template) ->
+                createTaskListWrapper = (data, titleFunc, itemsList, template) ->
                     calendarTime = (d) -> UTILS.formatTimeStampInDict(d, 'actionable_at')
                     createTitle = (d) ->
-                        wrapper = ich.task_list title: GetTitle d
-                        wrapper.html()
+                        ich.task_list(title: titleFunc(d)).html()
                     createTask = (d, i) ->
                         ich[template](d).html()
 
