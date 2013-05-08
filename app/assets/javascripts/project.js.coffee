@@ -1,7 +1,8 @@
 jQuery ->
     return if $('#project-page').length == 0
+    project_id = $('#project-page').attr('project-id')
     reloadData = ->
-        $.get '/projects/random.json', (stages_and_records) ->
+        $.get "/projects/#{project_id}/display.json", (stages_and_records) ->
             displayStages = (stagesContainer, stages_and_records) ->
                 displayProjectName = (name) ->
                     $('.project-name').append(ich.project name:name)

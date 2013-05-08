@@ -15,16 +15,10 @@ class ProjectsController < UserAuthenticatedController
     end
   end
 
-  # GET /projects/random.json
-  def random
-    respond_to do |format|
-      format.json { render json: current_user.projects.first.stages_and_records }
-    end
-  end
-
   def display
     respond_to do |format|
       format.html #display.html
+      format.json { render json: @current_project.stages_and_records }
     end
   end
 
