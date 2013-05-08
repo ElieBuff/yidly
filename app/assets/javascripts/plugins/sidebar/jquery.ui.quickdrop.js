@@ -9,18 +9,11 @@
 		_create: function() {
 			startDragabble = function(){
 				$(this).addClass('draged');
-				$('.quickdrop').animate({
-          			opacity: 0.9
-          			}, 500, function() {
-          		});
-           		
+				$('.quickdrop').slideDown(500);
 			}
 			stopDragabble = function(){
 				$(this).removeClass('draged');
-				$('.quickdrop').animate({
-          			opacity: 0
-          			}, 500, function() {
-           		});
+				$('.quickdrop').slideUp(500);
 			}
 			getQuickDrop = function(){
 				htmlStr = "";
@@ -30,8 +23,7 @@
 				return htmlStr;
 			}
 			invokeTaskAction = function (jqueryObj, ui){
-				debugger;
-		 		jqueryObj.data('callback').call(undefined, ui.draggable);
+				jqueryObj.data('callback').call(undefined, ui.draggable);
 		 	}
 			var self = this,
 				   o = self.options; 
@@ -61,9 +53,7 @@
 		      			 	invokeTaskAction($(this), ui);
 						}
 		      		});
-		      		//var drop_function = $(".action").droppable('option', 'drop')
-					//drop_function();
-			 	}
+		      	}
 			 	insertIcons()
 			 	initIcons()
 		 	}
@@ -82,6 +72,7 @@
 					cursor: "move",
 					helper: "clone",
 					revert: "invalid",
+					refreshPositions: true,
 					opacity: 0.9,
 					zIndex: 100,
 					cursorAt: { top: -2, left: -2 },

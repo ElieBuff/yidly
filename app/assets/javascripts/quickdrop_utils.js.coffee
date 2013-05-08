@@ -18,7 +18,11 @@ window.initQuickDrop = (refreshDataCallBack)->
                     duration: 800
                 hide: 
                     effect: "fade"
-                    duration: 500
+                    duration: 800
+                position:
+                    my: "top"
+                    at: "top"
+                    of: "#home-page" 
                 autoOpen: false
                 resizable: false
                 dialogClass:'reschedule-dialog'
