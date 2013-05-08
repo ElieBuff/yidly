@@ -11,10 +11,7 @@ Dashboard::Application.routes.draw do
   devise_for :users
   resources :users
   resources :projects do
-    collection do
-      get 'random'
-      get 'display'
-    end
+      get 'display', :on => :member
   end
   resources :tests
   resources :records do

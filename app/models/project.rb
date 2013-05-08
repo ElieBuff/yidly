@@ -14,7 +14,7 @@ class Project < ActiveRecord::Base
 
   def stages_and_records
     {
-      :name => self.name,
+      :name => "#{self.job_title}  (#{self.location})",
       :stages => self.stages.order(:id).map {|stage|
                     stage.name
                  },

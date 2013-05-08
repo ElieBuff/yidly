@@ -45,30 +45,32 @@
 <script id="project" type="text/html">
     <div>
     <div class="project-wrapper">
-        <div class="project" id= "project #{{ id }}"> 
-            <div class="row">
-                <div class="job-title">
-                    {{ job_title }}
+        <a href="projects/{{ id }}/display.html">
+            <div class="project" id= "project #{{ id }}"> 
+                <div class="row">
+                    <div class="job-title">
+                        {{ job_title }}
+                    </div>
+                    <div class="location">
+                        {{ location }}
+                    </div>
                 </div>
-                <div class="location">
-                    {{ location }}
+                <div class="row">
+                    <div class="hiring-manager">
+                        {{ hiring_manager }}
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="hiring-manager">
-                    {{ hiring_manager }}
+                <div class="row">
+                    <div class="records">
+                        {{ num_records }} RECORDS
+                    </div>
+                    <div class="company-logo">
+                        <img src="{{ company_icon }}" class="company-logo-img">
+                        </img>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="records">
-                    {{ num_records }} RECORDS
-                </div>
-                <div class="company-logo">
-                    <img src="{{ company_icon }}" class="company-logo-img">
-                    </img>
-                </div>
-            </div>
-        </div> 
+            </div> 
+        </a>
     </div>
 </div>
 </script>
