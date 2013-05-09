@@ -11,7 +11,10 @@ window.initQuickDrop = (refreshDataCallBack)->
                 id: recordId
                 ), (data) ->
                     refreshDataCallBack()
+        rescheduleDrop = (recordId) ->
+            $('.quickdrop-records').quickdrop({'quickdropClass' : 'quickdrop_clickable'});
         createRescheduleAction = ->
+
             $("#dialog").dialog
                 show: 
                     effect: "fade"
@@ -60,7 +63,7 @@ window.initQuickDrop = (refreshDataCallBack)->
 
                 $.get url(recordId()), (data) ->
                     refreshDataCallBack()
-        createRescheduleAction()
+        
 
         getRecordId = (obj) ->
             id = obj.attr('id')
@@ -73,8 +76,7 @@ window.initQuickDrop = (refreshDataCallBack)->
                     ,
                         icon : "/assets/actions/clock.png",           
                         callback : (obj) ->
-                                        $('#dialog').data('obj', obj)
-                                        $('#dialog').dialog('open') 
+                                        rescheduleDrop getRecordId(obj)
                     ,
                         icon : "/assets/actions/hourglass.jpg"
                         callback : (obj) ->
@@ -91,4 +93,3 @@ window.reloadQuickDrop = ->
      $('body').quickdrop('reloadDraggable');
 
     
- 
