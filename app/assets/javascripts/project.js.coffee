@@ -26,6 +26,8 @@ jQuery ->
                 setWidth stages_and_records.stages.length
 
             displayStages $('.stages'), stages_and_records
+            reloadQuickDrop()
 
+    initQuickDrop(reloadData)
     reloadData()
 
