@@ -1,5 +1,6 @@
 .quickdrop{
-	opacity: 0;
+  display:none;
+	opacity: 0.9;
 	width:100%;
 	height:60px;
 	position: absolute;
