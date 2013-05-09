@@ -13,16 +13,16 @@ window.initQuickDrop = (refreshDataCallBack)->
                     refreshDataCallBack()
         createRescheduleAction = ->
             $("#dialog").dialog
-                show: 
+                show:
                     effect: "fade"
                     duration: 800
-                hide: 
+                hide:
                     effect: "fade"
                     duration: 800
                 position:
                     my: "top"
                     at: "top"
-                    of: "#home-page" 
+                    of: ".quickdrop-records"
                 autoOpen: false
                 resizable: false
                 dialogClass:'reschedule-dialog'
@@ -85,10 +85,10 @@ window.initQuickDrop = (refreshDataCallBack)->
                                         directAction getRecordId(obj), 'reject'
                     ]
     
-    $('body').quickdrop({'actions' : callbacks()});
+    $('body').quickdrop({'actions' : callbacks()})
 
 window.reloadQuickDrop = ->
-     $('body').quickdrop('reloadDraggable');
+     $('body').quickdrop('reloadDraggable')
 
     
  

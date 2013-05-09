@@ -48,38 +48,6 @@ body
     overflow: hidden;
 }
 
-.reschedule-dialog{
-    -webkit-border-bottom-right-radius: 15px;
-    -webkit-border-bottom-left-radius: 15px;
-    -moz-border-radius-bottomright: 15px;
-    -moz-border-radius-bottomleft: 15px;
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-    border: 0;
-    background-color: #c7c7c7 !important;
-    box-shadow: 5px 5px 2px #888888;
-    border-color: #676767;
-    background-color: $task-background-color;
-    border-width:2px;
-    border: 1px solid #676767;
-    width: 70% !important;
-    height: 80px !important;
-}
-.reschedule-container{
-    width:100%;
-}
-
-.reschedule-option {
-    float: left;
-    width:150px;
-}
-.reschedule-option-img{
-    width:80px;
-    height:80px;
-    display: block;
-    margin: 0 auto;
-}
-
 body#home-page {
 
     .underlay {
