@@ -11,7 +11,6 @@ window.initQuickDrop = (refreshDataCallBack)->
                 id: getRecordId(obj)
                 ), (data) ->
                     refreshDataCallBack()
-<<<<<<< HEAD
         rescheduleAction  = (obj) ->
             showRescheduleBox = ->
                 setBoxDesign = () ->
@@ -26,35 +25,6 @@ window.initQuickDrop = (refreshDataCallBack)->
                 $('.reschedule-box').slideUp(500, () -> $('body').quickdrop('hideQuickBar'));
             eventHandler = ->
                 $(document).on "click", "body", () -> hideRescheduleBox()
-=======
-        createRescheduleAction = ->
-            $("#dialog").dialog
-                show:
-                    effect: "fade"
-                    duration: 800
-                hide:
-                    effect: "fade"
-                    duration: 800
-                position:
-                    my: "top"
-                    at: "top"
-                    of: ".quickdrop-records"
-                autoOpen: false
-                resizable: false
-                dialogClass:'reschedule-dialog'
-                modal: true
-            $('#dialog').load('/dialogs.html')
-                    
-            $(document).on "click", "body", () -> $('#dialog').dialog('close')
-                        
-            $(document).on "click", ".reschedule-option", () ->
-                dataElement = -> $('#dialog')
-                recordId = -> 
-                    obj = dataElement().data('obj')
-                    obj.attr('id').replace('task', '');
-                    
-                clear = -> dataElement().removeData('obj')
->>>>>>> upstream/master
 
                 $(document).on "click", ".reschedule-option", () ->
                     jQueryThis = $(this)
@@ -78,7 +48,8 @@ window.initQuickDrop = (refreshDataCallBack)->
 
                     $.get url(getRecordId(obj)), (data) ->
                         refreshDataCallBack()
-            
+                    
+
             showRescheduleBox()
             eventHandler()
 
@@ -135,5 +106,7 @@ window.initQuickDrop = (refreshDataCallBack)->
         'dragHelperCallback' : getDragHelper, 
         'actions' : callbacks()
     });
+
+    
 
     
