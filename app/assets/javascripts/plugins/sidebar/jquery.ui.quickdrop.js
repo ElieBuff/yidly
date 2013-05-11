@@ -1,92 +1,77 @@
 (function($) {
-
     $.widget("ui.quickdrop", {
 		options: {
-			quickdropContainer: ".quickdrop-records",
-			quickdropClass: "quickdrop_draggable",
+			containerName: ".quickdrop-records",
+			className: "quickdrop_draggable",
+			dragHelperCallback: "",
 			actions : []
 		},
 		
 		_create: function() {
 			startDragabble = function(){
-
 				$(this).addClass('draged');
-				$('.quickdrop_draggable').slideDown(500);
+				$('.quickdrop').slideDown(500);
 			}
 			stopDragabble = function(){
-				alert(o.quickdropClass);
 				$(this).removeClass('draged');
-				$('.quickdrop_draggable').slideUp(500);
 			}
-			getQuickDropBar = function(options){
+			getQuickDropBar = function(){
 				htmlStr = "";
-      			htmlStr += "<div class='quickdrop " + options.quickdropClass + "'>";
-	      		htmlStr += "<div class='actions'></div>";
-      			htmlStr += "</div>";
+      			htmlStr += "<div class='quickdrop " + o.className + "'>" + 
+	      				   "<div class='actions'></div>" + 
+      			           "</div>";
 				return htmlStr;
 			}
-			invokeTaskAction = function (jqueryObj, ui){
-				jqueryObj.data('callback').call(undefined, ui.draggable);
-		 	}
-		 	getHelper = function(obj){
-				var candidate = obj.find('.candidate-name').text();
-				var project = obj.find('.project-name').text();
-				var imgSrc = obj.find('.action-icon').attr('src');
-				var htmlStr = '<div class="task-helper">';
-				htmlStr += '<div class="content-left-helper">';
-				htmlStr += '<img class="action-icon-helper" src=' + imgSrc + '>';
-				htmlStr += '</div>';
-				htmlStr += '<div class="content-right-helper">';
-				htmlStr += '<div class="candidate-name-helper">' + candidate + '</div>';
-				htmlStr += '<div class="project-name-helper">' + project + '</div>';
-				htmlStr += '</div>';
-
-				return $(htmlStr);
-			}
-
+			
 			var self = this, o = self.options; 
-			$(o.quickdropContainer).parent().css("position","relative"); 
-			$(o.quickdropContainer).append(getQuickDropBar(o));
+			$(o.containerName).parent().css("position","relative"); 
+			$(o.containerName).append(getQuickDropBar());
     		this._refresh();
 		},
 		
 		 _refresh: function() {
 		 	initQuickDropActions = function (){
-		 		insertIcons = function (){
-			 		var imgWidth = Math.floor(100 / o.actions.length);
-	    			$(".actions").empty();
-	    			$.each( o.actions, function( index, value ) {
-	    				if(value['icon'])
+	 			getImageWidth = function () { return 100 / o.actions.length; }
+	 			$(".actions").empty();
+	 			
+	 			$.each( o.actions, function( index, value ) {
+	 				createActionDiv = function(){
+		 				return $("<div class='action' style='width:" + getImageWidth() + "%'><img src='" + value.icon + "'/></div>");
+		 			}
+	 				var actionElem = createActionDiv();
+	 				insertIcon = function (){
+		 				if(value.icon)
 	        			{
-	          				$(".actions").append("<div id='action" + index + "' class='action' style='width:" + imgWidth + "%'><img src='" + value['icon'] + "'/></div>");
-	          				$("#action" + index).data('callback', value['callback']);
+	          				$(".actions").append(actionElem);
 	        			}
-	      			});
-			 	}
-			 	initIcons = function (){
-			 		$( ".action" ).droppable({
-		      			hoverClass: "drop-hover",
-		      			 drop: function( event, ui ) {
-		      			 	invokeTaskAction($(this), ui);
-						}
-		      		});
-		      	}
-			 	insertIcons()
-			 	initIcons()
+		      		}
+		      		initIcon = function (){
+				 		actionElem.droppable({
+			      			hoverClass: "drop-hover",
+			      			 drop: function( event, ui ) {
+			      			 	ui.draggable.data('height', $('.quickdrop').height());
+			      			 	ui.draggable.data('width', actionElem.width());
+			      			 	ui.draggable.data('left', actionElem.position().left);
+			      			 	value.callback(ui.draggable);
+			      			 	if(value.closeOnDrop)
+			      			 		$('.quickdrop').slideUp(500);
+			      			 	else
+			      			 		$(this).addClass("drop-hover");
+							}
+			      		});
+			      	}
+			      	insertIcon();
+			      	initIcon();
+			 	});
 		 	}
 		 	
-
 		 	var self = this,
 				   o = self.options; 
 		 	initQuickDropActions();      		
-    		this.reloadDraggable();	
-    		this.showQuickDrop();		
-		},
+    		this.reloadDraggable(o.dragHelperCallback);	
+    	},
 
-		initDraggableEvent:function(){
-		},
-
-		reloadDraggable:function(){
+		reloadDraggable:function(dragHelperCallback){
 			initDraggableTask = function(){
 				$(".draggable").draggable({
 					cursor: "move",
@@ -97,8 +82,8 @@
 					zIndex: 100,
 					cursorAt: { top: -2, left: -2 },
 					helper: function( event ) {
-								return getHelper($(this));
-							},
+						return dragHelperCallback($(this));
+						},
 					start: startDragabble, 
 					stop: stopDragabble
 				});	
@@ -106,14 +91,10 @@
 			initDraggableTask()
 			
 		},
-
-		showQuickDrop:function(){
-			$('.quickdrop_clickable').slideDown(500);
+		hideQuickBar:function(){
+			$('.action').removeClass("drop-hover");
+			$('.quickdrop').slideUp(500);
 		},
-		hideQuickDrop:function(){
-			$('.quickdrop_clickable').slideUp(500);
-		},
-
 		destroy: function() {			
 			this.element.next().remove();
 			
