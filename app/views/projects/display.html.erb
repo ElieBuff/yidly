@@ -1,6 +1,6 @@
 <script id="task" type="text/html">
 <div>
-    <div class="task" id= "task{{ id }}" draggable="true"> 
+    <div class="task draggable" id= "task{{ id }}"> 
             <div class="content-up"> 
                 <div class="details">
                     <div class="candidate-name"> {{ name }}</div>
@@ -29,7 +29,7 @@
     </div>
 </script>
 <body>
-    <div id="project-page" project-id="<%= @current_project.id%>">
+    <div id="project-page" class="quickdrop-records" project-id="<%= @current_project.id%>">
         <div class="project-name">
         </div>
         <div class="board">
