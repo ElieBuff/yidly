@@ -18,6 +18,7 @@ window.initQuickDrop = (refreshDataCallBack)->
                     width = obj.data('width');
                     left = obj.data('left');
                     $('.reschedule-box').css('top', top).css('width', width).css('left', left);
+                    $('.reschedule-option').css('width', width/3);
                     obj.removeData('obj')
                 setBoxDesign()
                 $('.reschedule-box').slideDown(500);
