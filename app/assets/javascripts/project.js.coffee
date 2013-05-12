@@ -14,7 +14,9 @@ jQuery ->
                     divs.enter().append('div').attr('class', 'task-container').html(createHtml)
                     divs.exit().remove()
                 createTaskListWrapper = (stage) ->
-                    wrapper = ich.stage name: stage
+                    wrapper = ich.stage
+                                name: stage.name
+                                img: stage.img
                     stagesContainer.append wrapper
                     wrapper
                 setWidth = (nStages) ->
@@ -22,7 +24,7 @@ jQuery ->
                        $('.icon').height($('.icon').width())
 
                 displayProjectName stages_and_records.name
-                displayRecordsOfStage createTaskListWrapper(stage), (stages_and_records.records[stage] || []) for stage in stages_and_records.stages
+                displayRecordsOfStage createTaskListWrapper(stage), (stages_and_records.records[stage.name] || []) for stage in stages_and_records.stages
                 setWidth stages_and_records.stages.length
 
             displayStages $('.stages'), stages_and_records

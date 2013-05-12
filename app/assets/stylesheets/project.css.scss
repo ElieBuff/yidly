@@ -9,10 +9,19 @@
 
     .stage {
             .header {
-                color: blue;
-                margin-left: 12px;
-                margin-top: 5px;
-                font-size: 100%;
+                    margin-left: 12px;
+                    margin-top: 5px;
+                    height: 60px;
+                .title {
+                    float: left;
+                    color: blue;
+                    font-size: 100%;
+                    width: 50%;
+                }
+                .stage-image {
+                    float: left;
+                    width: 30%;
+                }
             }
         float: left;
         min-height: 50px;

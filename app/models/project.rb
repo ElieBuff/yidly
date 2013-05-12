@@ -16,7 +16,10 @@ class Project < ActiveRecord::Base
     {
       :name => "#{self.job_title}  (#{self.location})",
       :stages => self.stages.order(:id).map {|stage|
-                    stage.name
+                          { 
+                            :name => stage.name,
+                            :img => stage.icon
+                          }
                  },
       :records => self.records.map { |r| 
                     r.to_task
