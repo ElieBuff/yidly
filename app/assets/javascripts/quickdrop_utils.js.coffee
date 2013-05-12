@@ -54,15 +54,15 @@ window.initQuickDrop = (refreshDataCallBack)->
             showRescheduleBox()
             eventHandler()
 
-            getRecordId = (obj) ->
-                id = obj.attr('id')
-                recordId = id.replace('task', '')
+        getRecordId = (obj) ->
+            id = obj.attr('id')
+            recordId = id.replace('task', '')
 
         actions =   [
                         icon : "/assets/actions/done.gif"
                         closeOnDrop : true
                         callback : (obj) ->
-                                        directAction getRecordId(obj), 'move_to_next_stage'
+                                        directAction obj, 'move_to_next_stage'
                     ,
                         icon : "/assets/actions/clock.png"
                         closeOnDrop : false           
@@ -72,12 +72,12 @@ window.initQuickDrop = (refreshDataCallBack)->
                         icon : "/assets/actions/hourglass.jpg"
                         closeOnDrop : true
                         callback : (obj) ->
-                                        waitForSec getRecordId(obj)
+                                        waitForSec obj
                     ,
                         icon : "/assets/actions/stop.png"
                         closeOnDrop : true
                         callback : (obj) ->
-                                        directAction getRecordId(obj), 'reject'
+                                        directAction obj, 'reject'
                     ]
     getDragHelper = (obj) ->
         candidate = obj.find('.candidate-name').text();
