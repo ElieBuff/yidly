@@ -1,11 +1,12 @@
 (function($) {
-
     $.widget("ui.quickdrop", {
 		options: {
-			quickdropContainer: ".quickdrop-records",
+			containerName: ".quickdrop-records",
+			className: "quickdrop_draggable",
+			dragHelperCallback: "",
 			actions : []
 		},
-				
+		
 		_create: function() {
 			startDragabble = function(){
 				$(this).addClass('draged');
@@ -13,60 +14,64 @@
 			}
 			stopDragabble = function(){
 				$(this).removeClass('draged');
-				$('.quickdrop').slideUp(500);
 			}
-			getQuickDrop = function(){
+			getQuickDropBar = function(){
 				htmlStr = "";
-      			htmlStr += "<div class='quickdrop'>";
-      			htmlStr += "<div class='actions'></div>";
-      			htmlStr += "</div>";
+      			htmlStr += "<div class='quickdrop " + o.className + "'>" + 
+	      				   "<div class='actions'></div>" + 
+      			           "</div>";
 				return htmlStr;
 			}
-			invokeTaskAction = function (jqueryObj, ui){
-				jqueryObj.data('callback').call(undefined, ui.draggable);
-		 	}
-			var self = this,
-				   o = self.options; 
 			
-      		$(o.quickdropContainer).parent().css("position","relative"); 
-    		$(o.quickdropContainer).append(getQuickDrop());
+			var self = this, o = self.options; 
+			$(o.containerName).parent().css("position","relative"); 
+			$(o.containerName).append(getQuickDropBar());
     		this._refresh();
 		},
 		
 		 _refresh: function() {
 		 	initQuickDropActions = function (){
-		 		insertIcons = function (){
-			 		var imgWidth = Math.floor(100 / o.actions.length);
-	    			$(".actions").empty();
-	    			$.each( o.actions, function( index, value ) {
-	    				if(value['icon'])
+	 			getImageWidth = function () { return 100 / o.actions.length; }
+	 			$(".actions").empty();
+	 			
+	 			$.each( o.actions, function( index, value ) {
+	 				createActionDiv = function(){
+		 				return $("<div class='action' style='width:" + getImageWidth() + "%'><img src='" + value.icon + "'/></div>");
+		 			}
+	 				var actionElem = createActionDiv();
+	 				insertIcon = function (){
+		 				if(value.icon)
 	        			{
-	          				$(".actions").append("<div id='action" + index + "' class='action' style='width:" + imgWidth + "%'><img src='" + value['icon'] + "'/></div>");
-	          				$("#action" + index).data('callback', value['callback']);
+	          				$(".actions").append(actionElem);
 	        			}
-	      			});
-			 	}
-			 	initIcons = function (){
-			 		$( ".action" ).droppable({
-		      			hoverClass: "drop-hover",
-		      			 drop: function( event, ui ) {
-		      			 	invokeTaskAction($(this), ui);
-						}
-		      		});
-		      	}
-			 	insertIcons()
-			 	initIcons()
+		      		}
+		      		initIcon = function (){
+				 		actionElem.droppable({
+			      			hoverClass: "drop-hover",
+			      			 drop: function( event, ui ) {
+			      			 	ui.draggable.data('height', $('.quickdrop').height());
+			      			 	ui.draggable.data('width', actionElem.width());
+			      			 	ui.draggable.data('left', actionElem.position().left);
+			      			 	value.callback(ui.draggable);
+			      			 	if(value.closeOnDrop)
+			      			 		$('.quickdrop').slideUp(500);
+			      			 	else
+			      			 		$(this).addClass("drop-hover");
+							}
+			      		});
+			      	}
+			      	insertIcon();
+			      	initIcon();
+			 	});
 		 	}
 		 	
-
 		 	var self = this,
 				   o = self.options; 
 		 	initQuickDropActions();      		
-    		this.reloadDraggable();			
-		},
+    		this.reloadDraggable(o.dragHelperCallback);	
+    	},
 
-		reloadDraggable:function(){
-			
+		reloadDraggable:function(dragHelperCallback){
 			initDraggableTask = function(){
 				$(".draggable").draggable({
 					cursor: "move",
@@ -77,31 +82,19 @@
 					zIndex: 100,
 					cursorAt: { top: -2, left: -2 },
 					helper: function( event ) {
-								return getHelper($(this));
-							},
-					start: startDragabble,
+						return dragHelperCallback($(this));
+						},
+					start: startDragabble, 
 					stop: stopDragabble
 				});	
-			}
-			getHelper = function(obj){
-				var candidate = obj.find('.candidate-name').text();
-				var project = obj.find('.project-name').text();
-				var imgSrc = obj.find('.action-icon').attr('src');
-				var htmlStr = '<div class="task-helper">';
-				htmlStr += '<div class="content-left-helper">';
-				htmlStr += '<img class="action-icon-helper" src=' + imgSrc + '>';
-				htmlStr += '</div>';
-				htmlStr += '<div class="content-right-helper">';
-				htmlStr += '<div class="candidate-name-helper">' + candidate + '</div>';
-				htmlStr += '<div class="project-name-helper">' + project + '</div>';
-				htmlStr += '</div>';
-
-				return $(htmlStr);
 			}
 			initDraggableTask()
 			
 		},
-
+		hideQuickBar:function(){
+			$('.action').removeClass("drop-hover");
+			$('.quickdrop').slideUp(500);
+		},
 		destroy: function() {			
 			this.element.next().remove();
 			

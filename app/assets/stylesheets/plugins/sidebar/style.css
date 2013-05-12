@@ -1,7 +1,7 @@
-.quickdrop{
+.quickdrop_draggable{
   display:none;
 	opacity: 0.9;
-	width:100%;
+  width:100%;
 	height:60px;
 	position: absolute;
   top: 0px;
