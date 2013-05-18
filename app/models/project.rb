@@ -18,6 +18,7 @@ class Project < ActiveRecord::Base
       :stages => self.stages.order(:id).map {|stage|
                           { 
                             :name => stage.name,
+                            :id => stage.id,
                             :img => stage.icon
                           }
                  },

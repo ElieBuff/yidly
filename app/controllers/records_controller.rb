@@ -69,6 +69,15 @@ class RecordsController < UserAuthenticatedController
   end
 
 
+  def my_create
+    p "my_create: #{params.inspect}"
+    record = Record.create stage_id: params[:stage_id], 
+                           name: params[:name],
+                           email: params[:email]
+    respond_to do |format|
+      format.json { render json: record }
+    end
+  end
 
   # POST /records
   # POST /records.json

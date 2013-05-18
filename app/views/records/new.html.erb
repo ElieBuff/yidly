@@ -1,3 +1,3 @@
-<h1>New record</h1>
+<h1>New record <%= "for Project: #{Stage.find(@current_record.stage_id).project.job_title} " if @current_record.stage_id %></h1>
  
 <%= render 'form' %>

@@ -16,14 +16,31 @@
     </div> 
 </div>
 </script>
+<script id="new_record" type="text/html">
+    <div class="new-record-dialog" title="Add Record to Project">
+        <form accept-charset="UTF-8" action="/records" class="new_record" id="new_record" method="post">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" />
+        </form>
+    </div>
+</script>
 <script id="stage" type="text/html">
     <div id="{{ name }}"> 
         <div class="header">
-            <div class="title">
-                {{ name }}
+            <div class="left">
+                <div class="name">
+                    {{ name }}
+                </div>
+                <button class="add" id="add-button-{{ id }}">
+                    +
+                </button>
             </div>
-            <img class="stage-image" src="{{ img }}">
-            </img>
+            <div class="right">
+                <img class="stage-image" src="{{ img }}">
+                </img>
+            </div>
         </div>
     </div>
 </script>
@@ -32,9 +49,16 @@
         {{ name }}
     </div>
 </script>
-<body>
-    <div id="project-page" class="quickdrop-records" project-id="<%= @current_project.id%>">
-        <div class="project-name">
+<body id="project-page" project-id="<%= @current_project.id%>">
+    <div class="quickdrop-records">
+        <div class="project-header">
+            <div class="container">
+                <div class="element project-name">
+                </div>
+                <div class="new-record">
+                    New Record
+                </div>
+            </div>
         </div>
         <div class="board">
             <div class="stages">

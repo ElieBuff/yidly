@@ -15,7 +15,11 @@ jQuery ->
                     divs.exit().remove()
                 createTaskListWrapper = () ->
                     wrapper = (d) ->
-                        (ich.stage name: d.name, img: d.img).html() 
+                        (ich.stage
+                            name: d.name
+                            id: d.id
+                            img: d.img
+                        ).html()
                     createRecord = (d, i) ->
                         ich.task(UTILS.formatTimeStampInDict(d, 'actionable_at')).html()
                     DisplayRecordsItem = (container)->
@@ -61,8 +65,33 @@ jQuery ->
                 createTaskListWrapper()
                 setWidth stages_and_records.stages.length
                
+            addRecordButton = ->
+                $('.add').button().click (event) ->
+                    button = $(this)
+                    ich.new_record().dialog
+                        autoOpen: true
+                        width: 350
+                        height: 300
+                        modal: true
+                        buttons:
+                            "Create": () ->
+                                that = $(this)
+                                val = (field) ->
+                                    that.find("##{field}").val()
+                                $.post(
+                                    "/records/my_create.json",
+                                    stage_id: button.attr('id').replace('add-button-','')
+                                    name: val('name')
+                                    email: val('email')
+                                )
+                                reloadData()
+                                that.dialog 'close'
+                            "Cancel": () -> $(this).dialog 'close'
+
             displayStages $('.stages'), stages_and_records
+            addRecordButton()
             reloadQuickDrop()
+
 
     initQuickDrop(reloadData)
     reloadData()

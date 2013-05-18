@@ -14,16 +14,16 @@ window.initQuickDrop = (refreshDataCallBack)->
         rescheduleAction  = (obj) ->
             showRescheduleBox = ->
                 setBoxDesign = () ->
-                    top = obj.data('height');
-                    width = obj.data('width');
-                    left = obj.data('left');
-                    $('.reschedule-box').css('top', top).css('width', width).css('left', left);
-                    $('.reschedule-option').css('width', width/3);
+                    top = obj.data('height')
+                    width = obj.data('width') * 2
+                    left = obj.data('left') - 100
+                    $('.reschedule-box').css('top', top).css('width', width).css('left', left)
+                    $('.reschedule-option').css('width', width/3)
                     obj.removeData('obj')
                 setBoxDesign()
-                $('.reschedule-box').slideDown(500);
+                $('.reschedule-box').slideDown(500)
             hideRescheduleBox = ->
-                $('.reschedule-box').slideUp(500, () -> $('body').quickdrop('hideQuickBar'));
+                $('.reschedule-box').slideUp(500, () -> $('body').quickdrop('hideQuickBar'))
             eventHandler = ->
                 $(document).on "click", "body", () -> hideRescheduleBox()
 

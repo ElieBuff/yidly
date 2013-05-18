@@ -15,6 +15,9 @@ Dashboard::Application.routes.draw do
   end
   resources :tests
   resources :records do
+    collection do
+      post 'my_create'
+    end
     get 'move_to_next_stage', :on => :member
     get 'reject', :on => :member
     get 'reschedule_in_sec', :on => :member
