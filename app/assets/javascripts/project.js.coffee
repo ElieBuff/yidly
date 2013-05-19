@@ -5,15 +5,15 @@ jQuery ->
         $.get "/projects/#{project_id}/display.json", (stages_and_records) ->
             displayStages = (stagesContainer, stages_and_records) ->
                 createRecord = (d, i) ->
-                    ich.task(UTILS.formatTimeStampInDict(d,
+                    ich.record(UTILS.formatTimeStampInDict(d,
                         'actionable_at',
                         (d)-> d.split(' at ')[0]
                     )).html()
                 displayProjectName = (name) ->
                     $('.project-name').html(ich.project name:name)
-                displayRecordsOfStage = (taskListWrapper, tasks) ->
-                    divs = d3.select(taskListWrapper[0]).selectAll('.task-container').data(tasks).html(createRecord)
-                    divs.enter().append('div').attr('class', 'task-container').html(createHtml)
+                displayRecordsOfStage = (recordListWrapper, records) ->
+                    divs = d3.select(recordListWrapper[0]).selectAll('.record-container').data(records).html(createRecord)
+                    divs.enter().append('div').attr('class', 'record-container').html(createHtml)
                     divs.exit().remove()
                 createTaskListWrapper = () ->
                     wrapper = (d) ->
@@ -23,18 +23,18 @@ jQuery ->
                             img: d.img
                         ).html()
                     DisplayRecordsItem = (container)->
-                        taskItem = container.selectAll('.task-container')
+                        recordItem = container.selectAll('.record-container')
                             .data((d) ->
                                 (stages_and_records.records[d.name] || [])
                             )
                             .html(createRecord)
                                
-                        taskItem.enter()
+                        recordItem.enter()
                             .append('div')
-                            .attr('class', 'task-container')
+                            .attr('class', 'record-container')
                             .html(createRecord)
 
-                        taskItem.exit().remove()
+                        recordItem.exit().remove()
                     
                     stageContainer = d3.select('.stages')
                                     .selectAll('.stage')
@@ -45,13 +45,13 @@ jQuery ->
                         .append('div')
                         .attr('class', 'stage')
                         .html(wrapper)
-                        .selectAll('.task-container')
+                        .selectAll('.record-container')
                         .data((d) ->
                                 (stages_and_records.records[d.name] || [])
                             )
                             .enter()
                             .append('div')
-                            .attr('class', 'task-container')
+                            .attr('class', 'record-container')
                             .html(createRecord)
                     
                     stageContainer.exit().remove()
