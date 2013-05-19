@@ -4,13 +4,15 @@ jQuery ->
     reloadData = ->
         $.get "/projects/#{project_id}/display.json", (stages_and_records) ->
             displayStages = (stagesContainer, stages_and_records) ->
+                createRecord = (d, i) ->
+                    ich.task(UTILS.formatTimeStampInDict(d,
+                        'actionable_at',
+                        (d)-> d.split(' at ')[0]
+                    )).html()
                 displayProjectName = (name) ->
                     $('.project-name').html(ich.project name:name)
                 displayRecordsOfStage = (taskListWrapper, tasks) ->
-                    createHtml = (d, i) ->
-                        ich.task(UTILS.formatTimeStampInDict(d, 'actionable_at')).html()
-
-                    divs = d3.select(taskListWrapper[0]).selectAll('.task-container').data(tasks).html(createHtml)
+                    divs = d3.select(taskListWrapper[0]).selectAll('.task-container').data(tasks).html(createRecord)
                     divs.enter().append('div').attr('class', 'task-container').html(createHtml)
                     divs.exit().remove()
                 createTaskListWrapper = () ->
@@ -20,8 +22,6 @@ jQuery ->
                             id: d.id
                             img: d.img
                         ).html()
-                    createRecord = (d, i) ->
-                        ich.task(UTILS.formatTimeStampInDict(d, 'actionable_at')).html()
                     DisplayRecordsItem = (container)->
                         taskItem = container.selectAll('.task-container')
                             .data((d) ->
