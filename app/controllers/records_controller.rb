@@ -69,11 +69,19 @@ class RecordsController < UserAuthenticatedController
   end
 
 
+  def my_edit
+    record = @current_record.update_attributes(params.select { |k,v|
+                                Record.attribute_names.include? k.to_s
+                            })
+    respond_to do |format|
+      format.json { render json: record }
+    end
+
+  end
   def my_create
-    p "my_create: #{params.inspect}"
-    record = Record.create stage_id: params[:stage_id], 
-                           name: params[:name],
-                           email: params[:email]
+    record = Record.create(params.select { |k,v|
+                                Record.attribute_names.include? k.to_s
+                            })
     respond_to do |format|
       format.json { render json: record }
     end

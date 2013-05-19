@@ -18,6 +18,7 @@ Dashboard::Application.routes.draw do
     collection do
       post 'my_create'
     end
+    post 'my_edit', :on => :member
     get 'move_to_next_stage', :on => :member
     get 'reject', :on => :member
     get 'reschedule_in_sec', :on => :member

@@ -65,6 +65,29 @@ jQuery ->
                 createTaskListWrapper()
                 setWidth stages_and_records.stages.length
                
+            makeRecordEditable = ->
+                $('.record').click (event) ->
+                    record = $(this)
+                    ich.new_record().dialog
+                        autoOpen: true
+                        width: 350
+                        height: 300
+                        modal: true
+                        buttons:
+                            "Save": () ->
+                                that = $(this)
+                                val = (field) ->
+                                    that.find("##{field}").val()
+                                id = -> record.attr('id').replace('record-','')
+                                $.post(
+                                    "/records/#{id()}/my_edit.json",
+                                    stage_id: val('stage_id')
+                                    name: val('name')
+                                    email: val('email')
+                                )
+                                reloadData()
+                                that.dialog 'close'
+                            "Cancel": () -> $(this).dialog 'close'
             addRecordButton = ->
                 $('.add').button().click (event) ->
                     button = $(this)
@@ -90,6 +113,7 @@ jQuery ->
 
             displayStages $('.stages'), stages_and_records
             addRecordButton()
+            makeRecordEditable()
             reloadQuickDrop()
 
 
