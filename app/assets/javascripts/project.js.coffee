@@ -4,15 +4,15 @@ jQuery ->
     reloadData = ->
         $.get "/projects/#{project_id}/display.json", (stages_and_records) ->
             displayStages = (stagesContainer, stages_and_records) ->
-                createRecord = (d, i) ->
-                    ich.record(UTILS.formatTimeStampInDict(d,
-                                            'actionable_at',
-                                            (d)-> d.split(' at ')[0]
-                                )).html()
                 displayProjectName = (name) ->
                     $('.project-name').html(ich.project name:name)
                 createTaskListWrapper = () ->
                     displayRecordsItem = (container)->
+                        createRecord = (d, i) ->
+                            ich.record(UTILS.formatTimeStampInDict(d,
+                                                    'actionable_at',
+                                                    (d)-> d.split(' at ')[0]
+                                        )).html()
                         records_for_stage = (stage) -> stages_and_records.records[stage] or []
                         recordItem = container.selectAll('.record-container')
                             .data((d) -> records_for_stage d.name)
