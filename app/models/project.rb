@@ -5,7 +5,10 @@ class Project < ActiveRecord::Base
   belongs_to :user
 
   def extended
-    self.attributes.merge :num_records => records.find(:all, :conditions => "rejected_at is NULL").length
+    self.attributes.merge :num_records => self.records_active.length
+  end
+  def records_active
+    records.find(:all, :conditions => "rejected_at is NULL")
   end
 
   def first_stage
@@ -22,7 +25,9 @@ class Project < ActiveRecord::Base
                             :img => stage.icon
                           }
                  },
-      :records => self.records.order(:actionable_at).map { |r| 
+      :records => self.records_active.sort_by{ |record|
+                   record[:actionable_at]
+                 }.map { |r|
                     r.to_task
                   }.to_a.group_by{|task|
                     task[:stage]
