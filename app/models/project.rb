@@ -22,7 +22,7 @@ class Project < ActiveRecord::Base
                             :img => stage.icon
                           }
                  },
-      :records => self.records.map { |r| 
+      :records => self.records.order(:actionable_at).map { |r| 
                     r.to_task
                   }.to_a.group_by{|task|
                     task[:stage]
