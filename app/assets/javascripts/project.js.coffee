@@ -6,9 +6,9 @@ jQuery ->
             displayStages = (stagesContainer, stages_and_records) ->
                 createRecord = (d, i) ->
                     ich.record(UTILS.formatTimeStampInDict(d,
-                        'actionable_at',
-                        (d)-> d.split(' at ')[0]
-                    )).html()
+                                            'actionable_at',
+                                            (d)-> d.split(' at ')[0]
+                                )).html()
                 displayProjectName = (name) ->
                     $('.project-name').html(ich.project name:name)
                 displayRecordsOfStage = (recordListWrapper, records) ->
@@ -65,7 +65,7 @@ jQuery ->
                 createTaskListWrapper()
                 setWidth stages_and_records.stages.length
                
-            makeRecordEditable = ->
+            makeRecordsEditable = ->
                 $('.record').click (event) ->
                     record = $(this)
                     ich.new_record().dialog
@@ -73,12 +73,17 @@ jQuery ->
                         width: 350
                         height: 300
                         modal: true
+                        open: ->
+                            that = $(this)
+                            setval = (field) ->
+                                that.find("##{field}").val(record.find("##{field}").val())
+                            setval field for field in ['name', 'email']
                         buttons:
                             "Save": () ->
                                 that = $(this)
                                 val = (field) ->
                                     that.find("##{field}").val()
-                                id = -> record.attr('id').replace('record-','')
+                                id = -> record.attr('data-server-id')
                                 $.post(
                                     "/records/#{id()}/my_edit.json",
                                     stage_id: val('stage_id')
@@ -88,7 +93,7 @@ jQuery ->
                                 reloadData()
                                 that.dialog 'close'
                             "Cancel": () -> $(this).dialog 'close'
-            addRecordButton = ->
+            addRecordButtons = ->
                 $('.add').button().click (event) ->
                     button = $(this)
                     ich.new_record().dialog
@@ -103,7 +108,7 @@ jQuery ->
                                     that.find("##{field}").val()
                                 $.post(
                                     "/records/my_create.json",
-                                    stage_id: button.attr('id').replace('add-button-','')
+                                    stage_id: button.attr('data-server-id')
                                     name: val('name')
                                     email: val('email')
                                 )
@@ -112,8 +117,8 @@ jQuery ->
                             "Cancel": () -> $(this).dialog 'close'
 
             displayStages $('.stages'), stages_and_records
-            addRecordButton()
-            makeRecordEditable()
+            addRecordButtons()
+            makeRecordsEditable()
             reloadQuickDrop()
 
 

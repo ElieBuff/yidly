@@ -1,6 +1,6 @@
 <script id="record" type="text/html">
 <div>
-    <div class="record draggable" id= "record-{{ id }}"> 
+    <div class="record draggable" id="{{ id }}" data-server-id="{{ id }}"> 
             <div class="content-up"> 
                 <div class="details">
                     <div class="candidate-name"> {{ name }}</div>
@@ -33,7 +33,7 @@
                 <div class="name">
                     {{ name }}
                 </div>
-                <button class="add" id="add-button-{{ id }}">
+                <button class="add" data-server-id="{{ id }}">
                     +
                 </button>
             </div>
