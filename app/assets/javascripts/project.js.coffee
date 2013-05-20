@@ -53,62 +53,73 @@ jQuery ->
                 createTaskListWrapper()
                 setWidth stages_and_records.stages.length
                
-            makeRecordsEditable = ->
-                $('.record').click (event) ->
-                    record = $(this)
-                    ich.new_record().dialog
-                        autoOpen: true
-                        width: 350
-                        height: 300
-                        modal: true
-                        open: ->
-                            that = $(this)
-                            setval = (field) ->
-                                that.find("##{field}").val(record.find("##{field}").val())
-                            setval field for field in ['name', 'email']
-                        buttons:
-                            "Save": () ->
+            eventsHandler = () ->
+                makeRecordsEditable =  ->
+                    dialogContainer = ich.new_record()
+                    dialogContainer.dialog
+                            autoOpen: false
+                            width: 350
+                            height: 300
+                            modal: true
+                            open: () ->
                                 that = $(this)
-                                val = (field) ->
-                                    that.find("##{field}").val()
-                                id = -> record.attr('data-server-id')
-                                $.post(
-                                    "/records/#{id()}/my_edit.json",
-                                    stage_id: val('stage_id')
-                                    name: val('name')
-                                    email: val('email')
-                                )
-                                reloadData()
-                                that.dialog 'close'
-                            "Cancel": () -> $(this).dialog 'close'
-            addRecordButtons = ->
-                $('.add').button().click (event) ->
-                    button = $(this)
-                    ich.new_record().dialog
-                        autoOpen: true
-                        width: 350
-                        height: 300
-                        modal: true
-                        buttons:
-                            "Create": () ->
-                                that = $(this)
-                                val = (field) ->
-                                    that.find("##{field}").val()
-                                $.post(
-                                    "/records/my_create.json",
-                                    stage_id: button.attr('data-server-id')
-                                    name: val('name')
-                                    email: val('email')
-                                )
-                                reloadData()
-                                that.dialog 'close'
-                            "Cancel": () -> $(this).dialog 'close'
+                                setval = (field) ->
+                                    that.find("##{field}").val(dialogContainer.data()[field])
+                                setval field for field in ['email', 'name']
+                            buttons:
+                                "Save": () ->
+                                    that = $(this)
+                                    val = (field) ->
+                                        that.find("##{field}").val()
+                                    id = -> dialogContainer.data().id
+                                    $.post(
+                                        "/records/#{id()}/my_edit.json",
+                                        stage_id: val('stage_id')
+                                        name: val('name')
+                                        email: val('email')
+                                    )
+                                    reloadData()
+                                    that.dialog 'close'
+                                "Cancel": () -> $(this).dialog 'close'
+                    $('.record').click (event) ->
+                        that = $(this)
+                        dialogContainer.data that.data()
+                        dialogContainer.dialog 'open'
+
+                addRecordButtons = ->
+                    $('.add').button().click (event) ->
+                        button = $(this)
+                        ich.new_record().dialog
+                            autoOpen: true
+                            width: 350
+                            height: 300
+                            modal: true
+                            buttons:
+                                "Create": () ->
+                                    that = $(this)
+                                    val = (field) ->
+                                        that.find("##{field}").val()
+                                    $.post(
+                                        "/records/my_create.json",
+                                        stage_id: button.attr('data-server-id')
+                                        name: val('name')
+                                        email: val('email')
+                                    )
+                                    reloadData()
+                                    that.dialog 'close'
+                                "Cancel": () -> $(this).dialog 'close'
+                addRecordButtons()
+                makeRecordsEditable()
+
+            updateRecordsData = (records) ->
+                updateRecordData = (record) ->
+                    $(".record[data-server-id=#{record.id}]").data(record)
+                updateRecordData record for record in records
 
             displayStages $('.stages'), stages_and_records
-            addRecordButtons()
-            makeRecordsEditable()
+            updateRecordsData records for stage, records of stages_and_records.records
+            eventsHandler()
             reloadQuickDrop()
-
 
     initQuickDrop(reloadData)
     reloadData()
