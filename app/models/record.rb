@@ -73,6 +73,7 @@ class Record < ActiveRecord::Base
       :stage => self.stage.name,
       :icon => self.icon,
       :name => self.name,
+      :email => self.email,
       :trial_count => self.trial_count,
       :actionable_at => self.actionable_at,
       :trial_count => self.trial_count,
