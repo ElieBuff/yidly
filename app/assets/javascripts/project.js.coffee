@@ -12,14 +12,8 @@ jQuery ->
                 displayProjectName = (name) ->
                     $('.project-name').html(ich.project name:name)
                 createTaskListWrapper = () ->
-                    records_for_stage = (stage) -> stages_and_records.records[stage] or []
-                    wrapper = (d) ->
-                        (ich.stage
-                            name: d.name
-                            id: d.id
-                            img: d.img
-                        ).html()
                     displayRecordsItem = (container)->
+                        records_for_stage = (stage) -> stages_and_records.records[stage] or []
                         recordItem = container.selectAll('.record-container')
                             .data((d) -> records_for_stage d.name)
                             .html(createRecord)
@@ -30,26 +24,27 @@ jQuery ->
                             .html(createRecord)
 
                         recordItem.exit().remove()
-                    
-                    stageContainer = d3.select('.stages')
-                        .selectAll('.stage')
-                        .data(stages_and_records.stages)
-                        .html(wrapper)
+                    createStageContainer = ->
+                        wrapper = (d) ->
+                            (ich.stage
+                                name: d.name
+                                id: d.id
+                                img: d.img
+                            ).html()
+                        stageContainer = d3.select('.stages')
+                            .selectAll('.stage')
+                            .data(stages_and_records.stages)
+                            .html(wrapper)
 
-                    stageContainer.enter()
-                        .append('div')
-                        .attr('class', 'stage')
-                        .html(wrapper)
-                        .selectAll('.record-container')
-                        .data((d) -> (records_for_stage d.name))
-                        .enter()
-                        .append('div')
-                        .attr('class', 'record-container')
-                        .html(createRecord)
-                    
-                    stageContainer.exit().remove()
+                        stageContainer.enter()
+                            .append('div')
+                            .attr('class', 'stage')
+                            .html(wrapper)
 
-                    displayRecordsItem stageContainer
+                        stageContainer.exit().remove()
+                        stageContainer
+
+                    displayRecordsItem createStageContainer()
 
                 setWidth = (nStages) ->
                        $('.stage').css 'width', "#{100/nStages - 1}%"
