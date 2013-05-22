@@ -1,12 +1,5 @@
 body#project-page {
     width:100%;
-    .new-record-dialog {
-        width: 50%;
-        background-color: gray;
-    }
-    .ui-dialog .ui-state-error { 
-        padding: .3em; 
-    }
     .project-header {
         .container {
             min-height: 1px;
@@ -28,18 +21,23 @@ body#project-page {
 
     .stage {
             .header {
-                    margin:10px;
-                    height: 60px;
+                    margin:4px 6px;
+                    height: 75px;
                  .left {
                         float: left;
                         width: 50%;
                         height: 100%;
+                        position:relative;
                     .name {
                         color: rgb(44, 44, 82);
                         font-size: 100%;
                     }
                     .add {
-                        bottom: 5px;
+                        cursor:pointer;
+                        position:absolute;
+                        font-size: 14px !important;
+                        bottom: 3px;
+                        right:9px;
                     }
                 }
                 .right {
@@ -184,32 +182,18 @@ body#project-page {
             border-radius: 15px;
         }
     }
-    .ui-draggable .ui-dialog-titlebar {
-        cursor: move;
+
+    .recordDialog{
+        .ui-dialog-title{
+            font-size:15px;
+        }
+        .ui-button-text{
+            font-size:14px;
+        }
     }
-    .ui-dialog .ui-dialog-titlebar {
-        padding: .4em 1em;
-        position: relative;
-    }
-    .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
-        border-bottom-right-radius: 4px;
-    }
-    .ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
-        border-bottom-left-radius: 4px;
-    }
-    .ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
-        border-top-right-radius: 4px;
-    }
-    .ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
-        border-top-left-radius: 4px;
-    }
-    .ui-widget-header {
-        border: 1px solid #aaaaaa;
-        background: #cccccc url(images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
-        color: #222222;
-        font-weight: bold;
-    }
-    .ui-helper-clearfix {
-        min-height: 0;
-    }
+
+    
 }
+
+
+

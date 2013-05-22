@@ -61,6 +61,7 @@ jQuery ->
                             width: 350
                             height: 300
                             modal: true
+                            dialogClass: "recordDialog"
                             open: () ->
                                 that = $(this)
                                 setval = (field) ->
@@ -87,13 +88,14 @@ jQuery ->
                         dialogContainer.dialog 'open'
 
                 addRecordButtons = ->
-                    $('.add').button().click (event) ->
+                    $('.add').click (event) ->
                         button = $(this)
                         ich.new_record().dialog
                             autoOpen: true
                             width: 350
                             height: 300
                             modal: true
+                            dialogClass: "recordDialog"
                             buttons:
                                 "Create": () ->
                                     that = $(this)

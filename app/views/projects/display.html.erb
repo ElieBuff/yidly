@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script id="record" type="text/html">
 <div>
     <div class="record draggable" id="{{ id }}" data-server-id="{{ id }}"> 
@@ -33,9 +34,7 @@
                 <div class="name">
                     {{ name }}
                 </div>
-                <button class="add" data-server-id="{{ id }}">
-                    +
-                </button>
+                <img src="/assets/icons/icon_plus.png" class="add" data-server-id="{{ id }}">
             </div>
             <div class="right">
                 <img class="stage-image" src="{{ img }}">

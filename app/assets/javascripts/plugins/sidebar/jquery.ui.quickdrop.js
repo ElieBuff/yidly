@@ -79,7 +79,7 @@
 					revert: "invalid",
 					refreshPositions: true,
 					opacity: 0.9,
-					zIndex: 100,
+					zIndex: 1005,
 					cursorAt: { top: -2, left: -2 },
 					helper: function( event ) {
 						return dragHelperCallback($(this));
