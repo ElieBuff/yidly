@@ -1,25 +1,7 @@
 body#project-page {
     width:100%;
-    .project-header {
-        .container {
-            min-height: 1px;
-            float: left;
-            .element {
-                float: left;
-                display: inline;
-            }
-            .project-name {
-                width: 30%;
-                font-color: #778844;
-                color: rgb(82, 43, 109);
-                margin-left: 2%;
-                margin-bottom: 10px;
-                margin-top: 10px;
-            }
-        }
-    }
 
-    .stage {
+        .stage {
             .header {
                     margin:4px 6px;
                     height: 75px;
@@ -62,14 +44,37 @@ body#project-page {
     }
 
     .board {
+        margin-left: 2%;
+        margin-right: 2%;
         .stages {
-            //width: 100%;
-            margin: 5px 5px 1% 1%;
+            height: 1000px;
+            //margin: 5px 5px 1% 1%;
         }
-        margin-left: 2px;
-        margin-right: 2px;
-        height: 1000px;
-        width: 100%;
+        .project-header {
+                min-height: 1px;
+                float: left;
+                width: 100%;
+                margin-bottom: 12px;
+                margin-top: 12px;
+                font-color: #778844;
+                color: rgb(82, 43, 109);
+                .element {
+                    float: left;
+                    display: inline;
+                }
+                .header-left {
+                    float: left;
+                    width: 20%;
+                }
+                .header-right {
+                    float: right;
+                    width: 80%;
+                    .right {
+                        margin-left: 1%;
+                        float: right;
+                    }
+                }
+            }
     }
     .record-container {
         height: 80px;

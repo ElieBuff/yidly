@@ -44,19 +44,28 @@
     </div>
 </script>
 <script id="project" type="text/html">
-    <div>
+    <div class="header-left">
         {{ name }}
     </div>
+    <div class="header-right">
+        <div class="right">
+            <%= link_to 'Edit', edit_project_path(@current_project) %></td>
+        </div>
+        <div class="right">
+            <%= link_to 'Destroy', @current_project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </div>
+    </div>
+    
 </script>
 <body id="project-page" project-id="<%= @current_project.id%>">
     <div class="quickdrop-records">
-        <div class="project-header">
-            <div class="container">
-                <div class="element project-name">
+        <div class="board">
+            <div class="project-header">
+                <div class="project-container">
+                    <div class="project-name">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="board">
             <div class="stages">
             </div>
         </div>

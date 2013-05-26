@@ -5,7 +5,7 @@ jQuery ->
         $.get "/projects/#{project_id}/display.json", (stages_and_records) ->
             displayStages = (stagesContainer, stages_and_records) ->
                 displayProjectName = (name) ->
-                    $('.project-name').html(ich.project name:name)
+                    $('.project-header').html(ich.project name:name)
                 createTaskListWrapper = () ->
                     displayRecordsItem = (container)->
                         createRecord = (d, i) ->
