@@ -61,6 +61,13 @@ class RecordsController < UserAuthenticatedController
     end
   end
 
+  # GET /records/1/move_to_stage/1
+  def move_to_stage
+    respond_to do |format|
+      format.json { render json: @current_record.move_to_stage(params[:stage].to_i) }
+    end
+  end
+
   # GET /records/1/reject
   def reject
     respond_to do |format|

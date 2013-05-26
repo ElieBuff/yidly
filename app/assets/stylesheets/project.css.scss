@@ -35,7 +35,6 @@ body#project-page {
                     .add {
                         cursor:pointer;
                         position:absolute;
-                        font-size: 14px !important;
                         bottom: 3px;
                         right:9px;
                     }
@@ -57,6 +56,11 @@ body#project-page {
         border-radius: 15px;
         -webkit-box-sizing: border-box;
     }
+
+    .drop-hover{
+        background-color: #c8c8c8;;
+    }
+
     .board {
         .stages {
             //width: 100%;
@@ -134,7 +138,7 @@ body#project-page {
                 width: 25%;
                 float: right;
                 position: relative;
-                right: 10px;
+                right: 25px;
                 color: #333333;
                 font-family: Impact, Charcoal, sans-serif;
                 font-size: 70%;
@@ -183,7 +187,21 @@ body#project-page {
         }
     }
 
-    .recordDialog{
+    .ui-widget-overlay{
+        opacity: 0.75 !important;
+    }
+    .record-Dialog{
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        background: yellow;
+
+        .ui-widget-header{
+            background: #A29999 !important;
+        }
+        .ui-dialog-buttonpane{
+            background: transparent;
+        }
         .ui-dialog-title{
             font-size:15px;
         }
