@@ -80,18 +80,12 @@ window.initQuickDrop = (refreshDataCallBack)->
                                         directAction obj, 'reject'
                     ]
     getDragHelper = (obj) ->
-        candidate = obj.find('.candidate-name').text();
-        project = obj.find('.project-name').text();
-        imgSrc = obj.find('.action-icon').attr('src');
-        htmlStr = '<div class="task-helper">
-            <div class="content-left-helper"> 
-            <img class="action-icon-helper" src=' + imgSrc + '> 
-            </div>
-            <div class="content-right-helper">
-            <div class="candidate-name-helper">' + candidate + '</div>
-            <div class="project-name-helper">' + project + '</div>
-            </div>'; 
-        return $(htmlStr);
+        helper = obj.clone()
+        helper.width(obj.width())
+        helper.height(obj.height())
+        
+        return helper
+        
     
     initRescheduleBox = ->
         createRescheduleBox = ->
@@ -101,7 +95,10 @@ window.initQuickDrop = (refreshDataCallBack)->
     initRescheduleBox()
 
     window.reloadQuickDrop = ->
-         $('body').quickdrop('reloadDraggable', getDragHelper);
+        $('body').quickdrop('reloadDraggable', getDragHelper);
+
+     window.hideQuickDrop = ->
+        $('body').quickdrop('hideQuickBar')
    
     $('body').quickdrop({
         'dragHelperCallback' : getDragHelper, 

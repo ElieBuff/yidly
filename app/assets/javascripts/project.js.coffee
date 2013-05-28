@@ -115,13 +115,8 @@ jQuery ->
                 addRecordButtons()
                 makeRecordsEditable()
 
-            updateRecordsData = (records) ->
-                updateRecordData = (record) ->
-                    $(".record[data-server-id=#{record.id}]").data(record)
-                updateRecordData record for record in records
-
             displayStages $('.stages'), stages_and_records
-            updateRecordsData records for stage, records of stages_and_records.records
+           
             eventsHandler()
             reloadQuickDrop()
             initDropabbleStage(reloadData)
