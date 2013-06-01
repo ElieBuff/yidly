@@ -61,7 +61,7 @@ jQuery ->
                             width: 350
                             height: 300
                             modal: true
-                            dialogClass: "recordDialog"
+                            dialogClass: "record-Dialog"
                             open: () ->
                                 that = $(this)
                                 setval = (field) ->
@@ -86,6 +86,7 @@ jQuery ->
                         that = $(this)
                         dialogContainer.data that.data()
                         dialogContainer.dialog 'open'
+                        return false;
 
                 addRecordButtons = ->
                     $('.add').click (event) ->
@@ -95,7 +96,7 @@ jQuery ->
                             width: 350
                             height: 300
                             modal: true
-                            dialogClass: "recordDialog"
+                            dialogClass: "record-Dialog"
                             buttons:
                                 "Create": () ->
                                     that = $(this)
@@ -103,26 +104,27 @@ jQuery ->
                                         that.find("##{field}").val()
                                     $.post(
                                         "/records/my_create.json",
-                                        stage_id: button.attr('data-server-id')
+                                        stage_id: button.parent().parent().attr('data-server-id')
                                         name: val('name')
                                         email: val('email')
                                     )
                                     reloadData()
                                     that.dialog 'close'
                                 "Cancel": () -> $(this).dialog 'close'
+                        return false;
                 addRecordButtons()
                 makeRecordsEditable()
 
-            updateRecordsData = (records) ->
-                updateRecordData = (record) ->
-                    $(".record[data-server-id=#{record.id}]").data(record)
-                updateRecordData record for record in records
-
             displayStages $('.stages'), stages_and_records
-            updateRecordsData records for stage, records of stages_and_records.records
+           
             eventsHandler()
             reloadQuickDrop()
+            initDropabbleStage(reloadData)
+    eventHandler = ->
+        $(document).on "click", ".ui-widget-overlay", () -> 
+            $(".ui-dialog-content").dialog("close");
 
     initQuickDrop(reloadData)
     reloadData()
+    eventHandler()
 

@@ -20,6 +20,7 @@ Dashboard::Application.routes.draw do
     end
     post 'my_edit', :on => :member
     get 'move_to_next_stage', :on => :member
+    get 'move_to_stage', :on => :member
     get 'reject', :on => :member
     get 'reschedule_in_sec', :on => :member
     get 'wait_for_sec', :on => :member

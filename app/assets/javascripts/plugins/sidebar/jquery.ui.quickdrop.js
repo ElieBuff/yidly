@@ -57,6 +57,7 @@
 			      			 		$('.quickdrop').slideUp(500);
 			      			 	else
 			      			 		$(this).addClass("drop-hover");
+
 							}
 			      		});
 			      	}
@@ -76,7 +77,12 @@
 				$(".draggable").draggable({
 					cursor: "move",
 					helper: "clone",
-					revert: "invalid",
+					revert: function(is_valid_drop){
+		                if(!is_valid_drop){
+		                   $('.quickdrop').slideUp(500);
+		                   return true;
+		                } 
+		            },
 					refreshPositions: true,
 					opacity: 0.9,
 					zIndex: 1005,

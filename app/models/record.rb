@@ -66,6 +66,13 @@ class Record < ActiveRecord::Base
     self
   end
 
+  def move_to_stage(stage)
+    self.stage.lower_item.tap { 
+      update_stage_id(stage) 
+    }
+    self
+  end
+
   def to_task
     { 
       :project => self.project.job_title,
