@@ -3,7 +3,7 @@ jQuery ->
     reloadData = ->
         
         taskList = ->
-            $.get '/tasks/urgent_and_today.json?tipping_point=' + moment().startOf('day')._d, (data) ->
+            $.get '/tasks/urgent_and_today.json?tipping_point=' + moment().startOf('day')._d*1, (data) ->
                 
                 GetHour = (d) -> moment(d).calendar()
                 GetDay = (d) -> moment(d).fromNow()

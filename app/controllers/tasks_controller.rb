@@ -26,7 +26,7 @@ class TasksController < UserAuthenticatedController
       (timestamp < point_after) ? between : after
   end
   def urgent_and_today
-    tipping_point_today = Time.parse params[:tipping_point]
+    tipping_point_today = Time.at params[:tipping_point].to_i/1000
     tipping_point_later = tipping_point_today + 24*HOUR
     tasks = {
       :urgent => [],
