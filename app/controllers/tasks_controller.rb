@@ -38,7 +38,7 @@ class TasksController < UserAuthenticatedController
     respond_to do |format|
       format.json { render json: {
         :urgent => Hash[tasks[:urgent].sort_by {|t| t[:actionable_at]}.group_by {|t| t[:project]}.sort],
-        :today => Hash[tasks[:today].sort_by {|t| t[:actionable_at]}.group_by {|t| Time.at t[:actionable_at].beginning_of_hour}.sort],
+        :today => Hash[tasks[:today].sort_by {|t| t[:actionable_at]}.group_by {|t| t[:actionable_at].beginning_of_hour}.sort],
         :later => Hash[tasks[:later].sort_by {|t| t[:actionable_at]}.group_by {|t| t[:actionable_at].beginning_of_day}.sort]
       }
       }
