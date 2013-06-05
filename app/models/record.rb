@@ -67,9 +67,9 @@ class Record < ActiveRecord::Base
   end
 
   def move_to_stage(stage)
-    self.stage.lower_item.tap { 
-      update_stage_id(stage) 
-    }
+    self.update_attributes({
+      :stage_id => stage
+    })
     self
   end
 
