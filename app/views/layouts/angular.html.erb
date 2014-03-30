@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="yidlyApp">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title><%= content_for?(:title) ? yield(:title) : "Yidly" %></title>
+		<%= csrf_meta_tags %>
+		<%= stylesheet_link_tag "application", :media => "all" %>
+		
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+	</head>
+	<body>
+		<header>
+			<div id="headerTop">
+				<img src="http://www.vectortemplates.com/raster/batman-logo-big.gif" class="img-responsive" alt="Responsive image">
+			</div>
+			<div id="headerBottom">
+				<nav id="navbar" class="navbar navbar-default" role="navigation">
+					<div class="container">
+						<div class="nav navbar-nav navbar-left">
+							<a class="navbar-brand" href="#">Emergency</a>
+							<a class="navbar-brand" href="#">Today</a>
+						</div>
+						<div class="nav navbar-nav navbar-right">
+	 						<a class="navbar-brand" href="#/projects">Projects</a>
+	 						<a class="navbar-brand" href="#">Settings</a>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</header>
+		
+		<div class="container">
+			<div data-ng-view/>
+		</div>
+		<%= javascript_include_tag "application" %>
+	</body>
+</html>

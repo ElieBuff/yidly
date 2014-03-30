@@ -8,10 +8,27 @@ Dashboard::Application.routes.draw do
   end
 
   root :to => 'home#index'
-  devise_for :users
+  get '/dashboard' => 'home#dashboard'
+  
+  
+  devise_scope :user do
+    get '/api/current_user' => 'users/sessions#show_current_user', as: 'show_current_user'
+    post '/api/check/is_user' => 'users/users#is_user', as: 'is_user'
+  end
+
+  devise_for :users,
+    :controllers => {
+      :omniauth_callbacks => "users/omniauth_callbacks"
+    }
+
+  namespace :api do
+    resources :tests
+  end
+
   resources :users
-  resources :projects do
+  resources :projects do 
       get 'display', :on => :member
+      get 'first_stage', :on => :member
   end
   resources :tests
   resources :records do

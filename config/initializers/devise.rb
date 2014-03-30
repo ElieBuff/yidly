@@ -15,6 +15,10 @@ Devise.setup do |config|
   # available as additional gems.
   require 'devise/orm/active_record'
 
+  config.secret_key = 'e1ee89b1caa1cabea1804e50952d62f49d231f6427a80e87bd239e603e04e8aa35c71655681245958d4e07b470af454a8428628cc647eb23faea16b676bee6a9'
+  config.omniauth :facebook, AppConfig.facebook['clientId'], 
+                             AppConfig.facebook['clientSecret']
+
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
   # just :email. You can configure it to use [:username, :subdomain], so for

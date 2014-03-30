@@ -1,0 +1,74 @@
+<h2>Records</h2>
+<div id="project_data">
+  <h4>{{ projectData.project.company }} </h4>
+  <h4>{{ projectData.project.job_description }} </h4>
+  <h4>{{ projectData.project.hiring_manager }} </h4>
+</div>
+aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>aaa</br>
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-striped">
+  			<thead>
+  				<tr>
+  					<th>Name</th>
+  					<th>Email</th>
+            <th></th>
+            <th></th>
+  				</tr>
+  			</thead>
+  			<tbody>
+  				<tr ng-repeat="record in projectData.records.items">
+  					<td>{{ record.name }}</td>
+  					<td>{{ record.email }}</td>
+  					<td>
+              <button type="button" class="btn btn-info btn-sm"
+                  data-toggle="modal" data-target="#recordModal"  
+                  ng-click="editRecord(record)">
+                  <span class="glyphicon glyphicon-edit"></span> Edit
+              </button>
+            </td>
+  					<td>
+              <button type="button" class="btn btn-danger btn-sm"
+                  ng-click="deleteRecord(record)">
+                  <span class="glyphicon glyphicon-remove"></span> Remove
+              </button>
+            </td>
+  				</tr>
+  			</tbody>
+  		</table>
+	</div>
+</div>
+
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#recordModal" ng-click="newRecord()">
+  Add new Record
+</button>
+
+<div class="modal fade" id="recordModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">
+          <span ng-show="newProj">New Record</span>
+          <span ng-hide="newProj">Edit Record</span>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Name</label>
+          <input type="text" ng-model="record.name" class="form-control" placeholder="Enter name">
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email</label>
+          <input type="text" ng-model="record.email" class="form-control" placeholder="Enter email">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="saveRecord()">Save</button>
+        
+      </div>
+    </div>
+  </div>
+</div>

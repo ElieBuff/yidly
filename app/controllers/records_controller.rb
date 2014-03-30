@@ -2,8 +2,13 @@ class RecordsController < UserAuthenticatedController
   # GET /records
   # GET /records.json
   def index
-    @records = current_user.records
-
+    if params[:project_id]
+      @project = Project.find(params['project_id'])
+      @records = @project.records.find_all
+    else
+      @records = current_user.records
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @records }
@@ -98,7 +103,6 @@ class RecordsController < UserAuthenticatedController
   # POST /records.json
   def create
     @record = Record.new(params[:record])
-
     respond_to do |format|
       if @record.save
         format.html { redirect_to root_path, notice: 'Record was successfully created.' }

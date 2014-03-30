@@ -10,14 +10,11 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require jquery
-//= require jquery_ujs
-//= require jquery.lightbox_me
+//=require jquery
+//=require jquery_ujs
+//=require angular
+//=require angular-route
+//=require angular-resource
 //= require bootstrap
-//= require moment
-//= require d3
-//= require utils
-//= require mustache.min
-//= require jquery-ui.js
-//= require ICanHaz-no-mustache.min
-//= require_tree .
+//=require_tree .
+

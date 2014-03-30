@@ -1,0 +1,225 @@
+<script>
+
+$(document).ready(function(){
+    $(".item_data").mouseenter(function() {
+        //$(this).find('.edit_data').fadeIn();
+    });
+    $(".item_data").mouseleave(function() {
+        //$(this).find('.edit_data').fadeOut();
+    });
+});
+
+</script>
+<style>
+.items_block{
+    min-height: 400px;
+}
+
+li.item {
+    width: 25%;
+    height: 170px;
+    float:left;
+    position: relative;
+}
+
+.item_data {
+    border: 2px solid #c6c6c6 !important;
+    margin: 10px;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+}
+.header{
+    margin-top:5px;
+    margin-left:5px;
+}
+div.logo_span{
+    width:30%;
+    display:inline-block;
+}
+div.logo_span img{
+    width:100%;
+}
+div.title_span{
+    width:65%;
+    display:inline-block;
+}
+div.title_span h4{
+    font-weight: bold;
+}
+.item_data .data{
+    padding-top: 5px;
+    padding-left: 10px;
+}
+.data label{
+    width: 80px;
+}
+div.edit_data{
+    background-color: black;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+.item_actions{
+    margin-top: 10px;
+    float: right;
+}
+.item_actions div{
+    background-color:white;
+    padding:3px;
+    margin-bottom: 5px;
+    opacity: 0.5;
+}
+</style>
+<div id="emergency_block" class="items_block">
+    <h2 class="text-center">Emergency</h2>
+    <ul class="emergency_container list-unstyled">
+        <li class="item emergency">
+           <div class="item_data img-rounded">
+                <div class="disp_data">
+                    <div class="header">
+                        <div class="logo_span">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
+                        </div>
+                        <div class="title_span">
+                            <h4 class="text-center">Review</h4>
+                        </div>
+                    </div>
+                    <div class="data">
+                        <div>
+                            <label>Position</label>
+                            <span>Developper</span>
+                        </div>
+                        <div>
+                            <label>Candidate</label>
+                            <span>Elie Buff</span>
+                        </div>
+                        <div>
+                            <label>Date</label>
+                            <span>01/01/2014</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="edit_data" style="">
+                    <div class="item_actions">
+                        <div class="reschedule">
+                            <i class="fa fa-clock-o fa-2x"></i>
+                        </div>
+                        <div>
+                            <i class="fa fa-times fa-2x"></i>
+                        </div>
+                        <div>
+                            <i class="fa fa-envelope-o fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+       <li class="item emergency">
+           <div class="item_data img-rounded">
+                <div class="disp_data">
+                    <div class="header">
+                        <div class="logo_span">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
+                        </div>
+                        <div class="title_span">
+                            <h4 class="text-center">Review</h4>
+                        </div>
+                    </div>
+                    <div class="data">
+                        <div>
+                            <label>Position</label>
+                            <span>Developper</span>
+                        </div>
+                        <div>
+                            <label>Candidate</label>
+                            <span>Elie Buff</span>
+                        </div>
+                        <div>
+                            <label>Date</label>
+                            <span>01/01/2014</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="edit_data" style="display:none;">
+                 <span class="glyphicon glyphicon-star"></span>
+                </div>
+            </div>
+        </li>
+
+        <li class="item emergency">
+           <div class="item_data img-rounded">
+                <div class="disp_data">
+                    <div class="header">
+                        <div class="logo_span">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
+                        </div>
+                        <div class="title_span">
+                            <h4 class="text-center">Review</h4>
+                        </div>
+                    </div>
+                    <div class="data">
+                        <div>
+                            <label>Position</label>
+                            <span>Developper</span>
+                        </div>
+                        <div>
+                            <label>Candidate</label>
+                            <span>Elie Buff</span>
+                        </div>
+                        <div>
+                            <label>Date</label>
+                            <span>01/01/2014</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="edit_data" style="display:none;">
+                aaaa
+                </div>
+            </div>
+        </li>
+
+        <li class="item emergency">
+           <div class="item_data img-rounded">
+                <div class="disp_data">
+                    <div class="header">
+                        <div class="logo_span">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
+                        </div>
+                        <div class="title_span">
+                            <h4 class="text-center">Review</h4>
+                        </div>
+                    </div>
+                    <div class="data">
+                        <div>
+                            <label>Position</label>
+                            <span>Developper</span>
+                        </div>
+                        <div>
+                            <label>Candidate</label>
+                            <span>Elie Buff</span>
+                        </div>
+                        <div>
+                            <label>Date</label>
+                            <span>01/01/2014</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="edit_data" style="display:none;">
+                aaaa
+                </div>
+            </div>
+        </li>
+
+
+        
+    </ul>
+</div>
+<div id="today_block" class="items_block">
+    <h2 class="text-center">Today</h2>
+</div>

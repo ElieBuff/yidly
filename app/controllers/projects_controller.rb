@@ -8,8 +8,6 @@ class ProjectsController < UserAuthenticatedController
       format.json { 
         render json: current_user.projects.map {|prj| 
           prj.extended
-        }.sort_by {|prj|
-          prj['job_title']
         }
       }
     end
@@ -71,9 +69,9 @@ class ProjectsController < UserAuthenticatedController
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to root_path, notice: 'Project was successfully created.' }
+        format.json { render json: @project.extended }
       else
-        format.html { render action: "new" }
+        format.json { render action: "new" }
       end
     end
   end
@@ -100,6 +98,14 @@ class ProjectsController < UserAuthenticatedController
     respond_to do |format|
       format.html { redirect_to projects_url }
       format.json { head :no_content }
+    end
+  end
+
+  # GET /stages.json/1/first_stage
+  def first_stage
+    respond_to do |format|
+      format.html { redirect_to @current_project, notice: 'Project was successfully updated.' }
+      format.json { render json: @current_project.first_stage }
     end
   end
 end

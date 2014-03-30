@@ -1,0 +1,13 @@
+defaults: &defaults
+  facebook:
+    clientId: "469023773221121"
+    clientSecret: "51eb79cf0397a9dff9612b1ecfffdb5a"
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
