@@ -7,6 +7,7 @@ gem 'd3-rails'
 gem 'momentjs-rails'
 gem 'underscore-rails'
 gem 'pg'
+gem 'rails_12factor', group: :production
 
 gem 'acts_as_list'
 gem 'simple_form'
