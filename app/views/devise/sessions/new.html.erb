@@ -11,7 +11,7 @@
 		max-width: 450px;
 		margin: 0 auto;
 	}
-	form input#emailInput, form input#passwordInput {
+	form input#emailInput {
 		margin-bottom: -1px;
 		border-bottom-left-radius: 0;
 		border-bottom-right-radius: 0;
@@ -28,6 +28,12 @@
 		font-size: 14px;
 		font-weight: normal;
 	}
+	.form-group #remember_div{
+		margin-top:20px;
+	}
+	.form-group #remember_label{
+		margin-left:20px;	
+	}
 	hr{
 		border-top: 1px solid #ccc;
 		margin-left: 20px;
@@ -37,17 +43,19 @@
 <div id="wrapper" class="container">
 	<div class="jumbotron jumbotron-signin">
 		<div class="container">
-			<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-				<h3>Please sign up</h3>
+			<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+				<h3>Please sign in</h3>
 				<%= devise_error_messages! %>
 				<div class="form-group">
-					<%= f.text_field :name, :autofocus => true, :class =>  "form-control input-lg", :id => id="nameInput", :placeholder =>"Enter name"%>
+					<%= f.email_field :email, :required => false, :class =>"form-control input-lg", :id =>"emailInput", :autofocus => true, :placeholder =>"Enter email" %>
 
-					<%= f.email_field :email, :class =>"form-control input-lg", :id =>"emailInput", :placeholder =>"Enter email" %>
+					<%= f.password_field :password, :required => false, :class =>"form-control input-lg", :id =>"passwordInput", :placeholder =>"Password" %>
 
-					<%= f.password_field :password, :class =>"form-control input-lg", :id =>"passwordInput", :placeholder =>"Password" %>
+					<div id="remember_div">
+						<%= f.check_box :remember_me, :as => :boolean if devise_mapping.rememberable? %>
+						<span id="remember_label"><strong>Remember Me</strong></span>
+					</div>
 
-					<%= f.password_field :password_confirmation, :class =>"form-control input-lg", :id =>"passwordConfirmationInput", :placeholder =>"Password Confirmation" %>
 				</div>
    				<button type="submit" class="btn btn-primary btn-lg btn-block">
 					Log In
@@ -71,5 +79,3 @@
 		</div>
 	</div>
 </div>
-
-

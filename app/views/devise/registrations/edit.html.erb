@@ -1,3 +1,80 @@
+<style>
+  body{
+    padding-top:40px;
+  }
+  form{
+    padding: 15px;
+    margin: 0 auto;       
+  }
+  .jumbotron-signin{
+
+    max-width: 450px;
+    margin: 0 auto;
+  }
+  form input#emailInput, form input#passwordInput {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  form input#passwordConfirmationInput, form input#passwordInput {
+    margin-top: -1px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .form-group{
+    padding:20px 0 10px 0;
+  }
+  .form-group label{
+    font-size: 14px;
+    font-weight: normal;
+  }
+  hr{
+    border-top: 1px solid #ccc;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+</style>
+<div id="wrapper" class="container">
+  <div class="jumbotron jumbotron-signin">
+    <div class="container">
+      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+        <h3>Please sign up</h3>
+        <%= devise_error_messages! %>
+        <div class="form-group">
+          <%= f.text_field :name, :autofocus => true, :class =>  "form-control input-lg", :id => id="nameInput", :placeholder =>"Enter name"%>
+
+          <%= f.email_field :email, :class =>"form-control input-lg", :id =>"emailInput", :placeholder =>"Enter email" %>
+
+          <%= f.password_field :password, :class =>"form-control input-lg", :id =>"passwordInput", :placeholder =>"Password" %>
+
+          <%= f.password_field :password_confirmation, :class =>"form-control input-lg", :id =>"passwordConfirmationInput", :placeholder =>"Password Confirmation" %>
+        </div>
+          <button type="submit" class="btn btn-primary btn-lg btn-block">
+          Log In
+        </button>
+
+        <hr/>
+
+        <div>
+          <%- resource_class.omniauth_providers.each do |provider| %>
+            <a class="btn btn-default btn-lg btn-block" 
+              href="<%= omniauth_authorize_path(resource_name, provider) %>">
+              <span class="glyphicon">
+                <img src="http://www.thedrum.com/uploads/styles/home_page_featured/public/drum_basic_article/138256/main_images/Facebook-logo-1817834_png.jpg" class="img-rounded" style="width:40px;">
+              </span> 
+              Log in with Facebook
+            </a>
+          <% end -%>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>

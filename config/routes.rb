@@ -2,13 +2,8 @@ Dashboard::Application.routes.draw do
   resources :stages
 
 
-  get "home/index"
-  authenticated :user do
-    root :to => 'home#index'
-  end
-
-  root :to => 'home#index'
   get '/dashboard' => 'home#dashboard'
+  root to: 'home#index'
   
   
   devise_scope :user do

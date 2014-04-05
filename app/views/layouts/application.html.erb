@@ -8,27 +8,46 @@
     <meta name="author" content="">
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
     <%= csrf_meta_tags %>
     <%= yield(:head) %>
   </head>
-  <body>
-    <header class="navbar navbar-fixed-top">
-      <nav class="navbar-inner">
-        <div class="container">
-          <%= render 'layouts/navigation' %>
+  <body id="applicationLayout">
+    <div class="container">
+      <header id="layout_header">
+        <div class="row">
+          <div class="col-md-9" id="logo_container">
+            <img src="http://www.vectortemplates.com/raster/batman-logo-big.gif" class="img-responsive" alt="Responsive image">
+          </div>
+          <div class="col-md-3">
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary btn-lg" 
+                id="login_button">
+                <i class="fa fa-hand-o-right fa-1x"></i>
+                <%= link_to 'Sign Up', new_user_registration_path %>
+              </button>
+              <button type="button" class="btn btn-primary btn-lg" 
+                id="login_button">
+                <i class="fa fa-sign-in fa-1x"></i>
+                <%= link_to 'Sign In', new_user_session_path %>
+              </button>
+            </div>
+            
+          </div>
         </div>
-      </nav>
-    </header>
+      </header>
+    </div>
+
+
+
     <div id="main" role="main">
-      Not signed in user
       <div class="container">
-        <div class="content">
-           <div class="row">
+        <div class="row">
             <div class="span12">
               <%= render 'layouts/messages' %>
               <%= yield %>
             </div>
-          </div>
           <footer>
           </footer>
         </div>

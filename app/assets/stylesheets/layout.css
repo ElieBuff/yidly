@@ -1,4 +1,10 @@
-#headerTop img{
+#layout_header{
+	margin-top:20px;
+}
+#logo_container img{
 	height: 80px;
-	margin: 20px 5px;
+}
+#login_button a{
+	text-decoration: none;
+	color: #fff;
 }
