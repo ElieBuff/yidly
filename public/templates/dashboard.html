@@ -1,20 +1,7 @@
-<script>
-
-$(document).ready(function(){
-    $(".item_data").mouseenter(function() {
-        //$(this).find('.edit_data').fadeIn();
-    });
-    $(".item_data").mouseleave(function() {
-        //$(this).find('.edit_data').fadeOut();
-    });
-});
-
-</script>
 <style>
-.items_block{
-    min-height: 400px;
+.items_container{
+    min-height: 5000px;
 }
-
 li.item {
     width: 25%;
     height: 170px;
@@ -57,169 +44,233 @@ div.title_span h4{
     width: 80px;
 }
 div.edit_data{
-    background-color: black;
     position: absolute;
     top: 0px;
     width: 100%;
     height: 100%;
-    opacity: 0.8;
 }
+
+ul#urgent_task div.edit_data{
+    background-color: rgba(244, 75, 78, 0.5);
+}
+ul#urgent_task div.action{
+    color: rgb(244, 75, 78);
+}
+ul#today_task div.edit_data{
+    background-color: rgba(120, 154, 189, 0.5);
+}
+ul#today_task div.action{
+    color: rgb(120, 154, 189);
+}
+ul#later_task div.edit_data{
+    background-color: rgba(237, 184, 37, 0.5);
+}
+ul#later_task div.action{
+    color: rgb(237, 184, 37);
+}
+
+
+.modal-dialog{
+    width: 400px;
+}
+
 .item_actions{
-    margin-top: 10px;
-    float: right;
+    margin-left: 10px;
 }
-.item_actions div{
+
+.item_actions .action{
     background-color:white;
+    text-align:center;
     padding:3px;
-    margin-bottom: 5px;
-    opacity: 0.5;
+    margin-right: 5px;
+    float: left;
+    width: 40px;
+    border-bottom-left-radius:4px;
+    border-bottom-right-radius:4px;
 }
+
+.reschedule_options{
+    overflow: hidden;
+}
+
+.reschedule_options .res_option{
+    width: 33%;
+    float:left;
+    text-align: center;
+}
+
+.res_option img{
+    width: 70px;
+
+}
+
 </style>
-<div id="emergency_block" class="items_block">
-    <h2 class="text-center">Emergency</h2>
-    <ul class="emergency_container list-unstyled">
-        <li class="item emergency">
-           <div class="item_data img-rounded">
-                <div class="disp_data">
-                    <div class="header">
-                        <div class="logo_span">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
+<div class="items_container">
+    <div id="emergency" class="items_block">
+        <h2 class="text-center">Emergency</h2>
+        <div ng-repeat= '(day, items) in tasks.urgent'>
+                <ul id="urgent_task" class="list-unstyled">
+                    <li class="item" ng-repeat='item in items' 
+                            ng-mouseover="itemMouseOver(item.id)" ng-mouseleave="itemMouseLeave()">
+                        <div class="item_data img-rounded">
+                            <div class="disp_data">
+                                <div class="header">
+                                    <div class="logo_span">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
+                                    </div>
+                                    <div class="title_span">
+                                        <h4 class="text-center">{{item.stage}}</h4>
+                                    </div>
+                                </div>
+                                <div class="data">
+                                    <div>
+                                        <label>Position</label>
+                                        <span>{{item.project}}</span>
+                                    </div>
+                                    <div>
+                                        <label>Candidate</label>
+                                        <span>{{item.name}}</span>
+                                    </div>
+                                    <div>
+                                        <label>Date</label>
+                                        <span>{{item.actionable_at|date:'dd/MM/yyyy HH:mm'}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="edit_data img-rounded ng-hide" ng-show="itemShowItem(item.id)">
+                                <div class="item_actions" >
+                                    <div class="action" ng-click="moveNextStage()"  >
+                                        <div class="action_logo fa fa-arrow-right  fa-2x"></div>
+                                    </div>
+                                    <div class="action" ng-click="rescheduleItemClick()"  >
+                                        <div class="action_logo fa fa-clock-o fa-2x"></div>
+                                    </div>
+                                    <div class="action" ng-click="rejectItem()">
+                                        <div class="action_logo fa fa-times fa-2x"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="title_span">
-                            <h4 class="text-center">Review</h4>
-                        </div>
-                    </div>
-                    <div class="data">
-                        <div>
-                            <label>Position</label>
-                            <span>Developper</span>
-                        </div>
-                        <div>
-                            <label>Candidate</label>
-                            <span>Elie Buff</span>
-                        </div>
-                        <div>
-                            <label>Date</label>
-                            <span>01/01/2014</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="edit_data" style="">
-                    <div class="item_actions">
-                        <div class="reschedule">
-                            <i class="fa fa-clock-o fa-2x"></i>
-                        </div>
-                        <div>
-                            <i class="fa fa-times fa-2x"></i>
-                        </div>
-                        <div>
-                            <i class="fa fa-envelope-o fa-2x"></i>
-                        </div>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
-        </li>
-
-       <li class="item emergency">
-           <div class="item_data img-rounded">
-                <div class="disp_data">
-                    <div class="header">
-                        <div class="logo_span">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
+    </div>
+    <br style="clear:both;"/>
+    <div id="today" class="items_block">
+        <h2 class="text-center">Today</h2>
+            <div ng-repeat= '(day, items) in tasks.today'>
+                <ul id="today_task" class="list-unstyled">
+                     <li class="item" ng-repeat='item in items' 
+                            ng-mouseover="itemMouseOver(item.id)" ng-mouseleave="itemMouseLeave()">
+                        <div class="item_data img-rounded">
+                            <div class="disp_data">
+                                <div class="header">
+                                    <div class="logo_span">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
+                                    </div>
+                                    <div class="title_span">
+                                        <h4 class="text-center">{{item.stage}}</h4>
+                                    </div>
+                                </div>
+                                <div class="data">
+                                    <div>
+                                        <label>Position</label>
+                                        <span>{{item.project}}</span>
+                                    </div>
+                                    <div>
+                                        <label>Candidate</label>
+                                        <span>{{item.name}}</span>
+                                    </div>
+                                    <div>
+                                        <label>Date</label>
+                                        <span>{{item.actionable_at|date:'dd/MM/yyyy HH:mm'}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="edit_data img-rounded ng-hide" ng-show="itemShowItem(item.id)">
+                                <div class="item_actions" >
+                                    <div class="action" ng-click="moveNextStage()"  >
+                                        <div class="action_logo fa fa-arrow-right  fa-2x"></div>
+                                    </div>
+                                    <div class="action" ng-click="rescheduleItemClick()"  >
+                                        <div class="action_logo fa fa-clock-o fa-2x"></div>
+                                    </div>
+                                    <div class="action" ng-click="rejectItem()">
+                                        <div class="action_logo fa fa-times fa-2x"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="title_span">
-                            <h4 class="text-center">Review</h4>
-                        </div>
-                    </div>
-                    <div class="data">
-                        <div>
-                            <label>Position</label>
-                            <span>Developper</span>
-                        </div>
-                        <div>
-                            <label>Candidate</label>
-                            <span>Elie Buff</span>
-                        </div>
-                        <div>
-                            <label>Date</label>
-                            <span>01/01/2014</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="edit_data" style="display:none;">
-                 <span class="glyphicon glyphicon-star"></span>
-                </div>
+                    </li>
+                </ul>
             </div>
-        </li>
-
-        <li class="item emergency">
-           <div class="item_data img-rounded">
-                <div class="disp_data">
-                    <div class="header">
-                        <div class="logo_span">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
+    </div>
+    <br style="clear:both;"/>
+    <div id="later" class="items_block">
+        <h2 class="text-center">Later</h2>
+            <div ng-repeat= '(day, items) in tasks.later'>
+                <ul id="later_task" class="list-unstyled">
+                     <li class="item" ng-repeat='item in items' 
+                            ng-mouseover="itemMouseOver(item.id)" ng-mouseleave="itemMouseLeave()">
+                        <div class="item_data img-rounded">
+                            <div class="disp_data">
+                                <div class="header">
+                                    <div class="logo_span">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
+                                    </div>
+                                    <div class="title_span">
+                                        <h4 class="text-center">{{item.stage}}</h4>
+                                    </div>
+                                </div>
+                                <div class="data">
+                                    <div>
+                                        <label>Position</label>
+                                        <span>{{item.project}}</span>
+                                    </div>
+                                    <div>
+                                        <label>Candidate</label>
+                                        <span>{{item.name}}</span>
+                                    </div>
+                                    <div>
+                                        <label>Date</label>
+                                        <span>{{item.actionable_at|date:'dd/MM/yyyy HH:mm'}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="edit_data img-rounded ng-hide" ng-show="itemShowItem(item.id)">
+                                <div class="item_actions" >
+                                    <div class="action" ng-click="moveNextStage()"  >
+                                        <div class="action_logo fa fa-arrow-right  fa-2x"></div>
+                                    </div>
+                                    <div class="action" ng-click="rescheduleItemClick()"  >
+                                        <div class="action_logo fa fa-clock-o fa-2x"></div>
+                                    </div>
+                                    <div class="action" ng-click="rejectItem()">
+                                        <div class="action_logo fa fa-times fa-2x"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="title_span">
-                            <h4 class="text-center">Review</h4>
-                        </div>
-                    </div>
-                    <div class="data">
-                        <div>
-                            <label>Position</label>
-                            <span>Developper</span>
-                        </div>
-                        <div>
-                            <label>Candidate</label>
-                            <span>Elie Buff</span>
-                        </div>
-                        <div>
-                            <label>Date</label>
-                            <span>01/01/2014</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="edit_data" style="display:none;">
-                aaaa
-                </div>
+                    </li>
+                </ul>
             </div>
-        </li>
-
-        <li class="item emergency">
-           <div class="item_data img-rounded">
-                <div class="disp_data">
-                    <div class="header">
-                        <div class="logo_span">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
-                        </div>
-                        <div class="title_span">
-                            <h4 class="text-center">Review</h4>
-                        </div>
-                    </div>
-                    <div class="data">
-                        <div>
-                            <label>Position</label>
-                            <span>Developper</span>
-                        </div>
-                        <div>
-                            <label>Candidate</label>
-                            <span>Elie Buff</span>
-                        </div>
-                        <div>
-                            <label>Date</label>
-                            <span>01/01/2014</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="edit_data" style="display:none;">
-                aaaa
-                </div>
-            </div>
-        </li>
-
-
-        
-    </ul>
+    </div>
 </div>
-<div id="today_block" class="items_block">
-    <h2 class="text-center">Today</h2>
-</div>
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">
+            <span ng-hide="newProj">Reschedule Item</span>
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="reschedule_options">
+            <div ng-repeat="option in rescheduleOptions" class="res_option" 
+                ng-click="rescheduleItem(option.value)">
+                <img class="img-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7LCrXnBSWbKrH9b58Ix6_6BItvmOSTucTdMfh6ZxNB1XplFHpxQ"/>
+                <div>{{option.text}}</div>
+            </div>
+        </div>
+    </div>
+</script>
+

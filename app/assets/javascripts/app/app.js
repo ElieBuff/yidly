@@ -1,4 +1,4 @@
-var yidlyModule = angular.module('yidlyApp', ['ngRoute', 'ngResource'])
+var yidlyModule = angular.module('yidlyApp', ['ngRoute', 'ngResource', 'ui.bootstrap'])
 yidlyModule.config(['$routeProvider',function($routeProvider) {
 	$routeProvider
 	.when('/', {

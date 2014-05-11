@@ -11,11 +11,18 @@ yidlyModule
 	);
 }])
 .factory('Record', ['$resource', function($resource) {
-		return $resource('/records/:id.json', 
+		return $resource('/records/:id/:customFunction.json', 
 			{
 				id: '@id'
 			}, {
 				update: { method: 'PUT' }
+			}
+	);
+}])
+.factory('Task', ['$resource', function($resource) {
+		return $resource('/tasks/:id/:customFunction.json', 
+			{
+				id: '@id'
 			}
 	);
 }])

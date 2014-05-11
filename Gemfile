@@ -36,6 +36,7 @@ gem 'omniauth-facebook'
 gem 'uuidtools'
 
 gem 'angularjs-rails', '>= 1.2.0.rc1'
+gem 'angular-ui-bootstrap-rails'
 gem 'ngmin-rails'
 gem 'bootstrap-sass', "~> 3.1.0.2"
 

@@ -13,15 +13,18 @@
 	</head>
 	<body>
 		<header>
-			<div id="headerTop">
-				<img src="http://www.vectortemplates.com/raster/batman-logo-big.gif" class="img-responsive" alt="Responsive image">
+			<div id="logo_container">
+				<a href="./">
+					<img src="http://www.vectortemplates.com/raster/batman-logo-big.gif" class="img-responsive" alt="Responsive image">
+				</a>
 			</div>
 			<div id="headerBottom">
 				<nav id="navbar" class="navbar navbar-default" role="navigation">
 					<div class="container">
 						<div class="nav navbar-nav navbar-left">
-							<a class="navbar-brand" href="#">Emergency</a>
-							<a class="navbar-brand" href="#">Today</a>
+							<a class="navbar-brand" href="#emergency">Emergency</a>
+							<a class="navbar-brand" href="#today">Today</a>
+							<a class="navbar-brand" href="#later">Later</a>
 						</div>
 						<div class="nav navbar-nav navbar-right">
 	 						<a class="navbar-brand" href="#/projects">Projects</a>
@@ -36,5 +39,14 @@
 			<div data-ng-view/>
 		</div>
 		<%= javascript_include_tag "application" %>
+		<script>
+	      $(document).ready(function(){
+	        $('.navbar-left a').click(function(){
+	        	var $href = $(this).attr('href');
+	        	var $anchor = $($href).offset();
+	        	$('body').animate({ scrollTop: $anchor.top - 50});
+	        });
+	      });
+	    </script>
 	</body>
 </html>
