@@ -13,10 +13,18 @@
 	</head>
 	<body>
 		<header>
-			<div id="logo_container">
-				<a href="./">
-					<img src="http://www.vectortemplates.com/raster/batman-logo-big.gif" class="img-responsive" alt="Responsive image">
-				</a>
+			<div>
+				<span id="logo_container">
+					<a href="./">
+						<img src="http://www.vectortemplates.com/raster/batman-logo-big.gif" class="img-responsive" alt="Responsive image">
+					</a>
+				</span>
+				<span>
+					<button type="button" class="btn btn-primary btn-lg" id="login_button">
+                		<i class="fa fa-hand-o-right fa-1x"></i>
+                		<%= link_to 'Sign Out', destroy_user_session_path %>
+             		 </button>
+				</span>
 			</div>
 			<div id="headerBottom">
 				<nav id="navbar" class="navbar navbar-default" role="navigation">
