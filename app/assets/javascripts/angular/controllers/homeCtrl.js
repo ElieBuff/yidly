@@ -75,7 +75,7 @@ angular.module('yidlyApp')
 		{value:6, text:'In 1 Week', src:''}
 	];
 
-	$scope.rescheduleItem = function(delayType){alert(delayType);
+	$scope.rescheduleItem = function(delayType){
 		var fromNowInSec = function(){
 			var futurDate;
 			switch(delayType){
