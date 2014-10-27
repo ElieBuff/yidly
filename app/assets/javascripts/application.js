@@ -11,11 +11,15 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //=require jquery
+//= require jquery.ui.draggable
+//= require jquery.ui.droppable
 //=require angular
 //=require angular-route
 //=require angular-resource
-//= require angular-ui-bootstrap-tpls
+//=require angular-ui-bootstrap-tpls
 //=require bootstrap
 //=require moment
+//=require angular-dragdrop.min.js
+//=require angular-slide-menu.js
 //=require_tree .
 

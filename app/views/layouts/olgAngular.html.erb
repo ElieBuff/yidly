@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="yidlyApp">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title><%= content_for?(:title) ? yield(:title) : "Yidly" %></title>
+		<%= csrf_meta_tags %>
+		<%= stylesheet_link_tag "application", :media => "all" %>
+		
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+	</head>
+	<body>
+		<header>
+			<div id="header_div">
+				<span id="logo_container">
+					<a href="./">
+						<img src="http://www.vectortemplates.com/raster/batman-logo-big.gif" class="img-responsive" alt="Responsive image">
+					</a>
+				</span>
+				<span>
+					<button type="button" class="btn btn-primary btn-lg" id="login_button">
+                		<i class="fa fa-hand-o-right fa-1x"></i>
+                		<%= link_to 'Sign Out', destroy_user_session_path %>
+             		 </button>
+				</span>
+			</div>
+			<div id="headerBottom">
+				<nav id="navbar" class="navbar navbar-default" role="navigation">
+					<div class="container">
+						<ul class="nav navbar-nav navbar-left">
+							<li>
+								<a class="navbar-brand" href="#emergency">Emergency</a>
+							</li>
+							<li>
+								<a class="navbar-brand" href="#today">Today</a>
+							</li>
+							<li>
+								<a class="navbar-brand" href="#later">Later</a>
+							</li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+	 						<li>
+	 							<a class="navbar-brand" href="#/projects">Projects</a>
+	 						</li>
+	 						<li>
+	 							<a class="navbar-brand" href="#">Settings</a>
+	 						</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+		</header>
+		
+		<div class="container">
+			<div data-ng-view/>
+		</div>
+		<%= javascript_include_tag "application" %>
+		<script>
+	      $(document).ready(function(){
+	        $('.navbar-nav a').click(function(){
+	        	$('.navbar-nav li').removeClass('active');
+	        	$(this).parent().addClass('active');
+	        });
+
+	        $('.navbar-left a').click(function(){
+	        	window.location.assign("http://0.0.0.0:3000/#/")
+	        	var $href = $(this).attr('href');
+	        	var $anchor = $($href).offset();
+console.log($anchor);
+	        	var scrollTo = $anchor.top;
+	        	if(!$('#navbar').hasClass('navbar-fixed-top'))
+	        		scrollTo = scrollTo - $('#header_div').height();
+	 	       	else
+	 	       		scrollTo = scrollTo - $('#navbar').height();
+	        });
+	      });
+	    </script>
+	</body>
+</html>

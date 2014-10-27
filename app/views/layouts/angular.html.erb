@@ -10,51 +10,36 @@
 		
 		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
+		<style>
+		body, html {
+  			height: 100%;
+		}
+		body{
+	        width: 100%;
+	        height: 100%;
+	    }
+		</style>
+		
 	</head>
 	<body>
-		<header>
-			<div>
-				<span id="logo_container">
-					<a href="./">
-						<img src="http://www.vectortemplates.com/raster/batman-logo-big.gif" class="img-responsive" alt="Responsive image">
-					</a>
-				</span>
-				<span>
-					<button type="button" class="btn btn-primary btn-lg" id="login_button">
-                		<i class="fa fa-hand-o-right fa-1x"></i>
-                		<%= link_to 'Sign Out', destroy_user_session_path %>
-             		 </button>
-				</span>
-			</div>
-			<div id="headerBottom">
-				<nav id="navbar" class="navbar navbar-default" role="navigation">
-					<div class="container">
-						<div class="nav navbar-nav navbar-left">
-							<a class="navbar-brand" href="#emergency">Emergency</a>
-							<a class="navbar-brand" href="#today">Today</a>
-							<a class="navbar-brand" href="#later">Later</a>
-						</div>
-						<div class="nav navbar-nav navbar-right">
-	 						<a class="navbar-brand" href="#/projects">Projects</a>
-	 						<a class="navbar-brand" href="#">Settings</a>
-						</div>
-					</div>
-				</nav>
-			</div>
-		</header>
-		
-		<div class="container">
-			<div data-ng-view/>
+		<div id="sp-nav" class="menu_container">
+			<ul>
+				<li> <a href="/">Home</a></li>
+				<li> <a href="#/projects">Projects</a></li>
+			</ul>
 		</div>
+
+		<div id="sp-page" class="menu_strip">
+  			<button type="button" class="btn btn-default"
+  				ng-click="$spMenu.toggle()">
+  				<span class="glyphicon glyphicon-align-justify"></span> 
+  			</button>
+  			<div class="page">
+  				<div data-ng-view />
+  			</div>
 		<%= javascript_include_tag "application" %>
-		<script>
-	      $(document).ready(function(){
-	        $('.navbar-left a').click(function(){
-	        	var $href = $(this).attr('href');
-	        	var $anchor = $($href).offset();
-	        	$('body').animate({ scrollTop: $anchor.top - 50});
-	        });
-	      });
-	    </script>
+  		</div>
+		
+		
 	</body>
 </html>

@@ -1,0 +1,15 @@
+
+<div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel">
+        <span ng-hide="newProj">Reschedule Item</span>
+    </h4>
+</div>
+<div class="modal-body">
+    <div class="reschedule_options">
+        <div ng-repeat="option in rescheduleOptions" class="res_option" 
+            ng-click="rescheduleItem(option.value)">
+            <img class="img-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7LCrXnBSWbKrH9b58Ix6_6BItvmOSTucTdMfh6ZxNB1XplFHpxQ"/>
+            <div>{{option.text}}</div>
+        </div>
+    </div>
+</div>
