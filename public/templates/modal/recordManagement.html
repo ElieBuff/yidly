@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+    	&times;
+    </button>
+    <h4 class="modal-title" id="myModalLabel">
+        <span ng-show="isNewProj">New Record</span>
+        <span ng-hide="isNewProj">Edit Record</span>
+    </h4>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Name</label>
+        <input type="text" ng-model="record.name" class="form-control" placeholder="Enter name">
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Email</label>
+        <input type="text" ng-model="record.email" class="form-control" placeholder="Enter email">
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="save()">Save</button>
+</div>
