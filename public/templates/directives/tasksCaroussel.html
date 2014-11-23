@@ -1,0 +1,48 @@
+<carousel>  
+  <slide ng-repeat= 'tasksList in groupTasks'>
+    <div class="slide">
+      <ul id="urgent_task" class="item-list list-unstyled">
+        <li class="task-item emergency" ng-repeat= 'item in tasksList'>
+          <div class="item_data img-rounded" ng-mouseover="itemMouseOver(item.id)"
+              ng-mouseleave="itemMouseLeave()">
+            <div class="disp-data">
+              <div class="header">
+                <div class="logo_span">
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
+                </div>
+                <div class="title_span">
+                  <h5 class="text-center">{{item.stage}}</h5>
+                </div>
+              </div>
+              <div class="data">
+                <div>
+                  <span>{{item.project}}</span>
+                </div>
+                <div>
+                  <span>{{item.name}}</span>
+                </div>
+                <div>
+                  <span>{{item.actionable_at|date:'dd/MM/yyyy HH:mm'}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="edit_data img-rounded ng-hide" 
+              ng-show="selectedId ==item.id">
+              <div class="item_actions" >
+                <div class="action" ng-click="moveNextStage()">
+                  <div class="action_logo fa fa-arrow-right  fa-2x"></div>
+                </div>
+                <div class="action" reschedule-item="item">
+                  <div class="action_logo fa fa-clock-o fa-2x"></div>
+                </div>
+                <div class="action" ng-click="rejectItem()">
+                  <div class="action_logo fa fa-times fa-2x"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </slide>
+</carousel>

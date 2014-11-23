@@ -36,7 +36,7 @@ angular.module('yidlyApp')
 				
 				var modalInstance = $modal.open({ 
                     windowClass:'prodManagement',
-                    templateUrl: '/templates/modal/recordManagement.html',     
+                    templateUrl: '/templates/directives/recordManagement.html',     
                     controller: ModalInstanceCtrl,
                     resolve: {
                         record: function () {

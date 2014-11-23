@@ -31,7 +31,7 @@ yidlyModule
 						}
 
 					},
-					templateUrl: '/templates/modal/addRecord.html',
+					templateUrl: '/templates/directives/addRecord.html',
 				});
 			})
         }

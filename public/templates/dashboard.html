@@ -1,4 +1,8 @@
 <style>
+    .btn-group{
+        float: right;
+        padding: 5px;
+    }
     .dashboard{
         height:100vh;
     }
@@ -172,147 +176,26 @@
 </style>
 <div class="dashboard">
     <div class="first_row">
-      <div class="item-container emergency-container">
-        <h3 class="item-title">Emergency Items</h3>
-        <carousel>  
-          <slide ng-repeat= 'tasksList in urgentTasks'>
-            <div class="slide">
-              <ul id="urgent_task" class="item-list list-unstyled">
-                <li class="task-item emergency" ng-repeat= 'item in tasksList'>
-                  <div class="item_data img-rounded" ng-mouseover="itemMouseOver(item.id)"
-                      ng-mouseleave="itemMouseLeave()">
-                    <div class="disp-data">
-                      <div class="header">
-                        <div class="logo_span">
-                          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
-                        </div>
-                        <div class="title_span">
-                          <h5 class="text-center">{{item.stage}}</h5>
-                        </div>
-                      </div>
-                      <div class="data">
-                        <div>
-                          <span>{{item.project}}</span>
-                        </div>
-                        <div>
-                          <span>{{item.name}}</span>
-                        </div>
-                        <div>
-                          <span>{{item.actionable_at|date:'dd/MM/yyyy HH:mm'}}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="edit_data img-rounded ng-hide" 
-                      ng-show="selectedId ==item.id">
-                      <div class="item_actions" >
-                        <div class="action" ng-click="moveNextStage()">
-                          <div class="action_logo fa fa-arrow-right  fa-2x"></div>
-                        </div>
-                        <div class="action" reschedule-item="item">
-                          <div class="action_logo fa fa-clock-o fa-2x"></div>
-                        </div>
-                        <div class="action" ng-click="rejectItem()">
-                          <div class="action_logo fa fa-times fa-2x"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </slide>
-        </carousel>
-      </div>
-
-        <div class="item-container today-container">
-            <h3 class="item-title">Today Items</h3>
-            <carousel>  
-          <slide ng-repeat= 'tasksList in todayTasks'>
-            <div class="slide">
-              <ul id="today_task" class="item-list list-unstyled">
-                <li class="task-item today" ng-repeat= 'item in tasksList'>
-                  <div class="item_data img-rounded" ng-mouseover="itemMouseOver(item.id)"
-                      ng-mouseleave="itemMouseLeave()">
-                    <div class="disp-data">
-                      <div class="header">
-                        <div class="logo_span">
-                          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
-                        </div>
-                        <div class="title_span">
-                          <h5 class="text-center">{{item.stage}}</h5>
-                        </div>
-                      </div>
-                      <div class="data">
-                        <div>
-                          <span>{{item.project}}</span>
-                        </div>
-                        <div>
-                          <span>{{item.name}}</span>
-                        </div>
-                        <div>
-                          <span>{{item.actionable_at|date:'dd/MM/yyyy HH:mm'}}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="edit_data img-rounded ng-hide" 
-                      ng-show="selectedId ==item.id">
-                      <div class="item_actions" >
-                        <div class="action" ng-click="moveNextStage()">
-                          <div class="action_logo fa fa-arrow-right  fa-2x"></div>
-                        </div>
-                        <div class="action" reschedule-item="item">
-                          <div class="action_logo fa fa-clock-o fa-2x"></div>
-                        </div>
-                        <div class="action" ng-click="rejectItem()">
-                          <div class="action_logo fa fa-times fa-2x"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </slide>
-        </carousel>
-
-            </carousel>
+        <div class="btn-group">
+            <label class="btn btn-primary" ng-model="checkModel" btn-radio="'thumb'">
+                <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+            </label>
+            <label class="btn btn-primary" ng-model="checkModel" btn-radio="'list'">
+                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+            </label>
         </div>
-        <div class="item-container futur-container">
-            <h3 class="item-title">Futur Items</h3>
-            <carousel>  
-                <slide ng-repeat= 'tasksList in futurTasks'>
-                    <div class="slide">
-                        <ul class="item-list list-unstyled" >
-                            <li class="task-item futur"  
-                                ng-repeat= 'item in tasksList'>
-                                <div class="item_data img-rounded">
-                                    <div class="header">
-                                        <div class="logo_span">
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN-nHpLrw_yKDZrRNd6510vHOsngsRW0gSJPiSrFSAFoXVCO8v"/>
-                                        </div>
-                                        <div class="title_span">
-                                            <h5 class="text-center">{{item.stage}}</h5>
-                                        </div>
-                                    </div>
-                                    <div class="data">
-                                        <div>
-                                            <span>{{item.project}}</span>
-                                        </div>
-                                        <div>
-                                            <span>{{item.name}}</span>
-                                        </div>
-                                        <div>
-                                            <span>{{item.actionable_at|date:'dd/MM/yyyy HH:mm'}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </slide>
-            </carousel>
+        <div>
+            <div ng-repeat="tasksType in tasks" class="item-container">
+                <h3 class="item-title">{{tasksType.title}}</h3>
+                <div ng-show="checkModel == 'thumb'">
+                    <tasks-caroussel tasks="tasksType.records" reload="reloadTasks()" ></tasks-caroussel>
+                </div>
+                <div ng-show="checkModel == 'list'">
+                    <tasks-list tasks="tasksType.records" reload="reloadTasks()" ></tasks-list>
+                </div>
+            </div>
         </div>
-    </div>
+
     <div class="second_row">
     </div>
 </div>

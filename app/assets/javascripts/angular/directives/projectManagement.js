@@ -33,7 +33,7 @@ angular.module('yidlyApp')
 
 				var modalInstance = $modal.open({ 
                     windowClass:'prodManagement',
-                    templateUrl: '/templates/modal/projectManagement.html',     
+                    templateUrl: '/templates/directives/projectManagement.html',     
                     controller: ModalInstanceCtrl,
                     resolve: {
                         project: function () {

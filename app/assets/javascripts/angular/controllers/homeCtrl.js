@@ -1,34 +1,15 @@
 angular.module('yidlyApp')
 .controller('HomeCtrl', ['$scope', 'Task', 'Record', '$modal', '$filter',
 			function($scope, Task, Record, $modal, $filter) {
-	$scope.taskLoaded = false;
+	$scope.tasks = [];
+	$scope.checkModel = 'thumb';
+
 	reloadTasks();
 	
 
-	$scope.moveNextStage = function() {
-		Record.get({
-			id:$scope.selectedId, 
-			customFunction:'move_to_next_stage'
-		}); 
-		reloadTasks();
-	};
+	
 
-	$scope.rejectItem = function() {
-		Record.get({
-			id:$scope.selectedId, 
-			customFunction:'reject'
-		}); 
-		reloadTasks();
-	};
-
-	$scope.itemMouseOver = function(hoverId){
-		$scope.selectedId = hoverId;
-	}
-
-	$scope.itemMouseLeave = function(){
-		console.log('leave');
-		$scope.selectedId = '';
-	}
+	
 
 	$scope.rescheduleItem = function(){
 		var modalInstance = $modal.open({
@@ -55,10 +36,9 @@ angular.module('yidlyApp')
     		customFunction:'urgent_and_today', 
     		tipping_point:moment().startOf('day')._d*1
     	}, function(result){
-    		$scope.taskLoaded = true;
-    		$scope.urgentTasks = $filter('partitions')(result.urgent, 3);
-    		$scope.todayTasks = $filter('partitions')(result.today, 3);
-    		$scope.futurTasks = $filter('partitions')(result.later, 3);
+    		$scope.tasks[0] = {title: 'Emergency Tasks', records:result.urgent};
+    		$scope.tasks[1] = {title: 'Today Tasks', records:result.today};
+    		$scope.tasks[2] = {title: 'Futur Tasks', records:result.later};
     	});
 	}
 
@@ -66,15 +46,6 @@ angular.module('yidlyApp')
 }])
 .controller('ModalInstanceCtrl', ['$scope', 'Record', 'selectedId', 
 						function($scope, Record, selectedId) {
-	$scope.rescheduleOptions=[
-		{value:1, text:'In 1 Hour', src:''},
-		{value:2, text:'In 3 Hours', src:''},
-		{value:3, text:'Today 8:00 PM', src:''},
-		{value:4, text:'Tomorrow 9:00 AM', src:''},
-		{value:5, text:'In 1 day', src:''},
-		{value:6, text:'In 1 Week', src:''}
-	];
-
 	$scope.rescheduleItem = function(delayType){
 		var fromNowInSec = function(){
 			var futurDate;
