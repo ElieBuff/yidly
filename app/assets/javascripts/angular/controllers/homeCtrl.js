@@ -32,14 +32,16 @@ angular.module('yidlyApp')
 	}
 
 	function reloadTasks(){
-		Task.get({
+		$scope.tasks = Task.query();
+
+		/*Task.get({
     		customFunction:'urgent_and_today', 
     		tipping_point:moment().startOf('day')._d*1
     	}, function(result){
     		$scope.tasks[0] = {title: 'Emergency Tasks', records:result.urgent};
     		$scope.tasks[1] = {title: 'Today Tasks', records:result.today};
     		$scope.tasks[2] = {title: 'Futur Tasks', records:result.later};
-    	});
+    	});*/
 	}
 
 	

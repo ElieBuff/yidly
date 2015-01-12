@@ -22,7 +22,10 @@
 		
 	</head>
 	<body>
-		<div id="sp-nav" class="menu_container">
+		<div class="container-fluid">
+			<div data-ng-view />
+		</div>
+		<!--<div id="sp-nav" class="menu_container">
 			<ul>
 				<li> <a href="/">Home</a></li>
 				<li> <a href="#/projects">Projects</a></li>
@@ -36,7 +39,7 @@
   			</button>
   			<div class="page">
   				<div data-ng-view />
-  			</div>
+  			</div>-->
 		<%= javascript_include_tag "application" %>
   		</div>
 		

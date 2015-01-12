@@ -1,0 +1,64 @@
+<style>
+	.task_card{
+		margin-bottom: 20px;
+		overflow: hidden; 
+		height: 105px;
+		width: 100%;
+		border-style: solid;
+    	border-width: 1px;
+	}
+	.card_icon{
+		width: 30%;
+	}
+
+	.card_icon img{
+		width: 100%;
+	}
+
+	.card_icon, .card_data{
+		float:left;
+	}
+
+	.card_info{
+		padding: 5px;
+	}
+
+	.card_data{
+		padding-left: 5px;
+		width: 70%;
+		
+	}
+
+	.card_data span{
+		white-space: nowrap; 
+        overflow: hidden;
+    	text-overflow: ellipsis; 
+    }
+
+</style>
+
+<div class="task_card img-rounded" ng-class="className">
+	<div class="card_info">
+		<div class="card_icon">
+			<img ng-src="{{task.icon}}"/>
+		</div>
+		<div class="card_data">
+			<div>
+				<label>Project: </label>
+				<span class="form-control-static">{{task.project}}</span>
+			</div>
+			<div>
+				<label>Stage: </label>
+				<span>{{task.stage}}</span>
+			</div>
+			<div>
+				<label>Name: </label>
+				<span>{{task.name}}</span>
+			</div>
+			<div>
+				<label>Date: </label>
+				<span>{{task.actionable_at|date:'dd/MM/yyyy HH:mm'}}</span>
+			</div>
+		</div>
+	</div>
+</div>
